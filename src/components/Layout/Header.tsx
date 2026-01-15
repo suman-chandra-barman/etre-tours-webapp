@@ -10,12 +10,15 @@ interface HeaderProps {
 
 export default function Header({
   userName = "Maria",
-  userRole = "Counter Master",
+  userRole = "Direct Sales",
   userImage = userImg,
 }: HeaderProps) {
   return (
-    <header className="bg-white border-b border-gray-200 px-8 py-2">
-      <div className="flex items-start justify-end">
+    <header className="bg-white border-b border-gray-200 px-4 md:px-8 py-2">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">Hi, {userName}</h2>
+        </div>
         <div className="flex gap-3">
           <div className="text-right">
             <p className="text-sm font-semibold text-gray-900">{userName}</p>
