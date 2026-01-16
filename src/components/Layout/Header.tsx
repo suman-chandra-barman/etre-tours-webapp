@@ -14,7 +14,7 @@ export default function Header({
   userImage = userImg,
 }: HeaderProps) {
   return (
-    <header className="bg-white border-b border-gray-200 px-4 md:px-8 py-2">
+    <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-2">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold">Hi, {userName}</h2>
