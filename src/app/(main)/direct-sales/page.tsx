@@ -40,7 +40,6 @@ const DirectSalesPage = () => {
 
   const handleTicketConfirm = (ticketData: any) => {
     console.log("Ticket confirmed:", ticketData);
-    setShowTicketingSection(false);
     // Handle ticket confirmation logic here
   };
 
@@ -48,9 +47,7 @@ const DirectSalesPage = () => {
 
   return (
     <main className="p-4 md:p-6">
-      <div
-        className={`flex gap-6 lg:grid lg:grid-cols-3`}
-      >
+      <div className={`flex gap-6 lg:grid lg:grid-cols-3`}>
         <div className="lg:col-span-2">
           {viewMode === "setup" ? (
             <TourSetupForm

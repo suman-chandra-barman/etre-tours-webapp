@@ -1,0 +1,33 @@
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden;
+  }
+  
+  /* Show only the print area */
+  .printArea,
+  .printArea * {
+    visibility: visible;
+  }
+  
+  /* Position the print area at the top of the page */
+  .printArea {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+  
+  /* Remove any shadows, backgrounds, and borders from modal */
+  .printArea {
+    box-shadow: none !important;
+    background: white !important;
+  }
+}
+
+/* Hide elements with no-print class when printing */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}

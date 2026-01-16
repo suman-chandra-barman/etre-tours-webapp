@@ -1,9 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Minus, Plus, Armchair } from "lucide-react";
+import { Minus, Plus, Armchair, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import PrintTicketModal from "../Modals/PrintTicketModal";
 
 interface TicketingSectionProps {
   tourName: string;
@@ -35,7 +42,10 @@ const TicketingSection = ({
   const [children, setChildren] = useState(1);
   const [infant, setInfant] = useState(0);
   const [foc, setFoc] = useState(0);
-  const [paymentMethod, setPaymentMethod] = useState<"cards" | "xpf" | "usd" | "aud" | "euro">("xpf");
+  const [paymentMethod, setPaymentMethod] = useState<
+    "cards" | "xpf" | "usd" | "aud" | "euro"
+  >("xpf");
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const ADULT_PRICE = 49.0;
   const CHILD_PRICE = 39.0;
@@ -44,7 +54,53 @@ const TicketingSection = ({
   const childTotal = children * CHILD_PRICE;
   const total = adultTotal + childTotal;
 
+  // Format current date
+  const formatDate = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
+  };
+
+  // Format departure time
+  const formatDepartureTime = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    return `${day} ${month}, ${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const ticketData = {
+    dateOfIssue: formatDate(new Date()),
+    driver: "BROOKLYN SIMMONS", // This should come from your tour data
+    buyer: buyerName || "ALEX MORGAN",
+    guide: "GUY HAWKINS", // This should come from your tour data
+    from: "DEMO LOCATION", // This should come from your tour data
+    vehicle: "ISLAND TRANSPORT LTD.", // This should come from your tour data
+    to: tourName || "LAGOON SNORKELING",
+    registrationNumber: "PE 27095", // This should come from your tour data
+    departure: formatDepartureTime(new Date()),
+    tourCode: "CV57 XNK", // This should come from your tour data
+    adults: adults,
+    adultPrice: ADULT_PRICE,
+    children: children,
+    childPrice: CHILD_PRICE,
+    totalFare: total,
+  };
+
   const handleConfirm = () => {
+    // Open print modal instead of just calling onConfirm
+    setIsPrintModalOpen(true);
+    console.log("Opening print modal, isPrintModalOpen:", true);
+
     if (onConfirm) {
       onConfirm({
         buyerName,
@@ -265,7 +321,7 @@ const TicketingSection = ({
             <Button
               onClick={() => setPaymentMethod("cards")}
               variant={paymentMethod === "cards" ? "default" : "outline"}
-              className={`px-4 lg:px-8 rounded-full${
+              className={`px-4 lg:px-8 rounded-full ${
                 paymentMethod === "cards" ? "bg-gray-900 hover:bg-gray-800" : ""
               }`}
             >
@@ -304,22 +360,17 @@ const TicketingSection = ({
             className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
           >
             Confirm & print ticket
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"
-              />
-            </svg>
+            <Printer className="w-4 h-4" />
           </Button>
         </div>
       </div>
+
+      {/* Print Ticket Modal */}
+      <PrintTicketModal
+        isOpen={isPrintModalOpen}
+        onClose={() => setIsPrintModalOpen(false)}
+        ticketData={ticketData}
+      />
     </div>
   );
 };

@@ -67,7 +67,7 @@ const TicketingModal = ({
       <div className="fixed inset-0 bg-black/50 z-40" onClick={onClose} />
 
       {/* Modal */}
-      <div className="fixed right-0 top-0 h-full w-full md:w-[480px] bg-white shadow-xl z-50 overflow-y-auto">
+      <div className="fixed right-0 top-0 h-full w-full md:w-120 bg-white shadow-xl z-50 overflow-y-auto">
         <div className="p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
