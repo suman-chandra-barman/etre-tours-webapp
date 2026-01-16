@@ -1,7 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, Users, Smile, Baby, ChevronsLeft, ChevronsRight, Gift, ChevronRight } from "lucide-react";
+import {
+  Calendar,
+  Users,
+  Smile,
+  Baby,
+  ChevronsLeft,
+  ChevronsRight,
+  Gift,
+  ChevronRight,
+  Plus,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "../ui/button";
 
 interface TourSetupFormProps {
   tourData?: {
@@ -41,21 +52,21 @@ const TourSetupForm = ({
       <div className="p-4 md:p-6 border-b">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
-            <button className="text-gray-600 hover:text-gray-800">
+            <Button variant="ghost">
               <ChevronsLeft className="w-5 h-5" />
-            </button>
-            <button className="text-gray-600 hover:text-gray-800">
+            </Button>
+            <Button variant="ghost">
               <ChevronsRight className="w-5 h-5" />
-            </button>
+            </Button>
             <div className="flex items-center gap-2">
               <span className="font-medium">Today</span>
               <span className="text-gray-600">Tuesday, Nov 21, 2025</span>
               <Calendar className="w-5 h-5 text-gray-400 ml-2" />
             </div>
           </div>
-          <button className="px-4 py-2 border border-gray-300 rounded-md text-sm hover:bg-gray-50">
-            + New tour
-          </button>
+          <Button variant="outline">
+            <Plus className="w-4 h-4" /> New tour
+          </Button>
         </div>
 
         {/* Tabs */}
@@ -103,7 +114,7 @@ const TourSetupForm = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
               <Select>
-                <SelectTrigger className="w-full" >
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Operator" />
                 </SelectTrigger>
                 <SelectContent>
@@ -241,19 +252,20 @@ const TourSetupForm = ({
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <button
+          <Button
+            variant="outline"
             onClick={onConfirmDeparture}
-            className="px-6 py-2 border border-gray-300 rounded-full text-sm hover:bg-gray-50 transition-colors"
+            className="border rounded-full  hover:bg-gray-50"
           >
             Confirm departure
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={onMakeTickets}
-            className="px-6 py-2 bg-blue-500 text-white rounded-full text-sm hover:bg-blue-600 transition-colors flex items-center gap-2"
+            className=" bg-blue-500 rounded-full hover:bg-blue-600"
           >
             Make tickets
             <ChevronRight className="w-4 h-4" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

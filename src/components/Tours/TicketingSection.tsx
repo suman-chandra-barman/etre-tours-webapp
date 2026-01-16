@@ -108,8 +108,8 @@ const TicketingSection = ({
           </h3>
           <div className="grid grid-cols-2 gap-4">
             {/* Adults */}
-            <div className="border border-gray-300 rounded-lg p-3">
-              <div className="flex items-center justify-between mb-2">
+            <div>
+              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg p-3">
                 <span className="text-sm font-medium">Adults</span>
                 <div className="flex items-center gap-2">
                   <Button
@@ -139,8 +139,8 @@ const TicketingSection = ({
             </div>
 
             {/* Children */}
-            <div className="border border-gray-300 rounded-lg p-3">
-              <div className="flex items-center justify-between mb-2">
+            <div>
+              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg p-3">
                 <span className="text-sm font-medium">Children</span>
                 <div className="flex items-center gap-2">
                   <Button
