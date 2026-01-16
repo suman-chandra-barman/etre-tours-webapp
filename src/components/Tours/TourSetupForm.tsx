@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
+import CreateNewTourModal from "../Modals/CreateNewTourModal";
 
 interface TourSetupFormProps {
   tourData?: {
@@ -39,6 +40,7 @@ const TourSetupForm = ({
 }: TourSetupFormProps) => {
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("vehicle");
   const [acceptCardsAndCash, setAcceptCardsAndCash] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [ticketCounts, setTicketCounts] = useState({
     adults: 0,
     children: 0,
@@ -64,7 +66,7 @@ const TourSetupForm = ({
               <Calendar className="w-5 h-5 text-gray-400 ml-2" />
             </div>
           </div>
-          <Button variant="outline">
+          <Button variant="outline" onClick={() => setIsModalOpen(true)}>
             <Plus className="w-4 h-4" /> New tour
           </Button>
         </div>
@@ -268,6 +270,9 @@ const TourSetupForm = ({
           </Button>
         </div>
       </div>
+
+      {/* Create New Tour Modal */}
+      <CreateNewTourModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 };
