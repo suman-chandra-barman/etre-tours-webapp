@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   CheckCircle,
   Bus,
@@ -10,6 +11,7 @@ import {
   Users,
   ChevronRight,
 } from "lucide-react";
+import CancelTourModal from "@/components/Modals/CancelTourModal";
 
 interface TourProgressViewProps {
   tourData: {
@@ -35,6 +37,8 @@ const TourProgressView = ({
   onNextStep,
   currentStep = "pre-departure",
 }: TourProgressViewProps) => {
+  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+
   const steps = [
     { key: "pre-departure", label: "Pre-departure", icon: CheckCircle },
     { key: "in-progress", label: "In-progress", icon: Bus },
@@ -43,6 +47,13 @@ const TourProgressView = ({
 
   const getStepIndex = (step: string) => steps.findIndex((s) => s.key === step);
   const currentStepIndex = getStepIndex(currentStep);
+
+  const handleCancelTour = (reason: string) => {
+    console.log("Tour cancellation reason:", reason);
+    if (onCancelTour) {
+      onCancelTour();
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-sm border">
@@ -231,7 +242,7 @@ const TourProgressView = ({
         {/* Action Buttons */}
         <div className="flex gap-3">
           <button
-            onClick={onCancelTour}
+            onClick={() => setIsCancelModalOpen(true)}
             className="px-6 py-2 border border-red-300 text-red-500 rounded-full text-sm hover:bg-red-50 transition-colors"
           >
             Cancel the tour
@@ -245,6 +256,13 @@ const TourProgressView = ({
           </button>
         </div>
       </div>
+
+      {/* Cancel Tour Modal */}
+      <CancelTourModal
+        isOpen={isCancelModalOpen}
+        onClose={() => setIsCancelModalOpen(false)}
+        onSubmit={handleCancelTour}
+      />
     </div>
   );
 };
