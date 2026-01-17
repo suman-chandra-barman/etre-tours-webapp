@@ -25,6 +25,7 @@ export default function DailyTourTallyModal({
   isOpen,
   onClose,
 }: DailyTourTallyModalProps) {
+  const [isAlertDismissed, setIsAlertDismissed] = useState(false);
   const [tallyData, setTallyData] = useState<TourTallyItem[]>([
     {
       id: 1,
@@ -188,11 +189,11 @@ export default function DailyTourTallyModal({
           <div className="flex items-center gap-3">
             <button
               onClick={onClose}
-              className="px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              className="px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded-full transition-colors"
             >
               Cancel
             </button>
-            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+            <button className="px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors">
               Confirm tally
             </button>
           </div>
@@ -226,7 +227,7 @@ export default function DailyTourTallyModal({
         </div>
 
         {/* Discrepancy Alert */}
-        {hasDiscrepancy && (
+        {hasDiscrepancy && !isAlertDismissed && (
           <div className="mx-6 mt-4 p-3 bg-red-50 border border-red-200 rounded-lg flex items-start justify-between">
             <div className="flex items-start gap-2">
               <span className="text-red-500 mt-0.5">⚠️</span>
@@ -238,7 +239,10 @@ export default function DailyTourTallyModal({
                 confirming.
               </p>
             </div>
-            <button className="text-red-500 hover:text-red-700">
+            <button
+              onClick={() => setIsAlertDismissed(true)}
+              className="text-red-500 hover:text-red-700"
+            >
               <X className="w-5 h-5" />
             </button>
           </div>
