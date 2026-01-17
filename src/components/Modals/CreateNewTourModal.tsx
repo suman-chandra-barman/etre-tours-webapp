@@ -69,9 +69,9 @@ const CreateNewTourModal = ({
           onValueChange={(value) => setActiveTab(value as "boat" | "vehicle")}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-2 mb-6">
-            <TabsTrigger value="boat">By boat</TabsTrigger>
-            <TabsTrigger value="vehicle">By Vehicle</TabsTrigger>
+          <TabsList className="flex items-center gap-4 mb-6 h-12">
+            <TabsTrigger value="boat"className="px-4 h-10" >By boat</TabsTrigger>
+            <TabsTrigger value="vehicle" className="px-4 h-10">By Vehicle</TabsTrigger>
           </TabsList>
 
           {/* Tabs Content for Boat */}
