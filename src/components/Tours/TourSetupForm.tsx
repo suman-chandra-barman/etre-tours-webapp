@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "../ui/button";
 import CreateNewTourModal from "../Modals/CreateNewTourModal";
+import { Separator } from "../ui/separator";
 
 interface TourSetupFormProps {
   tourData?: {
@@ -254,6 +255,13 @@ const TourSetupForm = ({
 
         {/* Action Buttons */}
         <div className="flex gap-3">
+          <Button
+            variant="ghost"
+            className="text-red-500  hover:text-red-600 hover:bg-red-50"
+          >
+            Delete
+          </Button>
+          <Separator className="h-10!" orientation="vertical"/>
           <Button
             variant="outline"
             onClick={onConfirmDeparture}
