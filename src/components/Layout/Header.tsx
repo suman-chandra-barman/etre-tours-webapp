@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
-import userImg from "@/assets/user.png"
+import userImg from "@/assets/user.png";
 import { StaticImageData } from "next/image";
+import { usePathname } from "next/navigation";
 
 interface HeaderProps {
   userName?: string;
@@ -13,6 +16,9 @@ export default function Header({
   userRole = "Direct Sales",
   userImage = userImg,
 }: HeaderProps) {
+  const params = usePathname();
+  const role =params.split("/")[1];
+
   return (
     <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-2">
       <div className="flex items-center justify-between">
@@ -22,7 +28,7 @@ export default function Header({
         <div className="flex gap-3">
           <div className="text-right">
             <p className="text-sm font-semibold text-gray-900">{userName}</p>
-            <p className="text-xs text-gray-500">{userRole}</p>
+            <p className="text-xs text-gray-500">{role == "direct-sales" ? "Direct Sales" : role === "cruise-sales" ? "Cruise Sales" : "Partner Sales"}</p>
           </div>
           <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200">
             <Image
