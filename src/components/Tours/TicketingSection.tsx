@@ -38,8 +38,8 @@ const TicketingSection = ({
 }: TicketingSectionProps) => {
   const [buyerName, setBuyerName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [adults, setAdults] = useState(2);
-  const [children, setChildren] = useState(1);
+  const [adults, setAdults] = useState(0);
+  const [children, setChildren] = useState(0);
   const [infant, setInfant] = useState(0);
   const [foc, setFoc] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<
@@ -165,8 +165,8 @@ const TicketingSection = ({
           <div className="grid grid-cols-2 gap-4">
             {/* Adults */}
             <div>
-              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg p-3">
-                <span className="text-sm font-medium">Adults</span>
+              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg px-3 py-1.5">
+                <span className="text-sm">Adults</span>
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={() => setAdults(Math.max(0, adults - 1))}
@@ -176,7 +176,7 @@ const TicketingSection = ({
                   >
                     <Minus className="w-3 h-3" />
                   </Button>
-                  <span className="text-lg font-semibold w-8 text-center">
+                  <span className="w-8 text-center">
                     {adults.toString().padStart(2, "0")}
                   </span>
                   <Button
@@ -196,8 +196,8 @@ const TicketingSection = ({
 
             {/* Children */}
             <div>
-              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg p-3">
-                <span className="text-sm font-medium">Children</span>
+              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg px-3 py-1.5">
+                <span className="text-sm">Children</span>
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={() => setChildren(Math.max(0, children - 1))}
@@ -207,7 +207,7 @@ const TicketingSection = ({
                   >
                     <Minus className="w-3 h-3" />
                   </Button>
-                  <span className="text-lg font-semibold w-8 text-center">
+                  <span className="w-8 text-center">
                     {children.toString().padStart(2, "0")}
                   </span>
                   <Button
@@ -226,9 +226,9 @@ const TicketingSection = ({
             </div>
 
             {/* Infant */}
-            <div className="border border-gray-300 rounded-lg p-3">
+            <div className="border border-gray-300 rounded-lg px-3 py-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">Infant</span>
+                <span className="text-sm">Infant</span>
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={() => setInfant(Math.max(0, infant - 1))}
@@ -238,7 +238,7 @@ const TicketingSection = ({
                   >
                     <Minus className="w-3 h-3" />
                   </Button>
-                  <span className="text-lg font-semibold w-8 text-center">
+                  <span className="w-8 text-center">
                     {infant.toString().padStart(2, "0")}
                   </span>
                   <Button
@@ -254,9 +254,9 @@ const TicketingSection = ({
             </div>
 
             {/* FOC */}
-            <div className="border border-gray-300 rounded-lg p-3">
+            <div className="border border-gray-300 rounded-lg px-3 py-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-medium">FOC</span>
+                <span className="text-sm">FOC</span>
                 <div className="flex items-center gap-2">
                   <Button
                     onClick={() => setFoc(Math.max(0, foc - 1))}
@@ -266,7 +266,7 @@ const TicketingSection = ({
                   >
                     <Minus className="w-3 h-3" />
                   </Button>
-                  <span className="text-lg font-semibold w-8 text-center">
+                  <span className="w-8 text-center">
                     {foc.toString().padStart(2, "0")}
                   </span>
                   <Button
