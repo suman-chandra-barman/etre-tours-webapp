@@ -7,7 +7,6 @@ import {
   Printer,
   ChevronLeft,
   ChevronRight,
-  UserCircle,
 } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 import DailyTourTallyModal from "@/components/Modals/DailyTourTallyModal";
@@ -18,13 +17,17 @@ interface TourHistoryItem {
   tourSpots: string;
   departureFrom: string;
   tourCode: string;
-  subContractor: string;
+  partner: string;
   driverOrCaptain: string;
   guides: string;
   totalPax: number;
   vehicleBoats: string;
   totalAmount: string;
-  tourStatus: "Pre-departure" | "In-progress" | "Completed" | "Cancelled";
+  tourStatus:
+    | "Waiting for departure"
+    | "In-progress"
+    | "Completed"
+    | "Cancelled";
 }
 
 // Mock data based on the design image
@@ -35,13 +38,13 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Batarahitol, Baijanathpur",
     departureFrom: "Batarahitol, Baijanathpur",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Primer Inc.",
+    partner: "Primer Inc.",
     driverOrCaptain: "Primer Inc.",
     guides: "Primer Inc.",
     totalPax: 426,
     vehicleBoats: "2 Vehicle",
     totalAmount: "$26,000",
-    tourStatus: "Pre-departure",
+    tourStatus: "Waiting for departure",
   },
   {
     id: 2,
@@ -49,13 +52,13 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Bargachhi Chok, Biratnagar",
     departureFrom: "Bargachhi Chok, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
-    subContractor: "Larson & Larson",
+    partner: "Larson & Larson",
     driverOrCaptain: "Larson & Larson",
     guides: "Larson & Larson",
     totalPax: 447,
     vehicleBoats: "3 Vehicle",
     totalAmount: "$42,000",
-    tourStatus: "In-progress",
+    tourStatus: "Waiting for departure",
   },
   {
     id: 3,
@@ -63,7 +66,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Hospital chowk, Biratnagar",
     departureFrom: "Hospital chowk, Biratnagar",
     tourCode: "CFCA-3F50-E459-9E57",
-    subContractor: "Mertz Group",
+    partner: "Mertz Group",
     driverOrCaptain: "Mertz Group",
     guides: "Mertz Group",
     totalPax: 600,
@@ -77,7 +80,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Kanchanbari, Biratnagar",
     departureFrom: "Kanchanbari, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
-    subContractor: "Wintheiser LLC",
+    partner: "Wintheiser LLC",
     driverOrCaptain: "Wintheiser LLC",
     guides: "Wintheiser LLC",
     totalPax: 883,
@@ -91,7 +94,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Hatkhola Chok, Biratnagar",
     departureFrom: "Hatkhola Chok, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Solenoid",
+    partner: "Solenoid",
     driverOrCaptain: "Solenoid",
     guides: "Solenoid",
     totalPax: 154,
@@ -105,7 +108,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Chadani Chok, Biratnagar",
     departureFrom: "Chadani Chok, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Wiegand-Shields",
+    partner: "Wiegand-Shields",
     driverOrCaptain: "Wiegand-Shields",
     guides: "Wiegand-Shields",
     totalPax: 536,
@@ -119,7 +122,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Rani, Biratnagar",
     departureFrom: "Rani, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Metaful",
+    partner: "Metaful",
     driverOrCaptain: "Metaful",
     guides: "Metaful",
     totalPax: 429,
@@ -133,7 +136,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Ghinaghat, Baijanathpur",
     departureFrom: "Ghinaghat, Baijanathpur",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "Batz Group",
+    partner: "Batz Group",
     driverOrCaptain: "Batz Group",
     guides: "Batz Group",
     totalPax: 423,
@@ -147,7 +150,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Jaynepal chowk, Biratnagar",
     departureFrom: "Jaynepal chowk, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Performante",
+    partner: "Performante",
     driverOrCaptain: "Performante",
     guides: "Performante",
     totalPax: 583,
@@ -161,7 +164,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Kohobarachok, Biratnagar",
     departureFrom: "Kohobarachok, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "TypeSafe",
+    partner: "TypeSafe",
     driverOrCaptain: "TypeSafe",
     guides: "TypeSafe",
     totalPax: 185,
@@ -175,7 +178,7 @@ const mockHistoryData: TourHistoryItem[] = [
     tourSpots: "Kohobara, Biratnagar",
     departureFrom: "Kohobara, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "Advanta Inc.",
+    partner: "Advanta Inc.",
     driverOrCaptain: "Advanta Inc.",
     guides: "Advanta Inc.",
     totalPax: 196,
@@ -191,14 +194,14 @@ export default function TourHistoryPage() {
   const [selectedTime, setSelectedTime] = useState("Any time");
   const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
   const [selectedSubContractor, setSelectedSubContractor] = useState(
-    "Filter by Sub-contractor company"
+    "Filter by Sub-contractor company",
   );
   const [selectedOperator, setSelectedOperator] =
     useState("Filter by Operator");
   const [selectedDriver, setSelectedDriver] = useState("Select driver");
   const [selectedGuide, setSelectedGuide] = useState("Select guide");
   const [activeTab, setActiveTab] = useState<"All" | "Boats" | "Vehicle">(
-    "All"
+    "All",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [isTallyModalOpen, setIsTallyModalOpen] = useState(false);
@@ -216,7 +219,7 @@ export default function TourHistoryPage() {
 
   const getStatusStyles = (status: TourHistoryItem["tourStatus"]): string => {
     switch (status) {
-      case "Pre-departure":
+      case "Waiting for departure":
         return "bg-yellow-100 text-yellow-700";
       case "In-progress":
         return "bg-green-100 text-green-700";
@@ -384,19 +387,11 @@ export default function TourHistoryPage() {
                   <option>Sarah</option>
                   <option>James</option>
                 </select>
-
-                {/* Tally Up */}
-                <button className="min-w-32 px-6 py-2 bg-blue-200 text-black rounded-full text-sm font-medium hover:bg-blue-300 transition-colors">
-                  Apply Filters
-                </button>
               </div>
 
               <div className="flex items-center gap-4">
-                <button
-                  onClick={() => setIsTallyModalOpen(true)}
-                  className="min-w-32 px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium hover:bg-blue-700 transition-colors"
-                >
-                  Tally Up
+                <button className="min-w-32 px-6 py-2 bg-blue-200 text-black rounded-full text-sm font-medium hover:bg-blue-300 transition-colors">
+                  Apply Filters
                 </button>
                 <button
                   onClick={handlePrint}
@@ -428,7 +423,7 @@ export default function TourHistoryPage() {
                       Tour Code
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Sub-contractor company
+                      Partner
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Driver/Captain
@@ -469,7 +464,7 @@ export default function TourHistoryPage() {
                         {item.tourCode}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.subContractor}
+                        {item.partner}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.driverOrCaptain}
@@ -489,7 +484,7 @@ export default function TourHistoryPage() {
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyles(
-                            item.tourStatus
+                            item.tourStatus,
                           )}`}
                         >
                           {item.tourStatus}
@@ -532,7 +527,7 @@ export default function TourHistoryPage() {
                     >
                       {page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button
