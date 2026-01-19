@@ -18,7 +18,6 @@ const CruiseSalesPage = () => {
     from: "Los Angeles",
     startDateAndTime: "Sep 4, 2021 at 12:14 am -8:30 pm",
     returnDateAndTime: "2024-06-15T18:00:00Z",
-    paymentMethods: "Cash",
     operator: "Expedia LLC",
     operatorCompany: "Island Transport Ltd.",
     registrationNumber: "ML57 GNX",
