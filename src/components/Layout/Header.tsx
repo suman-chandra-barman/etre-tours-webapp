@@ -17,7 +17,7 @@ export default function Header({
   userImage = userImg,
 }: HeaderProps) {
   const params = usePathname();
-  const role =params.split("/")[1];
+  const role = params.split("/")[1];
 
   return (
     <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3">
@@ -28,7 +28,15 @@ export default function Header({
         <div className="flex gap-3">
           <div className="text-right">
             <p className="text-sm font-semibold text-gray-900">{userName}</p>
-            <p className="text-xs text-gray-500">{role == "direct-sales" ? "Direct Sales" : role === "cruise-sales" ? "Cruise Sales" : "Partner Sales"}</p>
+            <p className="text-xs text-gray-500">
+              {role == "direct-sales"
+                ? "Direct Sales"
+                : role === "cruise-sales"
+                  ? "Cruise Sales"
+                  : role === "partner-sales"
+                    ? "Partner Sales"
+                    : "Chief Admin"}
+            </p>
           </div>
           <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200">
             <Image

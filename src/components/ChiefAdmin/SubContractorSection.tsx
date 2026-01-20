@@ -36,7 +36,7 @@ export default function SubContractorSection() {
           Toptier sub-contractor companies
         </h3>
         <p className="text-sm text-gray-500 mt-1">
-          Contributors who helped to grow your Vehicleness
+          Contributors who helped to grow your business
         </p>
       </div>
 
