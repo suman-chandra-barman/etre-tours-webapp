@@ -178,30 +178,6 @@ const mockData: StationData[] = [
     totalAmount: "$57,000",
     tourStatus: "Completed",
   },
-  {
-    status: "Online",
-    dateTime: "Aug 18, 2023 at 04:12 pm",
-    tourSpots: "Jwalalot, Biratnagar",
-    departureFrom: "Jwalalot, Biratnagar",
-    tourCode: "295A-6774-96A2-5338",
-    subContractor: "FastTrak",
-    totalPax: 130,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$46,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Sep 4, 2021 at 12:14 am",
-    tourSpots: "Dhanpura, Baijanathpur",
-    departureFrom: "Dhanpura, Baijanathpur",
-    tourCode: "CAAC-350C-4E8C-CZ58",
-    subContractor: "Verify",
-    totalPax: 826,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$37,000",
-    tourStatus: "Completed",
-  },
 ];
 
 function StationPage() {
