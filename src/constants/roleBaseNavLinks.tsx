@@ -40,7 +40,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Users className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/chief-admin/subcontractors",
+      href: "/chief-admin/subcontractor",
       label: "Sub-con.",
       icon: <UserRoundCog className="w-6 h-6 mb-1" />,
     },
