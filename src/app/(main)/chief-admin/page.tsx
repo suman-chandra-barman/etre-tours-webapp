@@ -4,13 +4,13 @@ import SubContractorSection from "@/components/ChiefAdmin/SubContractorSection";
 
 function ChiefAdminPage() {
   return (
-    <main className="bg-linear-to-br from-blue-50 via-white to-blue-50 p-4 overflow-y-auto">
-      <div className="space-y-4">
+    <main className="bg-linear-to-br from-blue-50 via-white to-blue-50 p-6 overflow-y-auto">
+      <div className="space-y-6">
         {/* Stats Section */}
         <StatsSection />
 
         {/* Two Column Layout for Lower Sections */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {/* Popular Tours Section */}
           <PopularToursSection />
 

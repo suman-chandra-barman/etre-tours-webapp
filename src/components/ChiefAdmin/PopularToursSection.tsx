@@ -84,7 +84,7 @@ export default function PopularToursSection() {
             </div>
 
             {/* Percentage Markers */}
-            <div className="flex justify-between text-xs text-gray-500 mb-8">
+            <div className="flex justify-between text-xs text-gray-500">
               <span>1</span>
               <span>80%</span>
             </div>

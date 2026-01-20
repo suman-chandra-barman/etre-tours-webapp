@@ -20,7 +20,7 @@ export default function Header({
   const role =params.split("/")[1];
 
   return (
-    <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-2">
+    <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-semibold">Hi, {userName}</h2>
