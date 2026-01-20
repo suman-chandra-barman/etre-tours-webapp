@@ -24,6 +24,7 @@ function Sidebar() {
     if (pathname.startsWith("/direct-sales")) return "direct-sales";
     if (pathname.startsWith("/cruise-sales")) return "cruise-sales";
     if (pathname.startsWith("/partner-sales")) return "partner-sales";
+    if (pathname.startsWith("/chief-admin")) return "chief-admin";
     return role || "direct-sales";
   };
 
