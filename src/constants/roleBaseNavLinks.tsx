@@ -7,6 +7,7 @@ import {
   Landmark,
   BusFront,
   Settings,
+  UserRoundCog,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 
@@ -24,19 +25,24 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <LayoutDashboard className="w-6 h-6 mb-1" />,
     },
     {
+      href: "/chief-admin/tours",
+      label: "Tours",
+      icon: <Hotel className="w-6 h-6 mb-1" />,
+    },
+    {
       href: "/chief-admin/finance",
       label: "Finance",
       icon: <Landmark className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/chief-admin/transport",
-      label: "Transport",
-      icon: <BusFront className="w-6 h-6 mb-1" />,
+      href: "/chief-admin/station",
+      label: "Station",
+      icon: <Users className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/chief-admin/staffs",
-      label: "Staffs",
-      icon: <Users className="w-6 h-6 mb-1" />,
+      href: "/chief-admin/subcontractors",
+      label: "Sub-con.",
+      icon: <UserRoundCog className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/settings",
