@@ -139,7 +139,7 @@ function ToursPage() {
         <h1 className="text-2xl font-semibold text-gray-800">Manage tours</h1>
         <Button
           onClick={() => setIsModalOpen(true)}
-          className="bg-blue-400 hover:bg-blue-500 text-white"
+          className="bg-blue-400 hover:bg-blue-500 text-white rounded-full"
         >
           + Confirm setup tour
         </Button>
