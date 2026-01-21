@@ -4,10 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { EditBrandProfileModal } from "@/components/Modals/EditBrandProfileModal";
 import { AddEditMemberModal } from "@/components/Modals/AddEditMemberModal";
+import { UpdatePasswordModal } from "@/components/Modals/UpdatePasswordModal";
 import Image from "next/image";
 import { Pen, Plus } from "lucide-react";
 import Link from "next/link";
 import logo from "@/assets/logo.svg";
+import lock from "@/assets/lock.svg";
 
 interface Member {
   id: string;
@@ -20,6 +22,8 @@ function SettingPage() {
   const [isEditBrandModalOpen, setIsEditBrandModalOpen] = useState(false);
   const [isAddMemberModalOpen, setIsAddMemberModalOpen] = useState(false);
   const [isEditMemberModalOpen, setIsEditMemberModalOpen] = useState(false);
+  const [isUpdatePasswordModalOpen, setIsUpdatePasswordModalOpen] =
+    useState(false);
   const [selectedMember, setSelectedMember] = useState<Member | null>(null);
 
   // Brand profile data
@@ -173,56 +177,14 @@ function SettingPage() {
           <h2 className="text-xl font-semibold mb-4">Security Settings</h2>
           <div className="flex flex-col items-center py-8 bg-gray-50 rounded-lg">
             <div className="mb-4">
-              <svg
-                width="80"
-                height="80"
-                viewBox="0 0 80 80"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="25"
-                  y="35"
-                  width="30"
-                  height="25"
-                  rx="3"
-                  fill="#5B9BD5"
-                  opacity="0.3"
-                />
-                <path
-                  d="M50 35V30C50 23.3726 44.6274 18 38 18C31.3726 18 26 23.3726 26 30V35"
-                  stroke="#5B9BD5"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                />
-                <rect
-                  x="24"
-                  y="34"
-                  width="32"
-                  height="28"
-                  rx="4"
-                  fill="#5B9BD5"
-                />
-                <circle cx="40" cy="48" r="4" fill="white" />
-                <line
-                  x1="40"
-                  y1="52"
-                  x2="40"
-                  y2="58"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              </svg>
+              <Image src={lock} alt="Security Icon" />
             </div>
             <p className="text-center text-gray-700 mb-1 font-medium">
               By updating passwords helps to secure your account.
             </p>
-            <p className="text-center text-gray-500 text-sm mb-6">
-              Last update 13 days ago
-            </p>
             <Button
               variant="outline"
+              onClick={() => setIsUpdatePasswordModalOpen(true)}
               className="border-2 border-gray-800 text-gray-800 hover:bg-gray-100 rounded-full px-6"
             >
               Update password •••
@@ -265,6 +227,11 @@ function SettingPage() {
             : undefined
         }
         mode="edit"
+      />
+
+      <UpdatePasswordModal
+        isOpen={isUpdatePasswordModalOpen}
+        onClose={() => setIsUpdatePasswordModalOpen(false)}
       />
     </main>
   );
