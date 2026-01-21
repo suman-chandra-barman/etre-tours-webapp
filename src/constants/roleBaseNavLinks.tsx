@@ -5,7 +5,6 @@ import {
   Hotel,
   LayoutDashboard,
   Landmark,
-  BusFront,
   Settings,
   UserRoundCog,
 } from "lucide-react";
@@ -45,7 +44,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <UserRoundCog className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/admin/settings",
+      href: "/chief-admin/setting",
       label: "Settings",
       icon: <Settings className="w-6 h-6 mb-1" />,
     },
