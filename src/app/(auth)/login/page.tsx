@@ -9,7 +9,13 @@ import logo from "@/assets/logo.svg";
 import { useUser } from "@/contexts/UserContext";
 import Link from "next/link";
 import { TUserRole } from "@/types";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type TLoginFormData = {
   email: string;
@@ -176,16 +182,6 @@ function LoginPage() {
                 {errors.role.message}
               </p>
             )}
-          </div>
-
-          {/*Forgot Password */}
-          <div>
-            <Link
-              href="/forgot-password"
-              className="text-sm text-blue-500 hover:underline transition-colors"
-            >
-              Forgot Password
-            </Link>
           </div>
 
           {/* Login Button */}
