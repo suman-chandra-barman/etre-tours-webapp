@@ -11,10 +11,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Printer } from "lucide-react";
+import styles from "@/components/styles/Print.module.css";
 
 type TourStatus = "Pre-departure" | "In-progress" | "Completed" | "Cancelled";
 type FilterStatus =
   | "All"
+  | "Today"
   | "Awaiting departure"
   | "In-progress"
   | "Completed"
@@ -199,15 +202,31 @@ function StationPage() {
     }
   };
 
+  // Helper function to check if a date is today
+  const isToday = (dateString: string) => {
+    const today = new Date();
+    const date = new Date(dateString);
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
+  };
+
   const filteredData = mockData.filter((item) => {
     if (activeFilter === "All") return true;
+    if (activeFilter === "Today") return isToday(item.dateTime);
     if (activeFilter === "Awaiting departure")
       return item.tourStatus === "Pre-departure";
     return item.tourStatus === activeFilter;
   });
 
+  const handlePrint = () => {
+    window.print();
+  };
+
   return (
-    <main className="p-6 space-y-6">
+    <main className="p-6 space-y-6 overflow-y-auto h-full">
       <div>
         <h1 className="text-2xl font-semibold text-gray-900">Stations</h1>
       </div>
@@ -221,48 +240,67 @@ function StationPage() {
 
         <TabsContent value={activeTab} className="mt-6 space-y-4">
           {/* Filter Buttons */}
-          <div className="flex gap-2">
+          <div
+            className={`flex items-center justify-between ${styles.noPrint}`}
+          >
+            <div className="flex gap-2">
+              <Button
+                variant={activeFilter === "All" ? "default" : "outline"}
+                onClick={() => setActiveFilter("All")}
+                className="rounded-full"
+              >
+                All
+              </Button>
+              <Button
+                variant={activeFilter === "Today" ? "default" : "outline"}
+                onClick={() => setActiveFilter("Today")}
+                className="rounded-full"
+              >
+                Today
+              </Button>
+              <Button
+                variant={
+                  activeFilter === "Awaiting departure" ? "default" : "outline"
+                }
+                onClick={() => setActiveFilter("Awaiting departure")}
+                className="rounded-full"
+              >
+                Awaiting departure
+              </Button>
+              <Button
+                variant={activeFilter === "In-progress" ? "default" : "outline"}
+                onClick={() => setActiveFilter("In-progress")}
+                className="rounded-full"
+              >
+                In-progress
+              </Button>
+              <Button
+                variant={activeFilter === "Completed" ? "default" : "outline"}
+                onClick={() => setActiveFilter("Completed")}
+                className="rounded-full"
+              >
+                Completed
+              </Button>
+              <Button
+                variant={activeFilter === "Cancelled" ? "default" : "outline"}
+                onClick={() => setActiveFilter("Cancelled")}
+                className="rounded-full"
+              >
+                Cancelled
+              </Button>
+            </div>
             <Button
-              variant={activeFilter === "All" ? "default" : "outline"}
-              onClick={() => setActiveFilter("All")}
-              className="rounded-full"
+              onClick={handlePrint}
+              variant="ghost"
+              className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
             >
-              All
-            </Button>
-            <Button
-              variant={
-                activeFilter === "Awaiting departure" ? "default" : "outline"
-              }
-              onClick={() => setActiveFilter("Awaiting departure")}
-              className="rounded-full"
-            >
-              Awaiting departure
-            </Button>
-            <Button
-              variant={activeFilter === "In-progress" ? "default" : "outline"}
-              onClick={() => setActiveFilter("In-progress")}
-              className="rounded-full"
-            >
-              In-progress
-            </Button>
-            <Button
-              variant={activeFilter === "Completed" ? "default" : "outline"}
-              onClick={() => setActiveFilter("Completed")}
-              className="rounded-full"
-            >
-              Completed
-            </Button>
-            <Button
-              variant={activeFilter === "Cancelled" ? "default" : "outline"}
-              onClick={() => setActiveFilter("Cancelled")}
-              className="rounded-full"
-            >
-              Cancelled
+              <Printer className="w-4 h-4" />
+              Print
             </Button>
           </div>
 
           {/* Data Table */}
-          <div className="rounded-lg border bg-white">
+          <div className={`rounded-lg border bg-white ${styles.printArea}`}>
             <Table>
               <TableHeader>
                 <TableRow className="bg-gray-50">
