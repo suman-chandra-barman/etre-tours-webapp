@@ -7,6 +7,7 @@ import {
   Landmark,
   Settings,
   UserRoundCog,
+  LifeBuoy,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 
@@ -74,6 +75,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/admin/subcontractor",
       label: "Sub-con.",
       icon: <UserRoundCog className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/drivers",
+      label: "Drivers",
+      icon: <LifeBuoy className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/setting",
