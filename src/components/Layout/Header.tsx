@@ -35,7 +35,9 @@ export default function Header({
                   ? "Cruise Sales"
                   : role === "partner-sales"
                     ? "Partner Sales"
-                    : "Chief Admin"}
+                    : role === "admin"
+                      ? "Admin"
+                      : "Chief Admin"}
             </p>
           </div>
           <div className="relative w-10 h-10 rounded-full overflow-hidden bg-gray-200">

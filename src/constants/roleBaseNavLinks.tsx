@@ -49,6 +49,38 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Settings className="w-6 h-6 mb-1" />,
     },
   ],
+  admin: [
+    {
+      href: "/admin",
+      label: "Overview",
+      icon: <LayoutDashboard className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/tours",
+      label: "Tours",
+      icon: <Hotel className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/finance",
+      label: "Finance",
+      icon: <Landmark className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/station",
+      label: "Station",
+      icon: <Users className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/subcontractor",
+      label: "Sub-con.",
+      icon: <UserRoundCog className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/setting",
+      label: "Settings",
+      icon: <Settings className="w-6 h-6 mb-1" />,
+    },
+  ],
   "direct-sales": [
     {
       href: "/direct-sales",

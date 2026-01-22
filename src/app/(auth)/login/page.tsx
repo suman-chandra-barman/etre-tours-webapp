@@ -7,7 +7,6 @@ import { useForm, Controller } from "react-hook-form";
 import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
 import logo from "@/assets/logo.svg";
 import { useUser } from "@/contexts/UserContext";
-import Link from "next/link";
 import { TUserRole } from "@/types";
 import {
   Select,
@@ -48,6 +47,9 @@ function LoginPage() {
     switch (data.role) {
       case "chief-admin":
         router.push("/chief-admin");
+        break;
+      case "admin":
+        router.push("/admin");
         break;
       case "direct-sales":
         router.push("/direct-sales");
@@ -166,7 +168,8 @@ function LoginPage() {
                       />
                     </SelectTrigger>
                     <SelectContent className="mt-12">
-                      <SelectItem value="chief-admin">Chief Admin</SelectItem>
+                      {/* <SelectItem value="chief-admin">Chief Admin</SelectItem> */}
+                      <SelectItem value="admin">Admin</SelectItem>
                       <SelectItem value="direct-sales">Direct Sales</SelectItem>
                       <SelectItem value="cruise-sales">Cruise Sales</SelectItem>
                       <SelectItem value="partner-sales">

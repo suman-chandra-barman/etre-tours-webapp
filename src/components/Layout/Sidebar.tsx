@@ -21,10 +21,11 @@ function Sidebar() {
 
   // Determine role based on the current path if role is not set
   const getRoleFromPath = () => {
+    if (pathname.startsWith("/chief-admin")) return "chief-admin";
+    if (pathname.startsWith("/admin")) return "admin";
     if (pathname.startsWith("/direct-sales")) return "direct-sales";
     if (pathname.startsWith("/cruise-sales")) return "cruise-sales";
     if (pathname.startsWith("/partner-sales")) return "partner-sales";
-    if (pathname.startsWith("/chief-admin")) return "chief-admin";
     return role || "direct-sales";
   };
 
@@ -48,7 +49,7 @@ function Sidebar() {
     <aside className="w-20 bg-white border-r border-gray-200 flex flex-col items-center py-6 space-y-8">
       {/* Logo */}
       <Link
-        href={`/${role}`}
+        href={`/${currentRole}`}
         className="mb-4 transition-opacity hover:opacity-80"
         aria-label="Home"
       >
