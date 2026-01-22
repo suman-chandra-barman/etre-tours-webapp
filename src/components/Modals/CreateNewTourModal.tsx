@@ -30,11 +30,21 @@ const CreateNewTourModal = ({
   open,
   onOpenChange,
 }: CreateNewTourModalProps) => {
+  // Get today's date in YYYY-MM-DD format
+  const getTodayDate = () => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  };
+
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("boat");
   const [paymentMethod, setPaymentMethod] = useState<"cards" | "cash" | "both">(
-    "cards"
+    "cards",
   );
   const [acceptBoth, setAcceptBoth] = useState(false);
+  
+  // Date states with today's date as default
+  const [departureDate, setDepartureDate] = useState(getTodayDate());
+  const [returnDate, setReturnDate] = useState(getTodayDate());
 
   const handlePaymentMethodClick = (method: "cards" | "cash") => {
     if (acceptBoth) return;
@@ -56,7 +66,7 @@ const CreateNewTourModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="md:min-w-150 md:max-w-200 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="md:min-w-150 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">
             Setup a tour
@@ -69,9 +79,13 @@ const CreateNewTourModal = ({
           onValueChange={(value) => setActiveTab(value as "boat" | "vehicle")}
           className="w-full"
         >
-          <TabsList className="flex items-center gap-4 mb-6 h-12">
-            <TabsTrigger value="boat"className="px-4 h-10" >By boat</TabsTrigger>
-            <TabsTrigger value="vehicle" className="px-4 h-10">By Vehicle</TabsTrigger>
+          <TabsList className="flex items-center gap-4 mb-6 h-10">
+            <TabsTrigger value="boat" className="px-4">
+              By boat
+            </TabsTrigger>
+            <TabsTrigger value="vehicle" className="px-4">
+              By Vehicle
+            </TabsTrigger>
           </TabsList>
 
           {/* Tabs Content for Boat */}
@@ -82,12 +96,12 @@ const CreateNewTourModal = ({
                 Tour Details
               </h3>
 
-              {/* Pick a Tour Destination */}
+              {/* Pick a Tour*/}
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
                 <Select>
                   <SelectTrigger className="w-full pl-10">
-                    <SelectValue placeholder="Pick a Tour Destination" />
+                    <SelectValue placeholder="Pick a Tour" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
@@ -120,98 +134,71 @@ const CreateNewTourModal = ({
               <h3 className="text-sm font-medium text-gray-700">Departure</h3>
 
               <div className="grid grid-cols-2 gap-4">
-                {/* From */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="from-boat"
-                    className="text-xs text-gray-500 font-normal"
-                  >
-                    From
-                  </Label>
-                  <Input id="from-boat" placeholder="From" className="w-full" />
-                </div>
-
                 {/* Date & Time */}
                 <div className="space-y-2">
                   <Label
                     htmlFor="datetime-boat"
                     className="text-xs text-gray-500 font-normal"
                   >
-                    Date & Time
+                    Date
                   </Label>
                   <Input
                     id="datetime-boat"
-                    type="datetime-local"
-                    placeholder="Date & Time"
+                    type="date"
+                    placeholder="Date"
+                    className="w-full"
+                    value={departureDate}
+                    onChange={(e) => setDepartureDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-boat"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Time
+                  </Label>
+                  <Input
+                    id="datetime-boat"
+                    type="time"
+                    placeholder="Time"
                     className="w-full"
                   />
                 </div>
               </div>
 
               {/* Return */}
-              <div className="space-y-2">
-                <Label
-                  htmlFor="return-boat"
-                  className="text-xs text-gray-500 font-normal"
-                >
-                  Return
-                </Label>
-                <Input
-                  id="return-boat"
-                  type="datetime-local"
-                  placeholder="Return"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-medium text-gray-700">
-                Payment Methods for the tour
-              </h3>
-
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cards" || paymentMethod === "both"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cards")}
-                  disabled={acceptBoth}
-                  className="rounded-full"
-                >
-                  Cards
-                </Button>
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cash" || paymentMethod === "both"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cash")}
-                  disabled={acceptBoth}
-                  className="rounded-full"
-                >
-                  Cash
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Switch
-                  id="accept-both-boat"
-                  checked={acceptBoth}
-                  onCheckedChange={handleAcceptBothChange}
-                />
-                <Label
-                  htmlFor="accept-both-boat"
-                  className="text-sm text-gray-600 font-normal cursor-pointer"
-                >
-                  Accept both of them
-                </Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="return-boat"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Date
+                  </Label>
+                  <Input
+                    id="return-boat"
+                    type="date"
+                    placeholder="Return"
+                    className="w-full"
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-boat"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Time
+                  </Label>
+                  <Input
+                    id="datetime-boat"
+                    type="time"
+                    placeholder="Time"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
 
@@ -307,6 +294,7 @@ const CreateNewTourModal = ({
                     type="datetime-local"
                     placeholder="Date & Time"
                     className="w-full"
+                    defaultValue={new Date().toISOString().slice(0, 16)}
                   />
                 </div>
               </div>
@@ -324,6 +312,7 @@ const CreateNewTourModal = ({
                   type="datetime-local"
                   placeholder="Return"
                   className="w-full"
+                  defaultValue={new Date().toISOString().slice(0, 16)}
                 />
               </div>
             </div>
