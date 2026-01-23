@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MapPin, Building2 } from "lucide-react";
+import { getTodayDate } from "@/helper/date";
 
 interface CreateNewTourModalProps {
   open: boolean;
@@ -29,19 +30,9 @@ const CreateNewTourModal = ({
   open,
   onOpenChange,
 }: CreateNewTourModalProps) => {
-  
-  // Get today's date in YYYY-MM-DD format
-  const getTodayDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
-
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("boat");
-
-  // Date states with today's date as default
   const [departureDate, setDepartureDate] = useState(getTodayDate());
   const [returnDate, setReturnDate] = useState(getTodayDate());
-
 
   const handleConfirmSetup = () => {
     // Handle form submission here

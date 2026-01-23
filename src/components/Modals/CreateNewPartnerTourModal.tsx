@@ -18,8 +18,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { MapPin, Building2 } from "lucide-react";
+import { getTodayDate } from "@/helper/date";
 
 interface CreateNewPartnerTourModalProps {
   open: boolean;
@@ -31,24 +31,8 @@ const CreateNewPartnerTourModal = ({
   onOpenChange,
 }: CreateNewPartnerTourModalProps) => {
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("boat");
-  const [paymentMethod, setPaymentMethod] = useState<
-    "cards" | "cash" | "bank_transfer" | "cheque" | "all"
-  >("cards");
-  const [acceptAll, setAcceptAll] = useState(false);
-
-  const handlePaymentMethodClick = (
-    method: "cards" | "cash" | "bank_transfer" | "cheque",
-  ) => {
-    if (acceptAll) return;
-    setPaymentMethod(method);
-  };
-
-  const handleAcceptAllChange = (checked: boolean) => {
-    setAcceptAll(checked);
-    if (checked) {
-      setPaymentMethod("all");
-    }
-  };
+  const [departureDate, setDepartureDate] = useState(getTodayDate());
+  const [returnDate, setReturnDate] = useState(getTodayDate());
 
   const handleConfirmSetup = () => {
     // Handle form submission here
@@ -58,7 +42,7 @@ const CreateNewPartnerTourModal = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="md:min-w-150 md:max-w-200 max-h-[90vh] overflow-y-auto">
+      <DialogContent className="md:min-w-150 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">
             Setup a tour
@@ -71,11 +55,11 @@ const CreateNewPartnerTourModal = ({
           onValueChange={(value) => setActiveTab(value as "boat" | "vehicle")}
           className="w-full"
         >
-          <TabsList className="flex items-center gap-4 mb-6 h-12">
-            <TabsTrigger value="boat" className="px-4 h-10">
+          <TabsList className="flex items-center gap-4 mb-6 h-10">
+            <TabsTrigger value="boat" className="px-4">
               By boat
             </TabsTrigger>
-            <TabsTrigger value="vehicle" className="px-4 h-10">
+            <TabsTrigger value="vehicle" className="px-4">
               By Vehicle
             </TabsTrigger>
           </TabsList>
@@ -88,12 +72,12 @@ const CreateNewPartnerTourModal = ({
                 Tour Details
               </h3>
 
-              {/* Pick a Tour Destination */}
+              {/* Pick a Tour */}
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
                 <Select>
                   <SelectTrigger className="w-full pl-10">
-                    <SelectValue placeholder="Pick a Tour Destination" />
+                    <SelectValue placeholder="Pick a Tour" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
@@ -126,125 +110,71 @@ const CreateNewPartnerTourModal = ({
               <h3 className="text-sm font-medium text-gray-700">Departure</h3>
 
               <div className="grid grid-cols-2 gap-4">
-                {/* From */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="from-boat"
-                    className="text-xs text-gray-500 font-normal"
-                  >
-                    From
-                  </Label>
-                  <Input id="from-boat" placeholder="From" className="w-full" />
-                </div>
-
                 {/* Date & Time */}
                 <div className="space-y-2">
                   <Label
-                    htmlFor="datetime-boat"
+                    htmlFor="datetime-vehicle"
                     className="text-xs text-gray-500 font-normal"
                   >
-                    Date & Time
+                    Date
                   </Label>
                   <Input
-                    id="datetime-boat"
-                    type="datetime-local"
-                    placeholder="Date & Time"
+                    id="datetime-vehicle"
+                    type="date"
+                    placeholder="Date"
+                    className="w-full"
+                    value={departureDate}
+                    onChange={(e) => setDepartureDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
                     className="w-full"
                   />
                 </div>
               </div>
 
               {/* Return */}
-              <div className="space-y-2">
-                <Label
-                  htmlFor="return-boat"
-                  className="text-xs text-gray-500 font-normal"
-                >
-                  Return
-                </Label>
-                <Input
-                  id="return-boat"
-                  type="datetime-local"
-                  placeholder="Return"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-medium text-gray-700">
-                Payment Methods for the tour
-              </h3>
-
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cards" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cards")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cards
-                </Button>
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cash" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cash")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cash
-                </Button>
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cheque" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cheque")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cheque
-                </Button>
-
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "bank_transfer" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("bank_transfer")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Bank transfer
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Switch
-                  id="accept-all-boat"
-                  checked={acceptAll}
-                  onCheckedChange={handleAcceptAllChange}
-                />
-                <Label
-                  htmlFor="accept-all-boat"
-                  className="text-sm text-gray-600 font-normal cursor-pointer"
-                >
-                  Accept all of them
-                </Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="return-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Date
+                  </Label>
+                  <Input
+                    id="return-vehicle"
+                    type="date"
+                    placeholder="Return"
+                    className="w-full"
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
 
@@ -279,7 +209,7 @@ const CreateNewPartnerTourModal = ({
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
                 <Select>
                   <SelectTrigger className="w-full pl-10">
-                    <SelectValue placeholder="Pick a Tour Destination" />
+                    <SelectValue placeholder="Pick a Tour" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
@@ -312,134 +242,73 @@ const CreateNewPartnerTourModal = ({
               <h3 className="text-sm font-medium text-gray-700">Departure</h3>
 
               <div className="grid grid-cols-2 gap-4">
-                {/* From */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="from-vehicle"
-                    className="text-xs text-gray-500 font-normal"
-                  >
-                    From
-                  </Label>
-                  <Input
-                    id="from-vehicle"
-                    placeholder="From"
-                    className="w-full"
-                  />
-                </div>
-
                 {/* Date & Time */}
                 <div className="space-y-2">
                   <Label
                     htmlFor="datetime-vehicle"
                     className="text-xs text-gray-500 font-normal"
                   >
-                    Date & Time
+                    Date
                   </Label>
                   <Input
                     id="datetime-vehicle"
-                    type="datetime-local"
-                    placeholder="Date & Time"
+                    type="date"
+                    placeholder="Date"
+                    className="w-full"
+                    value={departureDate}
+                    onChange={(e) => setDepartureDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
                     className="w-full"
                   />
                 </div>
               </div>
 
               {/* Return */}
-              <div className="space-y-2">
-                <Label
-                  htmlFor="return-vehicle"
-                  className="text-xs text-gray-500 font-normal"
-                >
-                  Return
-                </Label>
-                <Input
-                  id="return-vehicle"
-                  type="datetime-local"
-                  placeholder="Return"
-                  className="w-full"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="return-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Date
+                  </Label>
+                  <Input
+                    id="return-vehicle"
+                    type="date"
+                    placeholder="Return"
+                    className="w-full"
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
-
-            {/* Payment Methods */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-medium text-gray-700">
-                Payment Methods for the tour
-              </h3>
-
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cards" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cards")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cards
-                </Button>
-
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cash" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cash")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cash
-                </Button>
-
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cheque" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cheque")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Cheque
-                </Button>
-
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "bank_transfer" || paymentMethod === "all"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("bank_transfer")}
-                  disabled={acceptAll}
-                  className="rounded-full"
-                >
-                  Bank transfer
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Switch
-                  id="accept-all-vehicle"
-                  checked={acceptAll}
-                  onCheckedChange={handleAcceptAllChange}
-                />
-                <Label
-                  htmlFor="accept-all-vehicle"
-                  className="text-sm text-gray-600 font-normal cursor-pointer"
-                >
-                  Accept all of them
-                </Label>
-              </div>
-            </div>
-
             {/* Action Buttons */}
             <div className="flex justify-end gap-3 pt-4">
               <Button
