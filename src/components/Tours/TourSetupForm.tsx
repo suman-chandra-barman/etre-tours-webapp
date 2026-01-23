@@ -52,7 +52,7 @@ const TourSetupForm = ({
   return (
     <div className="bg-white rounded-lg shadow-sm border">
       {/* Header */}
-      <div className="p-4 md:p-6 border-b">
+      <div className="p-4 md:p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost">

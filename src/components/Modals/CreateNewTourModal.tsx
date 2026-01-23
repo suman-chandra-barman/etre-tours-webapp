@@ -18,7 +18,6 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { MapPin, Building2 } from "lucide-react";
 
 interface CreateNewTourModalProps {
@@ -30,33 +29,19 @@ const CreateNewTourModal = ({
   open,
   onOpenChange,
 }: CreateNewTourModalProps) => {
+  
   // Get today's date in YYYY-MM-DD format
   const getTodayDate = () => {
     const today = new Date();
-    return today.toISOString().split('T')[0];
+    return today.toISOString().split("T")[0];
   };
 
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("boat");
-  const [paymentMethod, setPaymentMethod] = useState<"cards" | "cash" | "both">(
-    "cards",
-  );
-  const [acceptBoth, setAcceptBoth] = useState(false);
-  
+
   // Date states with today's date as default
   const [departureDate, setDepartureDate] = useState(getTodayDate());
   const [returnDate, setReturnDate] = useState(getTodayDate());
 
-  const handlePaymentMethodClick = (method: "cards" | "cash") => {
-    if (acceptBoth) return;
-    setPaymentMethod(method);
-  };
-
-  const handleAcceptBothChange = (checked: boolean) => {
-    setAcceptBoth(checked);
-    if (checked) {
-      setPaymentMethod("both");
-    }
-  };
 
   const handleConfirmSetup = () => {
     // Handle form submission here
@@ -228,12 +213,12 @@ const CreateNewTourModal = ({
                 Tour Details
               </h3>
 
-              {/* Pick a Tour Destination */}
+              {/* Pick a Tour */}
               <div className="relative">
                 <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
                 <Select>
                   <SelectTrigger className="w-full pl-10">
-                    <SelectValue placeholder="Pick a Tour Destination" />
+                    <SelectValue placeholder="Pick a Tour" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
@@ -266,104 +251,71 @@ const CreateNewTourModal = ({
               <h3 className="text-sm font-medium text-gray-700">Departure</h3>
 
               <div className="grid grid-cols-2 gap-4">
-                {/* From */}
-                <div className="space-y-2">
-                  <Label
-                    htmlFor="from-vehicle"
-                    className="text-xs text-gray-500 font-normal"
-                  >
-                    From
-                  </Label>
-                  <Input
-                    id="from-vehicle"
-                    placeholder="From"
-                    className="w-full"
-                  />
-                </div>
-
                 {/* Date & Time */}
                 <div className="space-y-2">
                   <Label
                     htmlFor="datetime-vehicle"
                     className="text-xs text-gray-500 font-normal"
                   >
-                    Date & Time
+                    Date
                   </Label>
                   <Input
                     id="datetime-vehicle"
-                    type="datetime-local"
-                    placeholder="Date & Time"
+                    type="date"
+                    placeholder="Date"
                     className="w-full"
-                    defaultValue={new Date().toISOString().slice(0, 16)}
+                    value={departureDate}
+                    onChange={(e) => setDepartureDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
+                    className="w-full"
                   />
                 </div>
               </div>
 
               {/* Return */}
-              <div className="space-y-2">
-                <Label
-                  htmlFor="return-vehicle"
-                  className="text-xs text-gray-500 font-normal"
-                >
-                  Return
-                </Label>
-                <Input
-                  id="return-vehicle"
-                  type="datetime-local"
-                  placeholder="Return"
-                  className="w-full"
-                  defaultValue={new Date().toISOString().slice(0, 16)}
-                />
-              </div>
-            </div>
-
-            {/* Payment Methods */}
-            <div className="space-y-4">
-              <h3 className="text-sm font-medium text-gray-700">
-                Payment Methods for the tour
-              </h3>
-
-              <div className="flex items-center gap-3">
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cards" || paymentMethod === "both"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cards")}
-                  disabled={acceptBoth}
-                  className="rounded-full"
-                >
-                  Cards
-                </Button>
-                <Button
-                  type="button"
-                  variant={
-                    paymentMethod === "cash" || paymentMethod === "both"
-                      ? "default"
-                      : "outline"
-                  }
-                  onClick={() => handlePaymentMethodClick("cash")}
-                  disabled={acceptBoth}
-                  className="rounded-full"
-                >
-                  Cash
-                </Button>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Switch
-                  id="accept-both-vehicle"
-                  checked={acceptBoth}
-                  onCheckedChange={handleAcceptBothChange}
-                />
-                <Label
-                  htmlFor="accept-both-vehicle"
-                  className="text-sm text-gray-600 font-normal cursor-pointer"
-                >
-                  Accept both of them
-                </Label>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="return-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Date
+                  </Label>
+                  <Input
+                    id="return-vehicle"
+                    type="date"
+                    placeholder="Return"
+                    className="w-full"
+                    value={returnDate}
+                    onChange={(e) => setReturnDate(e.target.value)}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="datetime-vehicle"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Time
+                  </Label>
+                  <Input
+                    id="datetime-vehicle"
+                    type="time"
+                    placeholder="Time"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
 
