@@ -24,7 +24,7 @@ interface TourHistoryItem {
   vehicleBoats: string;
   totalAmount: string;
   tourStatus:
-    | "Waiting for departure"
+    | "Pre-departure"
     | "In-progress"
     | "Completed"
     | "Cancelled";
@@ -44,7 +44,7 @@ const mockHistoryData: TourHistoryItem[] = [
     totalPax: 426,
     vehicleBoats: "2 Vehicle",
     totalAmount: "$26,000",
-    tourStatus: "Waiting for departure",
+    tourStatus: "Pre-departure",
   },
   {
     id: 2,
@@ -58,7 +58,7 @@ const mockHistoryData: TourHistoryItem[] = [
     totalPax: 447,
     vehicleBoats: "3 Vehicle",
     totalAmount: "$42,000",
-    tourStatus: "Waiting for departure",
+    tourStatus: "Pre-departure",
   },
   {
     id: 3,
@@ -219,7 +219,7 @@ export default function TourHistoryPage() {
 
   const getStatusStyles = (status: TourHistoryItem["tourStatus"]): string => {
     switch (status) {
-      case "Waiting for departure":
+      case "Pre-departure":
         return "bg-yellow-100 text-yellow-700";
       case "In-progress":
         return "bg-green-100 text-green-700";

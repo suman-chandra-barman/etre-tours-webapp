@@ -7,7 +7,6 @@ import {
   Printer,
   ChevronLeft,
   ChevronRight,
-  UserCircle,
 } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 import DailyTourTallyModal from "@/components/Modals/DailyTourTallyModal";
