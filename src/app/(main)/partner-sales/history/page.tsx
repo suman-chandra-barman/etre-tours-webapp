@@ -23,11 +23,7 @@ interface TourHistoryItem {
   totalPax: number;
   vehicleBoats: string;
   totalAmount: string;
-  tourStatus:
-    | "Pre-departure"
-    | "In-progress"
-    | "Completed"
-    | "Cancelled";
+  tourStatus: "Pre-departure" | "In-progress" | "Completed" | "Cancelled";
 }
 
 // Mock data based on the design image
@@ -414,7 +410,7 @@ export default function TourHistoryPage() {
                       Date & Time
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour Spots
+                      Tour
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Departure From

@@ -190,14 +190,14 @@ export default function TourHistoryPage() {
   const [selectedTime, setSelectedTime] = useState("Any time");
   const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
   const [selectedSubContractor, setSelectedSubContractor] = useState(
-    "Filter by Sub-contractor company"
+    "Filter by Sub-contractor company",
   );
   const [selectedOperator, setSelectedOperator] =
     useState("Filter by Operator");
   const [selectedDriver, setSelectedDriver] = useState("Select driver");
   const [selectedGuide, setSelectedGuide] = useState("Select guide");
   const [activeTab, setActiveTab] = useState<"All" | "Boats" | "Vehicle">(
-    "All"
+    "All",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const [isTallyModalOpen, setIsTallyModalOpen] = useState(false);
@@ -418,7 +418,7 @@ export default function TourHistoryPage() {
                       Date & Time
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour Spots
+                      Tour
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Departure From
@@ -488,7 +488,7 @@ export default function TourHistoryPage() {
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyles(
-                            item.tourStatus
+                            item.tourStatus,
                           )}`}
                         >
                           {item.tourStatus}
@@ -531,7 +531,7 @@ export default function TourHistoryPage() {
                     >
                       {page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button

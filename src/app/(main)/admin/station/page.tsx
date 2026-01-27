@@ -311,7 +311,7 @@ function StationPage() {
                     Date & Time
                   </TableHead>
                   <TableHead className="font-semibold text-gray-700">
-                    Tour Spots
+                    Tour
                   </TableHead>
                   <TableHead className="font-semibold text-gray-700">
                     Departure From

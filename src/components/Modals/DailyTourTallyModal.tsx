@@ -115,7 +115,7 @@ export default function DailyTourTallyModal({
 
   const totalHeadCount = tallyData.reduce(
     (sum, item) => sum + item.shipCount,
-    0
+    0,
   );
   const totalAmount = tallyData.reduce((sum, item) => {
     const amount = parseFloat(item.totalPrice.replace(/[$,]/g, ""));
@@ -123,10 +123,10 @@ export default function DailyTourTallyModal({
   }, 0);
 
   const hasDiscrepancy = tallyData.some(
-    (item) => item.status === "not-matched"
+    (item) => item.status === "not-matched",
   );
   const discrepancyCount = tallyData.filter(
-    (item) => item.status === "not-matched"
+    (item) => item.status === "not-matched",
   ).length;
 
   const updateShipCount = (id: number, increment: boolean) => {
@@ -143,7 +143,7 @@ export default function DailyTourTallyModal({
           };
         }
         return item;
-      })
+      }),
     );
   };
 
@@ -161,13 +161,13 @@ export default function DailyTourTallyModal({
           };
         }
         return item;
-      })
+      }),
     );
   };
 
   const updateNotes = (id: number, notes: string) => {
     setTallyData((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, notes } : item))
+      prev.map((item) => (item.id === id ? { ...item, notes } : item)),
     );
   };
 
@@ -254,7 +254,7 @@ export default function DailyTourTallyModal({
             <thead className="sticky top-0 bg-white">
               <tr className="border-b border-gray-200">
                 <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                  Tour Spots
+                  Tour
                 </th>
                 <th className="px-3 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                   Scheduled Time

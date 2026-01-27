@@ -262,7 +262,6 @@ export default function FinancePage() {
   const endIndex = startIndex + itemsPerPage;
   const currentData = filteredData.slice(startIndex, endIndex);
 
-
   const handleFileUpload = (
     invoiceId: number,
     type: "payment" | "voucher",
@@ -451,7 +450,7 @@ export default function FinancePage() {
                       Date & Time
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour Spots
+                      Tour
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Departure From
