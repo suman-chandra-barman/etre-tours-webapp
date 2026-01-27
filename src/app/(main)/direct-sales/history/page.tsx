@@ -1,14 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Calendar,
-  Search,
-  Printer,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Calendar, Search, Printer } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
+import { Pagination } from "@/components/ui/pagination";
 
 interface TourHistoryItem {
   id: number;
@@ -191,14 +186,14 @@ export default function TourHistoryPage() {
   const [selectedTime, setSelectedTime] = useState("Any time");
   const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
   const [selectedSubContractor, setSelectedSubContractor] = useState(
-    "Filter by Sub-contractor company"
+    "Filter by Sub-contractor company",
   );
   const [selectedOperator, setSelectedOperator] =
     useState("Filter by Operator");
   const [selectedDriver, setSelectedDriver] = useState("Select driver");
   const [selectedGuide, setSelectedGuide] = useState("Select guide");
   const [activeTab, setActiveTab] = useState<"All" | "Boats" | "Vehicle">(
-    "All"
+    "All",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -484,7 +479,7 @@ export default function TourHistoryPage() {
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyles(
-                            item.tourStatus
+                            item.tourStatus,
                           )}`}
                         >
                           {item.tourStatus}
@@ -504,50 +499,15 @@ export default function TourHistoryPage() {
             </div>
 
             {/* Pagination */}
-            <div
-              className={`px-4 py-3 border-t border-gray-200 flex items-center justify-between bg-white ${styles.noPrint}`}
-            >
-              <div className="text-sm text-gray-600">
-                Showing {startIndex + 1} to{" "}
-                {Math.min(endIndex, filteredData.length)} of{" "}
-                {filteredData.length} entries
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronLeft className="w-4 h-4 text-gray-600" />
-                </button>
-
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                  (page) => (
-                    <button
-                      key={page}
-                      onClick={() => setCurrentPage(page)}
-                      className={`px-3 py-1.5 text-sm rounded-lg transition-colors ${
-                        currentPage === page
-                          ? "bg-blue-600 text-white"
-                          : "border border-gray-300 text-gray-600 hover:bg-gray-50"
-                      }`}
-                    >
-                      {page}
-                    </button>
-                  )
-                )}
-
-                <button
-                  onClick={() =>
-                    setCurrentPage((p) => Math.min(totalPages, p + 1))
-                  }
-                  disabled={currentPage === totalPages}
-                  className="p-2 rounded-lg border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronRight className="w-4 h-4 text-gray-600" />
-                </button>
-              </div>
-            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={setCurrentPage}
+              startIndex={startIndex}
+              endIndex={endIndex}
+              totalItems={filteredData.length}
+              className={styles.noPrint}
+            />
           </div>
         </div>
       </div>
