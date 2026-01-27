@@ -7,9 +7,11 @@ import {
   Landmark,
   Settings,
   UserRoundCog,
-  LifeBuoy,
+  Ticket,
 } from "lucide-react";
 import { TUserRole } from "@/types";
+import { PiIslandDuotone } from "react-icons/pi";
+import { GiSteeringWheel } from "react-icons/gi";
 
 interface NavLink {
   href: string;
@@ -27,7 +29,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/chief-admin/tours",
       label: "Tours",
-      icon: <Hotel className="w-6 h-6 mb-1" />,
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
       href: "/chief-admin/finance",
@@ -59,7 +61,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/admin/tours",
       label: "Tours",
-      icon: <Hotel className="w-6 h-6 mb-1" />,
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/finance",
@@ -79,7 +81,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/admin/drivers",
       label: "Drivers",
-      icon: <LifeBuoy className="w-6 h-6 mb-1" />,
+      icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/setting",
@@ -91,11 +93,17 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/direct-sales",
       label: "Tickets",
-      icon: (
-        <svg className="w-6 h-6 mb-1" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z" />
-        </svg>
-      ),
+      icon: <Ticket className="w-6 h-6 mb-1" />,
+    },
+        {
+      href: "/direct-sales/drivers",
+      label: "Drivers",
+      icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/direct-sales/tours",
+      label: "All Tours",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
       href: "/direct-sales/history",

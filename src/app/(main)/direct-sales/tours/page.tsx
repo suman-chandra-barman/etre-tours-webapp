@@ -185,20 +185,16 @@ const mockHistoryData: TourHistoryItem[] = [
   },
 ];
 
-export default function TourHistoryPage() {
+export default function ToursPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("Any time");
   const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
   const [selectedSubContractor, setSelectedSubContractor] = useState(
-    "Filter by Sub-contractor company"
+    "Filter by Sub-contractor company",
   );
-  const [selectedOperator, setSelectedOperator] =
-    useState("Filter by Operator");
-  const [selectedDriver, setSelectedDriver] = useState("Select driver");
-  const [selectedGuide, setSelectedGuide] = useState("Select guide");
   const [activeTab, setActiveTab] = useState<"All" | "Boats" | "Vehicle">(
-    "All"
+    "All",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -238,7 +234,7 @@ export default function TourHistoryPage() {
           >
             <div className={`flex items-center gap-3 `}>
               <h1 className="text-2xl font-semibold text-gray-900">
-                Tour History
+                All Tours
               </h1>
             </div>
           </div>
@@ -338,51 +334,6 @@ export default function TourHistoryPage() {
                   <option>Larson & Larson</option>
                   <option>Mertz Group</option>
                 </select>
-
-                {/* Operator Dropdown */}
-                <select
-                  value={selectedOperator}
-                  onChange={(e) => setSelectedOperator(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  }}
-                >
-                  <option>Filter by Operator</option>
-                  <option>Operator 1</option>
-                  <option>Operator 2</option>
-                  <option>Operator 3</option>
-                </select>
-
-                {/* Driver Dropdown */}
-                <select
-                  value={selectedDriver}
-                  onChange={(e) => setSelectedDriver(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  }}
-                >
-                  <option>Select driver</option>
-                  <option>Michael</option>
-                  <option>John</option>
-                  <option>David</option>
-                </select>
-
-                {/* Guide Dropdown */}
-                <select
-                  value={selectedGuide}
-                  onChange={(e) => setSelectedGuide(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  }}
-                >
-                  <option>Select guide</option>
-                  <option>Daniel</option>
-                  <option>Sarah</option>
-                  <option>James</option>
-                </select>
               </div>
 
               <div className="flex items-center gap-4">
@@ -411,7 +362,7 @@ export default function TourHistoryPage() {
                       Date & Time
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour Spots
+                      Tour
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Departure From
@@ -446,7 +397,7 @@ export default function TourHistoryPage() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {currentData.map((item) => (
+                  {currentData.map((item, index) => (
                     <tr
                       key={item.id}
                       className="hover:bg-gray-50 transition-colors cursor-pointer"
@@ -484,7 +435,7 @@ export default function TourHistoryPage() {
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         <span
                           className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusStyles(
-                            item.tourStatus
+                            item.tourStatus,
                           )}`}
                         >
                           {item.tourStatus}
@@ -492,9 +443,7 @@ export default function TourHistoryPage() {
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.note && (
-                          <div className="flex items-center gap-2">
-                            <span className="text-blue-600">{item.note}</span>
-                          </div>
+                          <span className="text-blue-600">{item.note}</span>
                         )}
                       </td>
                     </tr>
@@ -534,7 +483,7 @@ export default function TourHistoryPage() {
                     >
                       {page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button
