@@ -207,7 +207,7 @@ const PartnerTicketingSection = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border h-fit sticky top-6">
-      <div className="p-6 h-screen overflow-y-auto">
+      <div className="p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -224,7 +224,7 @@ const PartnerTicketingSection = ({
           </div>
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-medium">Transport Details</h3>
             <Button

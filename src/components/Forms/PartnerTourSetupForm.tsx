@@ -11,6 +11,7 @@ import {
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import CreateNewPartnerTourModal from "../Modals/CreateNewPartnerTourModal";
+import ProgressTracker from "../Tours/ProgressTracker";
 
 interface PartnerTourSetupFormProps {
   tourData?: {
@@ -30,11 +31,14 @@ const PartnerTourSetupForm = ({
 }: PartnerTourSetupFormProps) => {
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("vehicle");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState<
+    "pre-departure" | "in-progress" | "completed"
+  >("pre-departure");
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border">
+    <div className="p-4 md:p-6 bg-white rounded-lg shadow-sm border">
       {/* Header */}
-      <div className="p-4 md:p-6 border-b">
+      <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost">
@@ -80,7 +84,7 @@ const PartnerTourSetupForm = ({
       </div>
 
       {/* Tour Details */}
-      <div className="p-4 md:p-6">
+      <div className="mt-4">
         <h2 className="text-2xl font-semibold mb-2">
           {tourData?.destination || "Lagoon Snokeling"}
         </h2>
@@ -93,6 +97,9 @@ const PartnerTourSetupForm = ({
           {tourData?.operator || "Expedia LLC"}
         </p>
       </div>
+
+      {/* Progress Tracker */}
+      <ProgressTracker currentStep={currentStep} />
 
       {/* Action Buttons */}
       <div className="flex justify-end gap-3 p-4 bg-gray-100">
@@ -120,7 +127,10 @@ const PartnerTourSetupForm = ({
       </div>
 
       {/* Create New Tour Modal */}
-      <CreateNewPartnerTourModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <CreateNewPartnerTourModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };
