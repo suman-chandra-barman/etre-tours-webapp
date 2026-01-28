@@ -3,7 +3,6 @@
 import StatCard from "../Cards/StatCard";
 
 export default function ChiefAdminStatsSection() {
-
   // Sample data - replace with actual data
   const stats = {
     totalUsers: { value: "900", change: "9.4%", isPositive: true },
