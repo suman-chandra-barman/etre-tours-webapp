@@ -420,7 +420,7 @@ export default function DriversPage() {
                             }
                             className="border border-gray-300 rounded px-2 py-1 text-sm bg-white cursor-pointer"
                           >
-                            <option value="all">Transport type (All)</option>
+                            <option value="all">All Transport</option>
                             <option value="Vehicle">Vehicle</option>
                             <option value="Boat">Boat</option>
                           </select>
