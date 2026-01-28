@@ -1,22 +1,15 @@
-import StatsSection from "@/components/ChiefAdmin/StatsSection";
-import PopularToursSection from "@/components/ChiefAdmin/PopularToursSection";
-import SubContractorSection from "@/components/ChiefAdmin/SubContractorSection";
+import RevenueChart from "@/components/ChiefAdmin/RevenueChart";
+import ChiefAdminStatsSection from "@/components/ChiefAdmin/ChiefAdminStatsSection";
 
 function ChiefAdminPage() {
   return (
-    <main className="bg-linear-to-br from-blue-50 via-white to-blue-50 p-6 overflow-y-auto">
-      <div className="space-y-6">
+    <main className="min-h-screen bg-linear-to-br from-blue-50 via-white to-blue-50">
+      <div className="p-6 space-y-6">
         {/* Stats Section */}
-        <StatsSection />
+        <ChiefAdminStatsSection />
 
-        {/* Two Column Layout for Lower Sections */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {/* Popular Tours Section */}
-          <PopularToursSection />
-
-          {/* Sub-Contractor Section */}
-          <SubContractorSection />
-        </div>
+        {/* Revenue Chart */}
+        <RevenueChart />
       </div>
     </main>
   );

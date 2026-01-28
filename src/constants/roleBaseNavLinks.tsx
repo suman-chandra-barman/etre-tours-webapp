@@ -7,6 +7,7 @@ import {
   Settings,
   UserRoundCog,
   Ticket,
+  ChartLine,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
@@ -23,28 +24,18 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
   "chief-admin": [
     {
       href: "/chief-admin",
-      label: "Overview",
-      icon: <LayoutDashboard className="w-6 h-6 mb-1" />,
+      label: "Analytics",
+      icon: <ChartLine className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/chief-admin/tours",
-      label: "Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/chief-admin/finance",
-      label: "Finance",
-      icon: <Landmark className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/chief-admin/station",
-      label: "Station",
+      href: "/chief-admin/users",
+      label: "Users",
       icon: <Users className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/chief-admin/subcontractor",
-      label: "Sub-con.",
-      icon: <UserRoundCog className="w-6 h-6 mb-1" />,
+      href: "/chief-admin/transactions",
+      label: "Transac.",
+      icon: <Landmark className="w-6 h-6 mb-1" />,
     },
     {
       href: "/chief-admin/setting",
