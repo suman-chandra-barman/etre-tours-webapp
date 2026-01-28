@@ -212,7 +212,7 @@ const CruiseTicketingSection = ({
 
   return (
     <div className="bg-white rounded-lg shadow-sm border h-fit sticky top-6">
-      <div className="p-6 h-screen overflow-y-auto">
+      <div className="p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>

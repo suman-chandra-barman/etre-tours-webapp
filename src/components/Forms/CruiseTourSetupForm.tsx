@@ -9,7 +9,6 @@ import {
   Plus,
 } from "lucide-react";
 import { Button } from "../ui/button";
-import CreateNewTourModal from "../Modals/CreateNewTourModal";
 import { Separator } from "../ui/separator";
 import CreateCruiseNewTourModal from "../Modals/CreateCruiseNewTourModal";
 
@@ -33,9 +32,9 @@ const CruiseTourSetupForm = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border">
+    <div className="p-4 md:p-6 bg-white rounded-lg shadow-sm border">
       {/* Header */}
-      <div className="p-4 md:p-6 border-b">
+      <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost">
@@ -81,7 +80,7 @@ const CruiseTourSetupForm = ({
       </div>
 
       {/* Tour Details */}
-      <div className="p-4 md:p-6">
+      <div className="mt-4">
         <h2 className="text-2xl font-semibold mb-2">
           {tourData?.destination || "Lagoon Snokeling"}
         </h2>
