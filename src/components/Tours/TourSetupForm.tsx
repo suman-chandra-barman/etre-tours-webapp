@@ -54,9 +54,9 @@ const TourSetupForm = ({
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border">
+    <div className="p-4 md:p-6 bg-white rounded-lg shadow-sm border">
       {/* Header */}
-      <div className="p-4 md:p-6">
+      <div>
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost">
@@ -102,7 +102,7 @@ const TourSetupForm = ({
       </div>
 
       {/* Tour Details */}
-      <div className="p-4 md:p-6">
+      <div className="mt-4">
         <h2 className="text-2xl font-semibold mb-2">
           {tourData?.destination || "Lagoon Snokeling"}
         </h2>
@@ -119,7 +119,7 @@ const TourSetupForm = ({
         <ProgressTracker currentStep={currentStep} />
         
         {/* Setup Transport */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h3 className="text-lg font-medium mb-4">Setup Transport</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div>
@@ -209,7 +209,7 @@ const TourSetupForm = ({
         </div>
 
         {/* Tickets Count */}
-        <div className="mb-6">
+        <div className="mb-4">
           <h3 className="text-lg font-medium mb-4">Tickets Count</h3>
           <div className="flex flex-wrap gap-6">
             <div className="flex items-center gap-3">
