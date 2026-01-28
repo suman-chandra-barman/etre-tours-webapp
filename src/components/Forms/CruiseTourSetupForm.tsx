@@ -11,6 +11,7 @@ import {
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 import CreateCruiseNewTourModal from "../Modals/CreateCruiseNewTourModal";
+import ProgressTracker from "../Tours/ProgressTracker";
 
 interface CruiseTourSetupFormProps {
   tourData?: {
@@ -30,6 +31,9 @@ const CruiseTourSetupForm = ({
 }: CruiseTourSetupFormProps) => {
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("vehicle");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState<
+    "pre-departure" | "in-progress" | "completed"
+  >("pre-departure");
 
   return (
     <div className="p-4 md:p-6 bg-white rounded-lg shadow-sm border">
@@ -94,6 +98,9 @@ const CruiseTourSetupForm = ({
         </p>
       </div>
 
+      {/* Progress Tracker */}
+      <ProgressTracker currentStep={currentStep} />
+
       {/* Action Buttons */}
       <div className="flex justify-end gap-3 p-4 bg-gray-100">
         <Button
@@ -120,7 +127,10 @@ const CruiseTourSetupForm = ({
       </div>
 
       {/* Create New Tour Modal */}
-      <CreateCruiseNewTourModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      <CreateCruiseNewTourModal
+        open={isModalOpen}
+        onOpenChange={setIsModalOpen}
+      />
     </div>
   );
 };
