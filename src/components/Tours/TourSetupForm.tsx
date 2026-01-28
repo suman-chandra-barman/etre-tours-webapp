@@ -11,9 +11,6 @@ import {
   Gift,
   ChevronRight,
   Plus,
-  CheckCircle,
-  Bus,
-  Home,
 } from "lucide-react";
 import {
   Select,
