@@ -79,11 +79,6 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <UserRoundCog className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/admin/drivers",
-      label: "Drivers",
-      icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    },
-    {
       href: "/admin/setting",
       label: "Settings",
       icon: <Settings className="w-6 h-6 mb-1" />,
