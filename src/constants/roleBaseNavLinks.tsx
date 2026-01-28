@@ -2,7 +2,6 @@ import React from "react";
 import {
   Clock,
   Users,
-  Hotel,
   LayoutDashboard,
   Landmark,
   Settings,
@@ -12,6 +11,7 @@ import {
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
 import { GiSteeringWheel } from "react-icons/gi";
+import { PiUsersFour } from "react-icons/pi";
 
 interface NavLink {
   href: string;
@@ -115,7 +115,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/cruise-sales",
       label: "Headcounts",
-      icon: <Users className="w-6 h-6 mb-1" />,
+      icon: <PiUsersFour className="w-6 h-6 mb-1" />,
     },
     {
       href: "/cruise-sales/drivers",
@@ -137,7 +137,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/partner-sales",
       label: "Hotels",
-      icon: <Hotel className="w-6 h-6 mb-1" />,
+      icon: <Ticket className="w-6 h-6 mb-1" />,
     },
     {
       href: "/partner-sales/drivers",
