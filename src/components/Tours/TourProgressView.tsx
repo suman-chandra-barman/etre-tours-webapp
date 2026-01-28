@@ -1,17 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import {
-  CheckCircle,
-  Bus,
-  Home,
-  Smile,
-  Baby,
-  Gift,
-  Users,
-  ChevronRight,
-} from "lucide-react";
+import { Smile, Baby, Gift, Users, ChevronRight } from "lucide-react";
 import CancelTourModal from "@/components/Modals/CancelTourModal";
+import ProgressTracker from "./ProgressTracker";
 
 interface TourProgressViewProps {
   tourData: {
@@ -39,15 +31,6 @@ const TourProgressView = ({
 }: TourProgressViewProps) => {
   const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
 
-  const steps = [
-    { key: "pre-departure", label: "Pre-departure", icon: CheckCircle },
-    { key: "in-progress", label: "In-progress", icon: Bus },
-    { key: "completed", label: "Completed", icon: Home },
-  ];
-
-  const getStepIndex = (step: string) => steps.findIndex((s) => s.key === step);
-  const currentStepIndex = getStepIndex(currentStep);
-
   const handleCancelTour = (reason: string) => {
     console.log("Tour cancellation reason:", reason);
     if (onCancelTour) {
@@ -69,57 +52,7 @@ const TourProgressView = ({
       </div>
 
       {/* Progress Tracker */}
-      <div className="p-4 md:p-6 border-b">
-        <div className="flex items-center justify-between max-w-3xl mx-auto">
-          {steps.map((step, index) => {
-            const Icon = step.icon;
-            const isCompleted = index <= currentStepIndex;
-            const isActive = index === currentStepIndex;
-
-            return (
-              <div key={step.key} className="flex items-center flex-1">
-                <div className="flex flex-col items-center">
-                  <div
-                    className={`w-12 h-12 rounded-full flex items-center justify-center ${
-                      isCompleted
-                        ? "bg-green-500 text-white"
-                        : "bg-gray-200 text-gray-400"
-                    }`}
-                  >
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <span
-                    className={`mt-2 text-sm ${
-                      isActive ? "font-medium text-gray-900" : "text-gray-500"
-                    }`}
-                  >
-                    {step.label}
-                  </span>
-                </div>
-                {index < steps.length - 1 && (
-                  <div
-                    className="flex-1 h-0.5 mx-2 relative"
-                    style={{ top: "-20px" }}
-                  >
-                    <div
-                      className={`h-full ${
-                        index < currentStepIndex
-                          ? "bg-green-500"
-                          : "bg-gray-300"
-                      }`}
-                      style={{
-                        borderTop: "2px dashed",
-                        borderColor:
-                          index < currentStepIndex ? "#10b981" : "#d1d5db",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <ProgressTracker currentStep={currentStep} />
 
       {/* Setup Transport Details */}
       <div className="p-4 md:p-6">

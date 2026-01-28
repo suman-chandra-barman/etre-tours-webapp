@@ -11,6 +11,9 @@ import {
   Gift,
   ChevronRight,
   Plus,
+  CheckCircle,
+  Bus,
+  Home,
 } from "lucide-react";
 import {
   Select,
@@ -22,6 +25,7 @@ import {
 import { Button } from "../ui/button";
 import CreateNewTourModal from "../Modals/CreateNewTourModal";
 import { Separator } from "../ui/separator";
+import ProgressTracker from "./ProgressTracker";
 
 interface TourSetupFormProps {
   tourData?: {
@@ -42,6 +46,9 @@ const TourSetupForm = ({
   const [activeTab, setActiveTab] = useState<"boat" | "vehicle">("vehicle");
   const [acceptCardsAndCash, setAcceptCardsAndCash] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentStep, setCurrentStep] = useState<
+    "pre-departure" | "in-progress" | "completed"
+  >("pre-departure");
   const [ticketCounts, setTicketCounts] = useState({
     adults: 0,
     children: 0,
@@ -111,6 +118,9 @@ const TourSetupForm = ({
           {tourData?.operator || "Expedia LLC"}
         </p>
 
+        {/* Progress Tracker */}
+        <ProgressTracker currentStep={currentStep} />
+        
         {/* Setup Transport */}
         <div className="mb-6">
           <h3 className="text-lg font-medium mb-4">Setup Transport</h3>
@@ -254,14 +264,14 @@ const TourSetupForm = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3">
+        <div className="flex justify-end gap-3">
           <Button
             variant="ghost"
             className="text-red-500  hover:text-red-600 hover:bg-red-50"
           >
             Delete
           </Button>
-          <Separator className="h-10!" orientation="vertical"/>
+          <Separator className="h-10!" orientation="vertical" />
           <Button
             variant="outline"
             onClick={onConfirmDeparture}
