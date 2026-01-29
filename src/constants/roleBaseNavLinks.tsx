@@ -8,6 +8,7 @@ import {
   UserRoundCog,
   Ticket,
   ChartLine,
+  CreditCard,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
@@ -68,6 +69,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/admin/subcontractor",
       label: "Sub-con.",
       icon: <UserRoundCog className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/billing",
+      label: "Billing",
+      icon: <CreditCard className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/setting",
