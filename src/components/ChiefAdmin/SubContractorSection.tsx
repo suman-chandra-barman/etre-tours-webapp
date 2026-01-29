@@ -64,7 +64,7 @@ export default function SubContractorSection() {
                 borderRadius: "8px",
                 boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
               }}
-              formatter={(value: number | undefined) => [`${value}k`, "Value"]}
+              formatter={(value) => [`${value}k`, "Value"]}
             />
             <Bar dataKey="value" radius={[8, 8, 0, 0]}>
               {contractorData.map((entry, index) => (
