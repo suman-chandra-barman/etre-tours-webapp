@@ -170,6 +170,7 @@ function LoginPage() {
                     <SelectContent className="mt-12">
                       {/* <SelectItem value="chief-admin">Chief Admin</SelectItem> */}
                       <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="chief-admin">Chief Admin</SelectItem>
                       <SelectItem value="direct-sales">Direct Sales</SelectItem>
                       <SelectItem value="cruise-sales">Cruise Sales</SelectItem>
                       <SelectItem value="partner-sales">
