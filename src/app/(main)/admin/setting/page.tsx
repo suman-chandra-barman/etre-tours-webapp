@@ -76,7 +76,7 @@ function SettingPage() {
     <main className="p-6 overflow-y-auto">
       <h1 className="text-3xl font-bold mb-6">Manage settings</h1>
 
-      <div className="max-w-xl bg-white rounded-lg shadow-sm p-6 space-y-8">
+      <div className="max-w-xl mx-auto bg-white rounded-lg shadow-sm p-6 space-y-8">
         {/* Brand Profile Section */}
         <div>
           <div className="flex items-center justify-between mb-4">
