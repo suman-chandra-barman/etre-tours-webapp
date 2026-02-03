@@ -1,26 +1,20 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Calendar,
-  Search,
-  Printer,
-} from "lucide-react";
+import { Calendar, Search, Printer } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 import { Pagination } from "@/components/ui/pagination";
 
 interface TourHistoryItem {
   id: number;
   dateTime: string;
-  tourSpots: string;
-  departureFrom: string;
+  tour: string;
   tourCode: string;
   subContractor: string;
-  driver: string;
-  guides: string;
   totalPax: number;
-  vehicleBoats: string;
-  totalAmount: string;
+  totalSets: number;
+  vacancy: number;
+  allTransport: string;
   tourStatus: "Pre-departure" | "In-progress" | "Completed" | "Cancelled";
   note?: string;
 }
@@ -30,156 +24,134 @@ const mockHistoryData: TourHistoryItem[] = [
   {
     id: 1,
     dateTime: "Feb 21, 2023 at 03:05 pm",
-    tourSpots: "Batarahitol, Baijanathpur",
-    departureFrom: "Batarahitol, Baijanathpur",
+    tour: "Ghinaghat, Baijanathpur",
     tourCode: "295A-6774-9EA2-5338",
     subContractor: "Primer Inc.",
-    driver: "Primer Inc.",
-    guides: "Primer Inc.",
     totalPax: 426,
-    vehicleBoats: "2 Vehicle",
-    totalAmount: "$26,000",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "2 Vehicle",
     tourStatus: "Pre-departure",
   },
   {
     id: 2,
     dateTime: "Aug 3, 2023 at 12:10 am",
-    tourSpots: "Bargachhi Chok, Biratnagar",
-    departureFrom: "Bargachhi Chok, Biratnagar",
+    tour: "Bargachhi Chok, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
     subContractor: "Larson & Larson",
-    driver: "Larson & Larson",
-    guides: "Larson & Larson",
     totalPax: 447,
-    vehicleBoats: "3 Vehicle",
-    totalAmount: "$42,000",
+    totalSets: 3,
+    vacancy: 0,
+    allTransport: "3 Vehicle",
     tourStatus: "In-progress",
   },
   {
     id: 3,
     dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Hospital chowk, Biratnagar",
-    departureFrom: "Hospital chowk, Biratnagar",
+    tour: "Hospital chowk, Biratnagar",
     tourCode: "CFCA-3F50-E459-9E57",
     subContractor: "Mertz Group",
-    driver: "Mertz Group",
-    guides: "Mertz Group",
     totalPax: 600,
-    vehicleBoats: "4 Vehicle",
-    totalAmount: "$12,000",
+    totalSets: 4,
+    vacancy: 0,
+    allTransport: "4 Vehicle",
     tourStatus: "Completed",
   },
   {
     id: 4,
     dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kanchanbari, Biratnagar",
-    departureFrom: "Kanchanbari, Biratnagar",
+    tour: "Kanchanbari, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
     subContractor: "Wintheiser LLC",
-    driver: "Wintheiser LLC",
-    guides: "Wintheiser LLC",
     totalPax: 883,
-    vehicleBoats: "5 Vehicle",
-    totalAmount: "$500",
+    totalSets: 5,
+    vacancy: 0,
+    allTransport: "5 Vehicle",
     tourStatus: "Cancelled",
     note: "A demo note...",
   },
   {
     id: 5,
     dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Hatkhola Chok, Biratnagar",
-    departureFrom: "Hatkhola Chok, Biratnagar",
+    tour: "Hatkhola Chok, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
     subContractor: "Solenoid",
-    driver: "Solenoid",
-    guides: "Solenoid",
     totalPax: 154,
-    vehicleBoats: "2 Vehicle",
-    totalAmount: "$62,000",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "2 Vehicle",
     tourStatus: "In-progress",
   },
   {
     id: 6,
     dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Chadani Chok, Biratnagar",
-    departureFrom: "Chadani Chok, Biratnagar",
+    tour: "Chadani Chok, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
     subContractor: "Wiegand-Shields",
-    driver: "Wiegand-Shields",
-    guides: "Wiegand-Shields",
     totalPax: 536,
-    vehicleBoats: "2 Vehicle",
-    totalAmount: "$16,300",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "2 Vehicle",
     tourStatus: "In-progress",
   },
   {
     id: 7,
     dateTime: "Aug 18, 2023 at 04:12 pm",
-    tourSpots: "Rani, Biratnagar",
-    departureFrom: "Rani, Biratnagar",
+    tour: "Rani, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
     subContractor: "Metaful",
-    driver: "Metaful",
-    guides: "Metaful",
     totalPax: 429,
-    vehicleBoats: "6 Boats",
-    totalAmount: "$17,000",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "6 Boats",
     tourStatus: "Completed",
   },
   {
     id: 8,
     dateTime: "Oct 13, 2023 at 08:05 am",
-    tourSpots: "Ghinaghat, Baijanathpur",
-    departureFrom: "Ghinaghat, Baijanathpur",
+    tour: "Ghinaghat, Baijanathpur",
     tourCode: "KDSS-2424-6565-HYJU",
     subContractor: "Batz Group",
-    driver: "Batz Group",
-    guides: "Batz Group",
     totalPax: 423,
-    vehicleBoats: "4 Boats",
-    totalAmount: "$65,000",
+    totalSets: 4,
+    vacancy: 0,
+    allTransport: "4 Boats",
     tourStatus: "Completed",
   },
   {
     id: 9,
     dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Jaynepal chowk, Biratnagar",
-    departureFrom: "Jaynepal chowk, Biratnagar",
+    tour: "Jaynepal chowk, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
     subContractor: "Performante",
-    driver: "Performante",
-    guides: "Performante",
     totalPax: 583,
-    vehicleBoats: "3 Boats",
-    totalAmount: "$21,000",
+    totalSets: 3,
+    vacancy: 0,
+    allTransport: "3 Boats",
     tourStatus: "Completed",
   },
   {
     id: 10,
     dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kohobarachok, Biratnagar",
-    departureFrom: "Kohobarachok, Biratnagar",
+    tour: "Kohobarachok, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
     subContractor: "TypeSafe",
-    driver: "TypeSafe",
-    guides: "TypeSafe",
     totalPax: 185,
-    vehicleBoats: "2 Vehicle",
-    totalAmount: "$21,000",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "2 Vehicle",
     tourStatus: "Completed",
   },
   {
     id: 11,
     dateTime: "Nov 4, 2023 at 12:13 am",
-    tourSpots: "Kohobara, Biratnagar",
-    departureFrom: "Kohobara, Biratnagar",
+    tour: "Kohobara, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
     subContractor: "Advanta Inc.",
-    driver: "Advanta Inc.",
-    guides: "Advanta Inc.",
     totalPax: 196,
-    vehicleBoats: "2 Vehicle",
-    totalAmount: "$26,000",
+    totalSets: 2,
+    vacancy: 0,
+    allTransport: "2 Vehicle",
     tourStatus: "Completed",
   },
 ];
@@ -192,8 +164,8 @@ export default function ToursPage() {
   const [selectedSubContractor, setSelectedSubContractor] = useState(
     "Filter by Sub-contractor company",
   );
-  const [activeTab, setActiveTab] = useState<"All" | "Boats" | "Vehicle">(
-    "All",
+  const [activeTab, setActiveTab] = useState<"Direct Sales" | "Partner Sales">(
+    "Direct Sales",
   );
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
@@ -233,7 +205,7 @@ export default function ToursPage() {
           >
             <div className={`flex items-center gap-3 `}>
               <h1 className="text-2xl font-semibold text-gray-900">
-                All Tours
+                Tours
               </h1>
             </div>
           </div>
@@ -252,7 +224,7 @@ export default function ToursPage() {
             </div>
             {/* Tabs Section */}
             <div className="flex gap-6 border-b border-gray-200">
-              {(["All", "Boats", "Vehicle"] as const).map((tab) => (
+              {(["Direct Sales", "Partner Sales"] as const).map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
@@ -364,28 +336,22 @@ export default function ToursPage() {
                       Tour
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Departure From
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Tour Code
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Sub-contractor company
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Driver
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Guides
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Total Pax
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Vehicle/Boats
+                      Total Sets
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Total Amount
+                      Vacancy
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      All Transport
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Tour Status
@@ -405,10 +371,7 @@ export default function ToursPage() {
                         {item.dateTime}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.tourSpots}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.departureFrom}
+                        {item.tour}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.tourCode}
@@ -416,20 +379,17 @@ export default function ToursPage() {
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.subContractor}
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.driver}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.guides}
-                      </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap text-center">
                         {item.totalPax}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.vehicleBoats}
+                        {item.totalSets}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                        {item.vacancy}
                       </td>
                       <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">
-                        {item.totalAmount}
+                        {item.allTransport}
                       </td>
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
                         <span
@@ -451,7 +411,7 @@ export default function ToursPage() {
               </table>
             </div>
 
-             {/* Pagination */}
+            {/* Pagination */}
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

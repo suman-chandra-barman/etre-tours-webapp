@@ -94,7 +94,12 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     },
     {
       href: "/direct-sales/tours",
-      label: "All Tours",
+      label: "Tours",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/direct-sales/my-tours",
+      label: "My Tours",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
@@ -116,7 +121,12 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     },
     {
       href: "/cruise-sales/tours",
-      label: "All Tours",
+      label: "Tours",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/cruise-sales/my-tours",
+      label: "My Tours",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
@@ -138,7 +148,12 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     },
     {
       href: "/partner-sales/tours",
-      label: "All Tours",
+      label: "Tours",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/partner-sales/my-tours",
+      label: "My Tours",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
