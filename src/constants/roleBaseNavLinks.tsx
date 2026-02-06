@@ -88,19 +88,19 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Ticket className="w-6 h-6 mb-1" />,
     },
     {
+      href: "/direct-sales/my-tours",
+      label: "My Station",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+        {
+      href: "/direct-sales/tours",
+      label: "Other Stations",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+    {
       href: "/direct-sales/drivers",
       label: "Drivers",
       icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/direct-sales/tours",
-      label: "Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/direct-sales/my-tours",
-      label: "My Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
       href: "/direct-sales/history",

@@ -75,7 +75,7 @@ function Sidebar() {
               key={link.href}
               href={link.href}
               className={cn(
-                "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200",
+                "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 text-center",
                 isActive ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
               )}
               aria-label={link.label}
