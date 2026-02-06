@@ -212,7 +212,7 @@ export default function ToursPage() {
     <div className="flex flex-col bg-gray-50 overflow-y-auto">
       <div className="flex-1">
         <div className="p-6">
-          <ToursHeader title="Tours" />
+          <ToursHeader title="Other Station Tours" />
 
           <SearchWithTabs
             searchQuery={searchQuery}
