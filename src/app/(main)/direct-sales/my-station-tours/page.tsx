@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TourHistoryItem, TourTabType } from "@/types/tours.types";
+import { MyTourTabType, TourHistoryItem } from "@/types/tours.types";
 import { ToursHeader } from "@/components/Tours/ToursHeader";
 import { SearchWithTabs } from "@/components/Tours/SearchWithTabs";
 import { ToursFilter } from "@/components/Tours/ToursFilter";
@@ -177,12 +177,12 @@ const mockHistoryData: TourHistoryItem[] = [
   },
 ];
 
-export default function ToursPage() {
+export default function MyStationToursPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTourZone, setSelectedTourZone] = useState("");
   const [selectedSubContractor, setSelectedSubContractor] = useState("");
-  const [activeTab, setActiveTab] = useState<TourTabType>("Cruise Sales");
+  const [activeTab, setActiveTab] = useState<MyTourTabType>("All");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -206,13 +206,13 @@ export default function ToursPage() {
     console.log("Clicked tour:", item);
   };
 
-  const tabs: readonly TourTabType[] = ["Cruise Sales", "Partner Sales"];
+  const tabs: readonly MyTourTabType[] = ["All", "Boat", "Vehicle"];
 
   return (
     <div className="flex flex-col bg-gray-50 overflow-y-auto">
       <div className="flex-1">
         <div className="p-6">
-          <ToursHeader title="Other Station Tours" />
+          <ToursHeader title="My Station Tours" />
 
           <SearchWithTabs
             searchQuery={searchQuery}

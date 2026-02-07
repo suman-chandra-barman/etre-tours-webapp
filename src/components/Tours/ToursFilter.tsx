@@ -54,7 +54,7 @@ export function ToursFilter({
       className={`bg-white rounded-xl border border-gray-200 p-4 mb-4 ${styles.noPrint}`}
     >
       <div className="flex justify-between items-center">
-        <div className="flex flex-wrap gap-3">
+        <div className="flex items-center flex-wrap gap-3">
           {/* Date Input with Calendar */}
           <Popover>
             <PopoverTrigger asChild>
@@ -88,7 +88,7 @@ export function ToursFilter({
             <SelectTrigger className="rounded-full text-sm">
               <SelectValue placeholder="Select tour zone" />
             </SelectTrigger>
-            <SelectContent >
+            <SelectContent>
               <SelectItem value="lagoon-snorkeling">
                 Lagoon Snorkeling
               </SelectItem>
@@ -111,6 +111,9 @@ export function ToursFilter({
               <SelectItem value="mertz-group">Mertz Group</SelectItem>
             </SelectContent>
           </Select>
+          <div>
+            <span className="font-medium">Last synced: 2 hours ago</span>
+          </div>
         </div>
 
         <div className="flex items-center gap-4">
