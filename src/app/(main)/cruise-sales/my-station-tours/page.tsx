@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { TourHistoryItem } from "@/types/tours.types";
+import { MyTourTabType, TourHistoryItem } from "@/types/tours.types";
 import { ToursHeader } from "@/components/Tours/ToursHeader";
 import { SearchWithTabs } from "@/components/Tours/SearchWithTabs";
 import { ToursFilter } from "@/components/Tours/ToursFilter";
@@ -22,7 +22,7 @@ const mockHistoryData: TourHistoryItem[] = [
     driver: "John Smith",
     allTransport: "2 Vehicle",
     guide: "Sarah Johnson",
-    tourStatus: "Completed",
+    tourStatus: "Pre-departure",
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const mockHistoryData: TourHistoryItem[] = [
     driver: "Mike Davis",
     allTransport: "3 Vehicle",
     guide: "Emily Chen",
-    tourStatus: "Cancelled",
+    tourStatus: "In-progress",
   },
   {
     id: 3,
@@ -83,7 +83,7 @@ const mockHistoryData: TourHistoryItem[] = [
     driver: "David Lee",
     allTransport: "2 Vehicle",
     guide: "Anna Martinez",
-    tourStatus: "Completed",
+    tourStatus: "In-progress",
   },
   {
     id: 6,
@@ -98,7 +98,7 @@ const mockHistoryData: TourHistoryItem[] = [
     driver: "Tom Harris",
     allTransport: "2 Vehicle",
     guide: "Jessica White",
-    tourStatus: "Cancelled",
+    tourStatus: "In-progress",
   },
   {
     id: 7,
@@ -177,12 +177,12 @@ const mockHistoryData: TourHistoryItem[] = [
   },
 ];
 
-export default function TourHistoryPage() {
+export default function MyStationToursPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTourZone, setSelectedTourZone] = useState("");
   const [selectedSubContractor, setSelectedSubContractor] = useState("");
-  const [activeTab, setActiveTab] = useState("All");
+  const [activeTab, setActiveTab] = useState<MyTourTabType>("All");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -206,13 +206,13 @@ export default function TourHistoryPage() {
     console.log("Clicked tour:", item);
   };
 
-  const tabs = ["All", "Boat", "Vehicle"];
+  const tabs: readonly MyTourTabType[] = ["All", "Boat", "Vehicle"];
 
   return (
     <div className="flex flex-col bg-gray-50 overflow-y-auto">
       <div className="flex-1">
         <div className="p-6">
-          <ToursHeader title="Tour History" />
+          <ToursHeader title="My Station Tours" />
 
           <SearchWithTabs
             searchQuery={searchQuery}
