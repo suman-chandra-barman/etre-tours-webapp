@@ -114,7 +114,7 @@ export function ToursFilter({
             </SelectContent>
           </Select>
           {lastSyncTime !== "0" && (
-            <span className="text-sm text-gray-500">
+            <span className="text-sm font-medium">
               Last sync: {lastSyncTime}
             </span>
           )}
