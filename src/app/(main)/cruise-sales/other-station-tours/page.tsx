@@ -184,8 +184,9 @@ export default function OtherStationToursPage() {
   const [selectedSubContractor, setSelectedSubContractor] = useState("");
   const [activeTab, setActiveTab] = useState("Direct Sales");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
+  const [lastSyncTime, setLastSyncTime] = useState("1 hour ago");
 
+  const itemsPerPage = 10;
   const filteredData = mockHistoryData;
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -231,6 +232,7 @@ export default function OtherStationToursPage() {
             onSubContractorChange={setSelectedSubContractor}
             onApplyFilter={handleApplyFilter}
             onPrint={handlePrint}
+            lastSyncTime={lastSyncTime}
           />
 
           <ToursTable
