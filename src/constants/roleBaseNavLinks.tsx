@@ -88,12 +88,12 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Ticket className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/direct-sales/my-tours",
+      href: "/direct-sales/my-station-tours",
       label: "My Station",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
         {
-      href: "/direct-sales/tours",
+      href: "/direct-sales/other-station-tours",
       label: "Other Stations",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
@@ -115,19 +115,19 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <PiUsersFour className="w-6 h-6 mb-1" />,
     },
     {
+      href: "/cruise-sales/my-station-tours",
+      label: "My Station",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/cruise-sales/other-station-tours",
+      label: "Other Stations",
+      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
+    },
+       {
       href: "/cruise-sales/drivers",
       label: "Drivers",
       icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/cruise-sales/tours",
-      label: "Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/cruise-sales/my-tours",
-      label: "My Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
       href: "/cruise-sales/history",
@@ -147,13 +147,13 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/partner-sales/tours",
-      label: "Tours",
+      href: "/partner-sales/my-station-tours",
+      label: "My Station",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
-      href: "/partner-sales/my-tours",
-      label: "My Tours",
+      href: "/partner-sales/other-station-tours",
+      label: "Other Stations",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
     },
     {
