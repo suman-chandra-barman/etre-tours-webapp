@@ -19,6 +19,7 @@ import { useState } from "react";
 
 interface ToursFilterProps {
   selectedDate: string;
+  lastSyncTime: string;
   selectedTourZone: string;
   selectedSubContractor: string;
   onDateChange: (date: string) => void;
@@ -30,6 +31,7 @@ interface ToursFilterProps {
 
 export function ToursFilter({
   selectedDate,
+  lastSyncTime,
   selectedTourZone,
   selectedSubContractor,
   onDateChange,
@@ -111,9 +113,11 @@ export function ToursFilter({
               <SelectItem value="mertz-group">Mertz Group</SelectItem>
             </SelectContent>
           </Select>
-          <div>
-            <span className="font-medium">Last synced: 2 hours ago</span>
-          </div>
+          {lastSyncTime !== "0" && (
+            <span className="text-sm text-gray-500">
+              Last sync: {lastSyncTime}
+            </span>
+          )}
         </div>
 
         <div className="flex items-center gap-4">
