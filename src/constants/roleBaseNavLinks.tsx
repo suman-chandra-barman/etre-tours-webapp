@@ -101,12 +101,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/direct-sales/drivers",
       label: "Drivers",
       icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/direct-sales/history",
-      label: "History",
-      icon: <Clock className="w-6 h-6 mb-1" />,
-    },
+    }
   ],
   "cruise-sales": [
     {
@@ -128,12 +123,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/cruise-sales/drivers",
       label: "Drivers",
       icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/cruise-sales/history",
-      label: "History",
-      icon: <Clock className="w-6 h-6 mb-1" />,
-    },
+    }
   ],
   "partner-sales": [
     {
@@ -155,11 +145,6 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/partner-sales/other-station-tours",
       label: "Other Stations",
       icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/partner-sales/history",
-      label: "History",
-      icon: <Clock className="w-6 h-6 mb-1" />,
-    },
+    }
   ],
 };
