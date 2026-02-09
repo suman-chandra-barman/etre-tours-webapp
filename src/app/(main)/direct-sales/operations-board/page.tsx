@@ -4,6 +4,9 @@ import { useState } from "react";
 import { useUser } from "@/contexts/UserContext";
 import { TUserRole } from "@/types/user.types";
 import { OperationsStationSection } from "@/components/OperationsBoard/OperationsStationSection";
+import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import CreateNewTourModal from "@/components/Modals/CreateNewTourModal";
 
 // Station sync status type
 export interface StationSyncStatus {
@@ -29,6 +32,8 @@ export interface OperationsTour {
 }
 
 export default function OperationsBoardPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { role } = useUser();
 
   // Mock data for TODAY's tours - in real app, this would come from API
@@ -228,17 +233,26 @@ export default function OperationsBoardPage() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Page Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Operations Board</h1>
-        <p className="text-gray-600 mt-1">
-          Live operations for{" "}
-          {new Date().toLocaleDateString("en-US", {
-            weekday: "long",
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </p>
+      <div className="mb-6 flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Operations Board</h1>
+          <p className="text-gray-600 mt-1">
+            Live operations for{" "}
+            {new Date().toLocaleDateString("en-US", {
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
+        </div>
+        <Button
+          variant={"outline"}
+          className="bg-blue-200 hover:bg-blue-300 rounded-full"
+          onClick={() => setIsModalOpen(true)}
+        >
+          <Plus className="w-4 h-4" /> New tour
+        </Button>
       </div>
 
       {/* Stations Sections */}
@@ -288,6 +302,9 @@ export default function OperationsBoardPage() {
           }
         />
       </div>
+
+      {/* Create New Tour Modal */}
+      <CreateNewTourModal open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }
