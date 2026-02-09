@@ -17,7 +17,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { MapPin, Building2, Users, UserPlus } from "lucide-react";
 import { OperationsTour } from "@/app/(main)/direct-sales/operations-board/page";
 
 interface EditOperationsTourModalProps {
@@ -91,7 +90,6 @@ const EditOperationsTourModal = ({
         <div className="space-y-6">
           {/* Tour Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">Tour Details</h3>
             <div className="grid grid-cols-2 gap-4">
               {/* Tour Name */}
               <div className="space-y-1">
@@ -156,10 +154,6 @@ const EditOperationsTourModal = ({
 
           {/* Time Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">
-              Departure & Return
-            </h3>
-
             <div className="grid grid-cols-2 gap-4">
               {/* Departure Date & Time */}
               <div className="space-y-1">
@@ -211,8 +205,6 @@ const EditOperationsTourModal = ({
 
           {/* Assignment Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">Assignments</h3>
-
             <div className="grid grid-cols-2 gap-4">
               {/* Driver */}
               <div className="space-y-1">
@@ -287,8 +279,8 @@ const EditOperationsTourModal = ({
           </div>
 
           {/* Status */}
-          <div className="space-y-3">
-            <h3 className="text-sm font-medium text-gray-700">Status</h3>
+          <div className="space-y-1">
+            <Label className="text-xs text-gray-500 font-normal">Status</Label>
             <Select
               value={status}
               onValueChange={(value) =>
