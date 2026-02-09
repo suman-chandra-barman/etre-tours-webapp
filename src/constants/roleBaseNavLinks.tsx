@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Clock,
   Users,
   LayoutDashboard,
   Landmark,
@@ -9,6 +8,7 @@ import {
   Ticket,
   ChartLine,
   CreditCard,
+  Monitor,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
@@ -83,6 +83,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
   ],
   "direct-sales": [
     {
+      href: "/direct-sales/operations-board",
+      label: "Operations",
+      icon: <Monitor className="w-6 h-6 mb-1" />,
+    },
+    {
       href: "/direct-sales",
       label: "Tickets",
       icon: <Ticket className="w-6 h-6 mb-1" />,
@@ -105,6 +110,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
   ],
   "cruise-sales": [
     {
+      href: "/operations-board",
+      label: "Operations",
+      icon: <Monitor className="w-6 h-6 mb-1" />,
+    },
+    {
       href: "/cruise-sales",
       label: "Headcounts",
       icon: <PiUsersFour className="w-6 h-6 mb-1" />,
@@ -126,6 +136,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     }
   ],
   "partner-sales": [
+    {
+      href: "/operations-board",
+      label: "Operations",
+      icon: <Monitor className="w-6 h-6 mb-1" />,
+    },
     {
       href: "/partner-sales",
       label: "Hotels",

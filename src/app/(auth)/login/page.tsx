@@ -43,7 +43,7 @@ function LoginPage() {
       role: data.role,
     });
 
-    // Redirect based on role
+    // Redirect based on role - Operations Board for sales roles, default pages for admin roles
     switch (data.role) {
       case "chief-admin":
         router.push("/chief-admin");
@@ -52,13 +52,9 @@ function LoginPage() {
         router.push("/admin");
         break;
       case "direct-sales":
-        router.push("/direct-sales");
-        break;
       case "cruise-sales":
-        router.push("/cruise-sales");
-        break;
       case "partner-sales":
-        router.push("/partner-sales");
+        router.push("/operations-board"); // Land on Operations Board for all sales roles
         break;
     }
   };

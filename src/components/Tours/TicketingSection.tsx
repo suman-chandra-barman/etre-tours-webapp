@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Minus, Plus, Armchair, Printer } from "lucide-react";
+import { Armchair, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NumberStepper } from "@/components/ui/number-stepper";
 import {
   Select,
   SelectContent,
@@ -116,8 +117,8 @@ const TicketingSection = ({
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border h-fit sticky top-6">
-      <div className="p-6">
+    <div className="bg-white rounded-lg shadow-sm border w-full">
+      <div className="p-4">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -163,123 +164,20 @@ const TicketingSection = ({
             Passenger Details
           </h3>
           <div className="grid grid-cols-2 gap-4">
-            {/* Adults */}
-            <div>
-              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg px-3 py-1.5">
-                <span className="text-sm">Adults</span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={() => setAdults(Math.max(0, adults - 1))}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </Button>
-                  <span className="w-8 text-center">
-                    {adults.toString().padStart(2, "0")}
-                  </span>
-                  <Button
-                    onClick={() => setAdults(adults + 1)}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500">
-                ${ADULT_PRICE.toFixed(2)} per adults
-              </p>
-            </div>
-
-            {/* Children */}
-            <div>
-              <div className="flex items-center justify-between mb-2 border border-gray-300 rounded-lg px-3 py-1.5">
-                <span className="text-sm">Children</span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={() => setChildren(Math.max(0, children - 1))}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </Button>
-                  <span className="w-8 text-center">
-                    {children.toString().padStart(2, "0")}
-                  </span>
-                  <Button
-                    onClick={() => setChildren(children + 1)}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
-              <p className="text-xs text-gray-500">
-                ${CHILD_PRICE.toFixed(2)} per child above 18 y/o
-              </p>
-            </div>
-
-            {/* Infant */}
-            <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">Infant</span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={() => setInfant(Math.max(0, infant - 1))}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </Button>
-                  <span className="w-8 text-center">
-                    {infant.toString().padStart(2, "0")}
-                  </span>
-                  <Button
-                    onClick={() => setInfant(infant + 1)}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
-            </div>
-
-            {/* FOC */}
-            <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-              <div className="flex items-center justify-between">
-                <span className="text-sm">FOC</span>
-                <div className="flex items-center gap-2">
-                  <Button
-                    onClick={() => setFoc(Math.max(0, foc - 1))}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Minus className="w-3 h-3" />
-                  </Button>
-                  <span className="w-8 text-center">
-                    {foc.toString().padStart(2, "0")}
-                  </span>
-                  <Button
-                    onClick={() => setFoc(foc + 1)}
-                    variant="outline"
-                    size="icon-sm"
-                    className="w-6 h-6 rounded-full"
-                  >
-                    <Plus className="w-3 h-3" />
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <NumberStepper
+              label="Adults"
+              value={adults}
+              onChange={setAdults}
+              description={`$${ADULT_PRICE.toFixed(2)} per adults`}
+            />
+            <NumberStepper
+              label="Children"
+              value={children}
+              onChange={setChildren}
+              description={`$${CHILD_PRICE.toFixed(2)} per child above 18 y/o`}
+            />
+            <NumberStepper label="Infant" value={infant} onChange={setInfant} />
+            <NumberStepper label="FOC" value={foc} onChange={setFoc} />
           </div>
         </div>
 
