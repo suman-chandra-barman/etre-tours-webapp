@@ -59,19 +59,14 @@ const CreateNewTourDrawer = ({
             >
               Transport Type
             </Label>
-            <div className="relative">
-              {transportType === "boat" ? (
-                <Ship className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
-              ) : (
-                <Car className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
-              )}
+            <div>
               <Select
                 value={transportType}
                 onValueChange={(value) =>
                   setTransportType(value as "boat" | "vehicle")
                 }
               >
-                <SelectTrigger className="w-full pl-10">
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select transport type" />
                 </SelectTrigger>
                 <SelectContent>
