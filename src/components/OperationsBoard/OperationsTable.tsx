@@ -100,7 +100,7 @@ export function OperationsTable({
                     }
                   >
                     <SelectTrigger
-                      className={`px-3 h-8! rounded-full text-sm font-semibold cursor-pointer print:hidden ${getStatusStyles(
+                      className={`px-3 h-8! w-35 rounded-full text-sm font-semibold cursor-pointer print:hidden [&_svg]:text-white! [&_svg]:opacity-100 ${getStatusStyles(
                         tour.status,
                       )}`}
                     >
