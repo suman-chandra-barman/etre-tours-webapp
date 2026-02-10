@@ -86,7 +86,7 @@ const CreateNewTourDrawer = ({
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-gray-700">Tour Details</h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {/* Pick a Tour*/}
               <div>
                 <Select>
@@ -97,7 +97,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
                     <SelectItem value="island">Island Hopping</SelectItem>
                     <SelectItem value="sunset">Sunset Cruise</SelectItem>
-                    <SelectItem value="diving">Scuba Diving</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -112,7 +111,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="expedia">Expedia LLC</SelectItem>
                     <SelectItem value="booking">Booking.com</SelectItem>
                     <SelectItem value="airbnb">Airbnb Experiences</SelectItem>
-                    <SelectItem value="viator">Viator</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -123,7 +121,7 @@ const CreateNewTourDrawer = ({
           <div className="space-y-4">
             <h3 className="text-sm font-medium text-gray-700">Departure</h3>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               {/* Date & Time */}
               <div className="space-y-2">
                 <Label
@@ -158,7 +156,7 @@ const CreateNewTourDrawer = ({
             </div>
 
             {/* Return */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label
                   htmlFor="return-date"
@@ -197,41 +195,21 @@ const CreateNewTourDrawer = ({
             <h3 className="text-sm font-medium text-gray-700">
               Setup Transport
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
                 <Select>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Operator" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="expedia">Expedia LLC</SelectItem>
-                    <SelectItem value="booking">Booking.com</SelectItem>
-                    <SelectItem value="airbnb">Airbnb Experiences</SelectItem>
-                    <SelectItem value="viator">Viator</SelectItem>
-                    <SelectItem value="getyourguide">GetYourGuide</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Registration Number" />
+                    <SelectValue placeholder="Vehicle Number" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="reg001">ABC-123-XYZ</SelectItem>
                     <SelectItem value="reg002">DEF-456-UVW</SelectItem>
                     <SelectItem value="reg003">GHI-789-RST</SelectItem>
-                    <SelectItem value="reg004">JKL-012-PQR</SelectItem>
-                    <SelectItem value="reg005">MNO-345-LMN</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               <div>
-                <input
-                  type="text"
-                  placeholder="Number of Seats"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <Input type="number" placeholder="Number of Seats" min="1" />
               </div>
               <div>
                 <Select>
@@ -242,7 +220,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="driver1">John Smith</SelectItem>
                     <SelectItem value="driver2">Sarah Johnson</SelectItem>
                     <SelectItem value="driver3">Michael Brown</SelectItem>
-                    <SelectItem value="driver4">Emily Davis</SelectItem>
                     <SelectItem value="driver5">David Wilson</SelectItem>
                   </SelectContent>
                 </Select>
@@ -256,8 +233,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="guide1">Maria Garcia</SelectItem>
                     <SelectItem value="guide2">James Anderson</SelectItem>
                     <SelectItem value="guide3">Linda Martinez</SelectItem>
-                    <SelectItem value="guide4">Robert Taylor</SelectItem>
-                    <SelectItem value="guide5">Jennifer Thomas</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -270,8 +245,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="none">None</SelectItem>
                     <SelectItem value="extra1">Carlos Rodriguez</SelectItem>
                     <SelectItem value="extra2">Patricia Lee</SelectItem>
-                    <SelectItem value="extra3">Daniel White</SelectItem>
-                    <SelectItem value="extra4">Jessica Harris</SelectItem>
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-blue-500 mt-1">
