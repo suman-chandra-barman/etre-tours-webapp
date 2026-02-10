@@ -13,6 +13,13 @@ import { Button } from "../ui/button";
 import { useState } from "react";
 import EditOperationsTourModal from "../Modals/EditOperationsTourModal";
 import MakeTicketDrawer from "../Drawers/MakeTicketDrawer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface OperationsTableProps {
   tours: OperationsTour[];
@@ -86,37 +93,31 @@ export function OperationsTable({
               <TableCell className="font-medium">{tour.tourName}</TableCell>
               <TableCell>
                 {isEditable ? (
-                  <>
-                    {/* Dropdown for screen view */}
-                    <select
-                      value={tour.status}
-                      onChange={(e) =>
-                        onStatusChange(
-                          tour.id,
-                          e.target.value as OperationsTour["status"],
-                        )
-                      }
-                      className={`px-3 py-1 rounded-md text-sm font-semibold cursor-pointer print:hidden ${getStatusStyles(
+                  <Select
+                    value={tour.status}
+                    onValueChange={(value) =>
+                      onStatusChange(tour.id, value as OperationsTour["status"])
+                    }
+                  >
+                    <SelectTrigger
+                      className={`px-3 h-8! rounded-full text-sm font-semibold cursor-pointer print:hidden ${getStatusStyles(
                         tour.status,
                       )}`}
                     >
-                      <option value="Pre-departure">Pre-departure</option>
-                      <option value="In progress">In progress</option>
-                      <option value="Completed">Completed</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
-                    {/* Badge for print view */}
-                    {/* <span
-                      className={`px-3 py-1 rounded-md text-sm font-semibold inline-block hidden print:inline-block ${getStatusStyles(
-                        tour.status,
-                      )}`}
-                    >
-                      {tour.status}
-                    </span> */}
-                  </>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Pre-departure">
+                        Pre-departure
+                      </SelectItem>
+                      <SelectItem value="In progress">In progress</SelectItem>
+                      <SelectItem value="Completed">Completed</SelectItem>
+                      <SelectItem value="Cancelled">Cancelled</SelectItem>
+                    </SelectContent>
+                  </Select>
                 ) : (
                   <span
-                    className={`px-3 py-1 rounded-md text-sm font-semibold inline-block ${getStatusStyles(
+                    className={`px-3 py-1.5 rounded-full text-sm font-semibold inline-block ${getStatusStyles(
                       tour.status,
                     )}`}
                   >
