@@ -6,7 +6,7 @@ import { TUserRole } from "@/types/user.types";
 import { OperationsStationSection } from "@/components/OperationsBoard/OperationsStationSection";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import CreateNewTourModal from "@/components/Modals/CreateNewTourModal";
+import CreateNewTourDrawer from "@/components/Drawers/CreateNewTourDrawer";
 
 // Station sync status type
 export interface StationSyncStatus {
@@ -303,8 +303,8 @@ export default function OperationsBoardPage() {
         />
       </div>
 
-      {/* Create New Tour Modal */}
-      <CreateNewTourModal open={isModalOpen} onOpenChange={setIsModalOpen} />
+      {/* Create New Tour Drawer */}
+      <CreateNewTourDrawer open={isModalOpen} onOpenChange={setIsModalOpen} />
     </div>
   );
 }

@@ -1,0 +1,306 @@
+"use client";
+
+import { useState } from "react";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Ship, Car } from "lucide-react";
+import { getTodayDate } from "@/helper/date";
+
+interface CreateNewTourDrawerProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+const CreateNewTourDrawer = ({
+  open,
+  onOpenChange,
+}: CreateNewTourDrawerProps) => {
+  const [transportType, setTransportType] = useState<"boat" | "vehicle">(
+    "boat",
+  );
+  const [departureDate, setDepartureDate] = useState(getTodayDate());
+  const [returnDate, setReturnDate] = useState(getTodayDate());
+
+  const handleConfirmSetup = () => {
+    // Handle form submission here
+    console.log("Tour setup confirmed");
+    onOpenChange(false);
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle className="text-2xl font-semibold">
+            Setup a tour
+          </SheetTitle>
+        </SheetHeader>
+
+        <div className="space-y-6 mt-6">
+          {/* Transport Type Selection */}
+          <div className="space-y-2">
+            <Label
+              htmlFor="transport-type"
+              className="text-sm font-medium text-gray-700"
+            >
+              Transport Type
+            </Label>
+            <div className="relative">
+              {transportType === "boat" ? (
+                <Ship className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
+              ) : (
+                <Car className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 z-10" />
+              )}
+              <Select
+                value={transportType}
+                onValueChange={(value) =>
+                  setTransportType(value as "boat" | "vehicle")
+                }
+              >
+                <SelectTrigger className="w-full pl-10">
+                  <SelectValue placeholder="Select transport type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="boat">By Boat</SelectItem>
+                  <SelectItem value="vehicle">By Vehicle</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+
+          {/* Tour Details */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-gray-700">Tour Details</h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Pick a Tour*/}
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Pick a Tour" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="lagoon">Lagoon Snokeling</SelectItem>
+                    <SelectItem value="island">Island Hopping</SelectItem>
+                    <SelectItem value="sunset">Sunset Cruise</SelectItem>
+                    <SelectItem value="diving">Scuba Diving</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
+              {/* Choose a Sub-contractor Company */}
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Sub-contractor Company" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="expedia">Expedia LLC</SelectItem>
+                    <SelectItem value="booking">Booking.com</SelectItem>
+                    <SelectItem value="airbnb">Airbnb Experiences</SelectItem>
+                    <SelectItem value="viator">Viator</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Departure */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-gray-700">Departure</h3>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* Date & Time */}
+              <div className="space-y-2">
+                <Label
+                  htmlFor="departure-date"
+                  className="text-xs text-gray-500 font-normal"
+                >
+                  Date
+                </Label>
+                <Input
+                  id="departure-date"
+                  type="date"
+                  placeholder="Date"
+                  className="w-full"
+                  value={departureDate}
+                  onChange={(e) => setDepartureDate(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="departure-time"
+                  className="text-xs text-gray-500 font-normal"
+                >
+                  Time
+                </Label>
+                <Input
+                  id="departure-time"
+                  type="time"
+                  placeholder="Time"
+                  className="w-full"
+                />
+              </div>
+            </div>
+
+            {/* Return */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="return-date"
+                  className="text-xs text-gray-500 font-normal"
+                >
+                  Return Date
+                </Label>
+                <Input
+                  id="return-date"
+                  type="date"
+                  placeholder="Return"
+                  className="w-full"
+                  value={returnDate}
+                  onChange={(e) => setReturnDate(e.target.value)}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label
+                  htmlFor="return-time"
+                  className="text-xs text-gray-500 font-normal"
+                >
+                  Return Time
+                </Label>
+                <Input
+                  id="return-time"
+                  type="time"
+                  placeholder="Time"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Setup Transport */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-medium text-gray-700">
+              Setup Transport
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Operator" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="expedia">Expedia LLC</SelectItem>
+                    <SelectItem value="booking">Booking.com</SelectItem>
+                    <SelectItem value="airbnb">Airbnb Experiences</SelectItem>
+                    <SelectItem value="viator">Viator</SelectItem>
+                    <SelectItem value="getyourguide">GetYourGuide</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Registration Number" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="reg001">ABC-123-XYZ</SelectItem>
+                    <SelectItem value="reg002">DEF-456-UVW</SelectItem>
+                    <SelectItem value="reg003">GHI-789-RST</SelectItem>
+                    <SelectItem value="reg004">JKL-012-PQR</SelectItem>
+                    <SelectItem value="reg005">MNO-345-LMN</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Number of Seats"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Assign Driver" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="driver1">John Smith</SelectItem>
+                    <SelectItem value="driver2">Sarah Johnson</SelectItem>
+                    <SelectItem value="driver3">Michael Brown</SelectItem>
+                    <SelectItem value="driver4">Emily Davis</SelectItem>
+                    <SelectItem value="driver5">David Wilson</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Assign Guide" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="guide1">Maria Garcia</SelectItem>
+                    <SelectItem value="guide2">James Anderson</SelectItem>
+                    <SelectItem value="guide3">Linda Martinez</SelectItem>
+                    <SelectItem value="guide4">Robert Taylor</SelectItem>
+                    <SelectItem value="guide5">Jennifer Thomas</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Select>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Extra Guide" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="none">None</SelectItem>
+                    <SelectItem value="extra1">Carlos Rodriguez</SelectItem>
+                    <SelectItem value="extra2">Patricia Lee</SelectItem>
+                    <SelectItem value="extra3">Daniel White</SelectItem>
+                    <SelectItem value="extra4">Jessica Harris</SelectItem>
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-blue-500 mt-1">
+                  If you need to add an extra guide
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex justify-end gap-3 pt-4">
+            <Button
+              variant="ghost"
+              onClick={() => onOpenChange(false)}
+              className="rounded-full"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleConfirmSetup}
+              className="bg-blue-500 hover:bg-blue-600 rounded-full"
+            >
+              Confirm setup
+            </Button>
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default CreateNewTourDrawer;

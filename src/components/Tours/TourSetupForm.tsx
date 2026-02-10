@@ -117,7 +117,7 @@ const TourSetupForm = ({
 
         {/* Progress Tracker */}
         <ProgressTracker currentStep={currentStep} />
-        
+
         {/* Setup Transport */}
         <div className="mb-4">
           <h3 className="text-lg font-medium mb-4">Setup Transport</h3>
