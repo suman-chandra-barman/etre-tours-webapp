@@ -17,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { OperationsTour } from "@/app/(main)/direct-sales/operations-board/page";
+import { OperationsTour } from "@/app/(main)/direct-sales/page";
 
 interface EditOperationsTourModalProps {
   open: boolean;

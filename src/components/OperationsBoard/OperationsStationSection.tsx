@@ -1,7 +1,7 @@
 import {
   OperationsTour,
   StationSyncStatus,
-} from "@/app/(main)/direct-sales/operations-board/page";
+} from "@/app/(main)/direct-sales/page";
 import { OperationsTable } from "./OperationsTable";
 import { Printer } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";

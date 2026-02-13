@@ -83,7 +83,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
   ],
   "direct-sales": [
     {
-      href: "/direct-sales/operations-board",
+      href: "/direct-sales",
       label: "Operations",
       icon: <Monitor className="w-6 h-6 mb-1" />,
     }

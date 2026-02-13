@@ -1,4 +1,4 @@
-import { OperationsTour } from "@/app/(main)/direct-sales/operations-board/page";
+import { OperationsTour } from "@/app/(main)/direct-sales/page";
 
 export const getStatusStyles = (status: OperationsTour["status"]) => {
   switch (status) {

@@ -1,4 +1,4 @@
-import { StationSyncStatus } from "@/app/(main)/direct-sales/operations-board/page";
+import { StationSyncStatus } from "@/app/(main)/direct-sales/page";
 
 export function getSyncStatusDisplay(syncStatus: StationSyncStatus) {
   if (!syncStatus.isOnline) {
