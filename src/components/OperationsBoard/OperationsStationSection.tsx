@@ -13,7 +13,7 @@ interface OperationsStationSectionProps {
   stationLabel: string;
   tours: OperationsTour[];
   syncStatus: StationSyncStatus;
-  isEditable: boolean;
+  isHomeStation: boolean;
   onStatusChange: (tourId: number, newStatus: OperationsTour["status"]) => void;
   onTourUpdate: (updatedTour: OperationsTour) => void;
 }
@@ -23,7 +23,7 @@ export function OperationsStationSection({
   stationLabel,
   tours,
   syncStatus,
-  isEditable,
+  isHomeStation,
   onStatusChange,
   onTourUpdate,
 }: OperationsStationSectionProps) {
@@ -34,7 +34,7 @@ export function OperationsStationSection({
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md overflow-hidden ${isEditable ? styles.homeStation : styles.otherStation}`}
+      className={`bg-white rounded-lg shadow-md overflow-hidden ${isHomeStation ? styles.homeStation : styles.otherStation}`}
     >
       {/* Station Header */}
       <div className="bg-linear-to-r from-blue-600 to-blue-700 px-6 py-4 no-print">
@@ -52,7 +52,7 @@ export function OperationsStationSection({
             {getSyncStatusDisplay(syncStatus)}
           </div>
         </div>
-        {!isEditable && (
+        {!isHomeStation && (
           <div className="mt-2 text-sm text-blue-100 flex items-center gap-2">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path
@@ -65,7 +65,7 @@ export function OperationsStationSection({
           </div>
         )}
         {/* Print Button - Only shown for editable stations */}
-        {isEditable && tours.length > 0 && (
+        {isHomeStation && tours.length > 0 && (
           <Button
             onClick={handlePrint}
             variant="outline"
@@ -100,7 +100,7 @@ export function OperationsStationSection({
         ) : (
           <OperationsTable
             tours={tours}
-            isEditable={isEditable}
+            isHomeStation={isHomeStation}
             onStatusChange={onStatusChange}
             onTourUpdate={onTourUpdate}
           />

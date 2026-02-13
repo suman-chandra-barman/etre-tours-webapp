@@ -23,14 +23,14 @@ import {
 
 interface OperationsTableProps {
   tours: OperationsTour[];
-  isEditable: boolean;
+  isHomeStation: boolean;
   onStatusChange: (tourId: number, newStatus: OperationsTour["status"]) => void;
   onTourUpdate: (updatedTour: OperationsTour) => void;
 }
 
 export function OperationsTable({
   tours,
-  isEditable,
+  isHomeStation,
   onStatusChange,
   onTourUpdate,
 }: OperationsTableProps) {
@@ -73,7 +73,7 @@ export function OperationsTable({
             <TableHead className="font-semibold">Driver</TableHead>
             <TableHead className="font-semibold">Vehicle</TableHead>
             <TableHead className="font-semibold">Guide</TableHead>
-            {isEditable && (
+            {isHomeStation && (
               <TableHead className="font-semibold">Actions</TableHead>
             )}
           </TableRow>
@@ -83,7 +83,7 @@ export function OperationsTable({
             <TableRow
               key={tour.id}
               className={`${
-                isEditable ? "hover:bg-gray-50" : "opacity-75"
+                isHomeStation ? "hover:bg-gray-50" : "opacity-75"
               } transition-colors`}
             >
               <TableCell className="font-medium">
@@ -92,7 +92,7 @@ export function OperationsTable({
               <TableCell>{tour.returnTime}</TableCell>
               <TableCell className="font-medium">{tour.tourName}</TableCell>
               <TableCell>
-                {isEditable ? (
+                {isHomeStation ? (
                   <Select
                     value={tour.status}
                     onValueChange={(value) =>
@@ -141,7 +141,7 @@ export function OperationsTable({
                   tour.guide
                 )}
               </TableCell>
-              {isEditable && (
+              {isHomeStation && (
                 <TableCell className="flex items-center gap-4">
                   <button
                     className="text-blue-600 hover:text-blue-800 transition-colors"

@@ -171,7 +171,7 @@ export default function OperationsBoardPage() {
   });
 
   // Determine which station is editable based on user role
-  const getStationEditability = (stationRole: TUserRole): boolean => {
+  const checkIsHomeStation = (stationRole: TUserRole): boolean => {
     return role === stationRole;
   };
 
@@ -263,7 +263,7 @@ export default function OperationsBoardPage() {
           stationLabel="Home station"
           tours={directSalesTours}
           syncStatus={syncStatus["direct-sales"]}
-          isEditable={getStationEditability("direct-sales")}
+          isHomeStation={checkIsHomeStation("direct-sales")}
           onStatusChange={(tourId, newStatus) =>
             handleStatusChange("direct-sales", tourId, newStatus)
           }
@@ -278,7 +278,7 @@ export default function OperationsBoardPage() {
           stationLabel="Station 1"
           tours={cruiseSalesTours}
           syncStatus={syncStatus["cruise-sales"]}
-          isEditable={getStationEditability("cruise-sales")}
+          isHomeStation={checkIsHomeStation("cruise-sales")}
           onStatusChange={(tourId, newStatus) =>
             handleStatusChange("cruise-sales", tourId, newStatus)
           }
@@ -293,7 +293,7 @@ export default function OperationsBoardPage() {
           stationLabel="Station 2"
           tours={partnerSalesTours}
           syncStatus={syncStatus["partner-sales"]}
-          isEditable={getStationEditability("partner-sales")}
+          isHomeStation={checkIsHomeStation("partner-sales")}
           onStatusChange={(tourId, newStatus) =>
             handleStatusChange("partner-sales", tourId, newStatus)
           }
