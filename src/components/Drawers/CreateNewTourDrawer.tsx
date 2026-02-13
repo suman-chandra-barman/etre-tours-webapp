@@ -17,7 +17,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Ship, Car } from "lucide-react";
 import { getTodayDate } from "@/helper/date";
 
 interface CreateNewTourDrawerProps {
@@ -79,11 +78,12 @@ const CreateNewTourDrawer = ({
 
           {/* Tour Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">Tour Details</h3>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {/* Pick a Tour*/}
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Tour Name
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Pick a Tour" />
@@ -97,7 +97,10 @@ const CreateNewTourDrawer = ({
               </div>
 
               {/* Choose a Sub-contractor Company */}
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Transport Contractor
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Sub-contractor Company" />
@@ -112,18 +115,16 @@ const CreateNewTourDrawer = ({
             </div>
           </div>
 
-          {/* Departure */}
+          {/* Time Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">Departure</h3>
-
             <div className="grid grid-cols-2 gap-3">
               {/* Date & Time */}
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <Label
                   htmlFor="departure-date"
                   className="text-xs text-gray-500 font-normal"
                 >
-                  Date
+                  Departure Date
                 </Label>
                 <Input
                   id="departure-date"
@@ -134,12 +135,12 @@ const CreateNewTourDrawer = ({
                   onChange={(e) => setDepartureDate(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <Label
                   htmlFor="departure-time"
                   className="text-xs text-gray-500 font-normal"
                 >
-                  Time
+                  Departure Time
                 </Label>
                 <Input
                   id="departure-time"
@@ -152,7 +153,7 @@ const CreateNewTourDrawer = ({
 
             {/* Return */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <Label
                   htmlFor="return-date"
                   className="text-xs text-gray-500 font-normal"
@@ -168,7 +169,7 @@ const CreateNewTourDrawer = ({
                   onChange={(e) => setReturnDate(e.target.value)}
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <Label
                   htmlFor="return-time"
                   className="text-xs text-gray-500 font-normal"
@@ -185,13 +186,13 @@ const CreateNewTourDrawer = ({
             </div>
           </div>
 
-          {/* Setup Transport */}
+          {/* Assignment Details */}
           <div className="space-y-4">
-            <h3 className="text-sm font-medium text-gray-700">
-              Setup Transport
-            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Vehicle Number
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Vehicle Number" />
@@ -203,13 +204,19 @@ const CreateNewTourDrawer = ({
                   </SelectContent>
                 </Select>
               </div>
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Number of Seats
+                </Label>
                 <Input type="number" placeholder="Number of Seats" min="1" />
               </div>
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Driver Name
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Assign Driver" />
+                    <SelectValue placeholder="Select Driver" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="driver1">John Smith</SelectItem>
@@ -219,10 +226,13 @@ const CreateNewTourDrawer = ({
                   </SelectContent>
                 </Select>
               </div>
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Guide
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Assign Guide" />
+                    <SelectValue placeholder="Select Guide" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="guide1">Maria Garcia</SelectItem>
@@ -231,7 +241,10 @@ const CreateNewTourDrawer = ({
                   </SelectContent>
                 </Select>
               </div>
-              <div>
+              <div className="space-y-1">
+                <Label className="text-xs text-gray-500 font-normal">
+                  Extra Guide <span className="text-gray-400">(Optional)</span>
+                </Label>
                 <Select>
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Extra Guide" />
@@ -242,9 +255,6 @@ const CreateNewTourDrawer = ({
                     <SelectItem value="extra2">Patricia Lee</SelectItem>
                   </SelectContent>
                 </Select>
-                <p className="text-xs text-blue-500 mt-1">
-                  If you need to add an extra guide
-                </p>
               </div>
             </div>
           </div>
