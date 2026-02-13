@@ -3,13 +3,13 @@
   body * {
     visibility: hidden;
   }
-  
+
   /* Show only the print area */
   .printArea,
   .printArea * {
     visibility: visible;
   }
-  
+
   /* Position the print area at the top of the page */
   .printArea {
     position: absolute;
@@ -17,11 +17,25 @@
     top: 0;
     width: 100%;
   }
-  
+
   /* Remove any shadows, backgrounds, and borders from modal */
   .printArea {
     box-shadow: none !important;
     background: white !important;
+  }
+
+  /* Hide non-home stations when printing */
+  .otherStation {
+    display: none !important;
+  }
+
+  /* Ensure home station is visible */
+  .homeStation {
+    visibility: visible !important;
+  }
+
+  .homeStation * {
+    visibility: visible !important;
   }
 }
 

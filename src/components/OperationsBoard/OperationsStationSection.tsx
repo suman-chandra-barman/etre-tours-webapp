@@ -6,6 +6,7 @@ import { OperationsTable } from "./OperationsTable";
 import { Printer } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 import { Button } from "../ui/button";
+import { getSyncStatusDisplay } from "@/helper/operationsBoard";
 
 interface OperationsStationSectionProps {
   stationName: string;
@@ -31,38 +32,10 @@ export function OperationsStationSection({
     window.print();
   };
 
-  // Determine sync status display
-  const getSyncStatusDisplay = () => {
-    if (!syncStatus.isOnline) {
-      return (
-        <span className="flex items-center gap-2 text-red-600 font-semibold">
-          <span className="w-3 h-3 bg-red-600 rounded-full animate-pulse"></span>
-          OFFLINE
-        </span>
-      );
-    }
-
-    if (syncStatus.lastSyncMinutes !== undefined) {
-      return (
-        <span className="flex items-center gap-2 text-yellow-600 font-semibold">
-          <span className="w-3 h-3 bg-yellow-600 rounded-full"></span>
-          Last sync: {syncStatus.lastSyncMinutes} min ago
-        </span>
-      );
-    }
-
-    return (
-      <span className="flex items-center gap-2 text-green-600 font-semibold">
-        <span className="w-3 h-3 bg-green-600 rounded-full"></span>
-        Online
-      </span>
-    );
-  };
-
-  console.log("Operations", isEditable, onStatusChange);
-
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div
+      className={`bg-white rounded-lg shadow-md overflow-hidden ${isEditable ? styles.homeStation : styles.otherStation}`}
+    >
       {/* Station Header */}
       <div className="bg-linear-to-r from-blue-600 to-blue-700 px-6 py-4 no-print">
         <div className="flex items-center justify-between">
@@ -76,7 +49,7 @@ export function OperationsStationSection({
           </div>
 
           <div className="bg-white px-4 py-2 rounded-full">
-            {getSyncStatusDisplay()}
+            {getSyncStatusDisplay(syncStatus)}
           </div>
         </div>
         {!isEditable && (
