@@ -52,9 +52,13 @@ function LoginPage() {
         router.push("/admin");
         break;
       case "direct-sales":
+        router.push("/direct-sales");
+        break;
       case "cruise-sales":
+        router.push("/cruise-sales");
+        break;
       case "partner-sales":
-        router.push("/operations-board"); // Land on Operations Board for all sales roles
+        router.push("/partner-sales");
         break;
     }
   };
