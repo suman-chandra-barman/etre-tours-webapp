@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import PrintTicketModal from "../Modals/PrintTicketModal";
+import { Input } from "../ui/input";
 
 interface TicketingSectionProps {
   tourName: string;
@@ -140,20 +141,20 @@ const TicketingSection = ({
           <h3 className="text-sm font-medium text-gray-700 mb-3">
             Buyer&apos;s Details
           </h3>
-          <div className="space-y-3">
-            <input
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <Input
               type="text"
-              placeholder="Name"
+              placeholder="Full Name"
               value={buyerName}
               onChange={(e) => setBuyerName(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-gray-300"
             />
-            <input
+            <Input
               type="tel"
               placeholder="Phone Number"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border-gray-300 "
             />
           </div>
         </div>
@@ -163,7 +164,7 @@ const TicketingSection = ({
           <h3 className="text-sm font-medium text-gray-700 mb-3">
             Passenger Details
           </h3>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3">
             <NumberStepper
               label="Adults"
               value={adults}

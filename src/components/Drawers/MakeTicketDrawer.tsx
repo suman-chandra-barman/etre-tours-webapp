@@ -43,7 +43,7 @@ const MakeTicketDrawer = ({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent className="w-175 sm:max-w-175 overflow-y-auto">
+      <SheetContent className="w-full sm:max-w-2xl overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Make Ticket</SheetTitle>
         </SheetHeader>
