@@ -7,6 +7,7 @@ import { OperationsStationSection } from "@/components/OperationsBoard/Operation
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import CreateNewTourDrawer from "@/components/Drawers/CreateNewTourDrawer";
+import { tourStatus, TourStatus, userRoles } from "@/constants";
 
 // Station sync status type
 export interface StationSyncStatus {
@@ -20,7 +21,7 @@ export interface OperationsTour {
   departureTime: string;
   returnTime: string;
   tourName: string;
-  status: "Pre-departure" | "In progress" | "Completed" | "Cancelled";
+  status: TourStatus;
   seatsSold: number;
   seatsAvailable: number;
   transportContractor: string;
@@ -43,7 +44,7 @@ export default function OperationsBoardPage() {
       departureTime: "09:00",
       returnTime: "10:00",
       tourName: "Village and back",
-      status: "In progress",
+      status: tourStatus.IN_PROGRESS,
       seatsSold: 4,
       seatsAvailable: 2,
       transportContractor: "Fast delivery",
@@ -56,7 +57,7 @@ export default function OperationsBoardPage() {
       departureTime: "10:00",
       returnTime: "12:00",
       tourName: "Town adventure",
-      status: "In progress",
+      status: tourStatus.IN_PROGRESS,
       seatsSold: 4,
       seatsAvailable: 2,
       transportContractor: "Edmond Transport",
@@ -69,7 +70,7 @@ export default function OperationsBoardPage() {
       departureTime: "11:00",
       returnTime: "12:00",
       tourName: "Tribal encounter",
-      status: "Pre-departure",
+      status: tourStatus.PRE_DEPARTURE,
       seatsSold: 15,
       seatsAvailable: 0,
       transportContractor: "Nice Tours",
@@ -82,7 +83,7 @@ export default function OperationsBoardPage() {
       departureTime: "12:00",
       returnTime: "15:00",
       tourName: "Dine & Dine",
-      status: "Pre-departure",
+      status: tourStatus.PRE_DEPARTURE,
       seatsSold: 4,
       seatsAvailable: 12,
       transportContractor: "Island culture",
@@ -95,7 +96,7 @@ export default function OperationsBoardPage() {
       departureTime: "13:00",
       returnTime: "16:00",
       tourName: "Snorkel haven",
-      status: "Cancelled",
+      status: tourStatus.CANCELLED,
       seatsSold: 2,
       seatsAvailable: 8,
       transportContractor: "Cruising adventure",
@@ -111,7 +112,7 @@ export default function OperationsBoardPage() {
       departureTime: "08:00",
       returnTime: "10:00",
       tourName: "Forest walk",
-      status: "In progress",
+      status: tourStatus.IN_PROGRESS,
       seatsSold: 22,
       seatsAvailable: 2,
       transportContractor: "Fast delivery",
@@ -124,7 +125,7 @@ export default function OperationsBoardPage() {
       departureTime: "10:00",
       returnTime: "12:00",
       tourName: "Castle bay",
-      status: "In progress",
+      status: tourStatus.IN_PROGRESS,
       seatsSold: 89,
       seatsAvailable: 22,
       transportContractor: "Edmond Transport",
@@ -137,7 +138,7 @@ export default function OperationsBoardPage() {
       departureTime: "12:00",
       returnTime: "14:00",
       tourName: "Cave and dive",
-      status: "Pre-departure",
+      status: tourStatus.PRE_DEPARTURE,
       seatsSold: 38,
       seatsAvailable: 11,
       transportContractor: "Nice Tours",
@@ -153,7 +154,7 @@ export default function OperationsBoardPage() {
       departureTime: "09:00",
       returnTime: "10:00",
       tourName: "All day discover",
-      status: "In progress",
+      status: tourStatus.IN_PROGRESS,
       seatsSold: 22,
       seatsAvailable: 5,
       transportContractor: "Jimmy roadrunner",
@@ -182,19 +183,19 @@ export default function OperationsBoardPage() {
     newStatus: OperationsTour["status"],
   ) => {
     // Update the appropriate station's tours
-    if (stationRole === "direct-sales") {
+    if (stationRole === userRoles.DIRECT_SALES) {
       setDirectSalesTours((prev) =>
         prev.map((tour) =>
           tour.id === tourId ? { ...tour, status: newStatus } : tour,
         ),
       );
-    } else if (stationRole === "cruise-sales") {
+    } else if (stationRole === userRoles.CRUISE_SALES) {
       setCruiseSalesTours((prev) =>
         prev.map((tour) =>
           tour.id === tourId ? { ...tour, status: newStatus } : tour,
         ),
       );
-    } else if (stationRole === "partner-sales") {
+    } else if (stationRole === userRoles.PARTNER_SALES) {
       setPartnerSalesTours((prev) =>
         prev.map((tour) =>
           tour.id === tourId ? { ...tour, status: newStatus } : tour,
@@ -213,15 +214,15 @@ export default function OperationsBoardPage() {
     stationRole: TUserRole,
     updatedTour: OperationsTour,
   ) => {
-    if (stationRole === "direct-sales") {
+    if (stationRole === userRoles.DIRECT_SALES) {
       setDirectSalesTours((prev) =>
         prev.map((tour) => (tour.id === updatedTour.id ? updatedTour : tour)),
       );
-    } else if (stationRole === "cruise-sales") {
+    } else if (stationRole === userRoles.CRUISE_SALES) {
       setCruiseSalesTours((prev) =>
         prev.map((tour) => (tour.id === updatedTour.id ? updatedTour : tour)),
       );
-    } else if (stationRole === "partner-sales") {
+    } else if (stationRole === userRoles.PARTNER_SALES) {
       setPartnerSalesTours((prev) =>
         prev.map((tour) => (tour.id === updatedTour.id ? updatedTour : tour)),
       );
