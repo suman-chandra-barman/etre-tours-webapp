@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { tourStatus } from "@/constants";
 
 interface OperationsTableProps {
   tours: OperationsTour[];
@@ -107,12 +108,12 @@ export function OperationsTable({
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Pre-departure">
+                      <SelectItem value={tourStatus.PRE_DEPARTURE}>
                         Pre-departure
                       </SelectItem>
-                      <SelectItem value="In progress">In progress</SelectItem>
-                      <SelectItem value="Completed">Completed</SelectItem>
-                      <SelectItem value="Cancelled">Cancelled</SelectItem>
+                      <SelectItem value={tourStatus.IN_PROGRESS}>In progress</SelectItem>
+                      <SelectItem value={tourStatus.COMPLETED}>Completed</SelectItem>
+                      <SelectItem value={tourStatus.CANCELLED}>Cancelled</SelectItem>
                     </SelectContent>
                   </Select>
                 ) : (
