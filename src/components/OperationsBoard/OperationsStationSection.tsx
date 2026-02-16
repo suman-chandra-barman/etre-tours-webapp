@@ -37,7 +37,7 @@ export function OperationsStationSection({
       className={`bg-white rounded-lg shadow-md overflow-hidden ${isHomeStation ? styles.homeStation : styles.otherStation}`}
     >
       {/* Station Header */}
-      <div className="bg-linear-to-r from-blue-600 to-blue-700 px-6 py-4 no-print">
+      <div className="bg-linear-to-r from-blue-600 to-blue-700 px-4 py-3 no-print">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center gap-3">
@@ -78,7 +78,7 @@ export function OperationsStationSection({
       </div>
 
       {/* Station Tours Table */}
-      <div className={`p-6 ${styles.printArea}`}>
+      <div className={`p-3 ${styles.printArea}`}>
         {/* Print Header - Only visible when printing */}
         <div className="hidden print:block mb-4">
           <h1 className="text-2xl font-bold">{stationName}</h1>

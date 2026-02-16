@@ -57,25 +57,41 @@ export function OperationsTable({
     <div className="overflow-x-auto">
       <Table>
         <TableHeader>
-          <TableRow className="bg-gray-50">
-            <TableHead className="font-semibold">Departure time</TableHead>
-            <TableHead className="font-semibold">Return time</TableHead>
-            <TableHead className="font-semibold">Tour name</TableHead>
-            <TableHead className="font-semibold">Status</TableHead>
-            <TableHead className="font-semibold text-center">
+          <TableRow className="bg-gray-50 h-12">
+            <TableHead className="font-semibold text-base px-3">
+              Departure time
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Return time
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Tour name
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Status
+            </TableHead>
+            <TableHead className="font-semibold text-base text-center px-3">
               Seats sold
             </TableHead>
-            <TableHead className="font-semibold text-center">
+            <TableHead className="font-semibold text-base text-center px-3">
               Seats available
             </TableHead>
-            <TableHead className="font-semibold">
+            <TableHead className="font-semibold text-base px-3">
               Transport contractor
             </TableHead>
-            <TableHead className="font-semibold">Driver</TableHead>
-            <TableHead className="font-semibold">Vehicle</TableHead>
-            <TableHead className="font-semibold">Guide</TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Driver
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Vehicle
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
+              Guide
+            </TableHead>
             {isHomeStation && (
-              <TableHead className="font-semibold">Actions</TableHead>
+              <TableHead className="font-semibold text-base px-3">
+                Actions
+              </TableHead>
             )}
           </TableRow>
         </TableHeader>
@@ -85,14 +101,18 @@ export function OperationsTable({
               key={tour.id}
               className={`${
                 isHomeStation ? "hover:bg-gray-50" : "opacity-75"
-              } transition-colors`}
+              } transition-colors h-14`}
             >
-              <TableCell className="font-medium">
+              <TableCell className="font-medium text-base px-3">
                 {tour.departureTime}
               </TableCell>
-              <TableCell>{tour.returnTime}</TableCell>
-              <TableCell className="font-medium">{tour.tourName}</TableCell>
-              <TableCell>
+              <TableCell className="text-base px-3">
+                {tour.returnTime}
+              </TableCell>
+              <TableCell className="font-medium text-base px-3">
+                {tour.tourName}
+              </TableCell>
+              <TableCell className="px-3">
                 {isHomeStation ? (
                   <Select
                     value={tour.status}
@@ -111,9 +131,15 @@ export function OperationsTable({
                       <SelectItem value={tourStatus.PRE_DEPARTURE}>
                         Pre-departure
                       </SelectItem>
-                      <SelectItem value={tourStatus.IN_PROGRESS}>In progress</SelectItem>
-                      <SelectItem value={tourStatus.COMPLETED}>Completed</SelectItem>
-                      <SelectItem value={tourStatus.CANCELLED}>Cancelled</SelectItem>
+                      <SelectItem value={tourStatus.IN_PROGRESS}>
+                        In progress
+                      </SelectItem>
+                      <SelectItem value={tourStatus.COMPLETED}>
+                        Completed
+                      </SelectItem>
+                      <SelectItem value={tourStatus.CANCELLED}>
+                        Cancelled
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 ) : (
@@ -126,16 +152,20 @@ export function OperationsTable({
                   </span>
                 )}
               </TableCell>
-              <TableCell className="text-center font-semibold">
+              <TableCell className="text-center font-semibold text-base px-3">
                 {tour.seatsSold}
               </TableCell>
-              <TableCell className="text-center font-semibold">
+              <TableCell className="text-center font-semibold text-base px-3">
                 {tour.seatsAvailable}
               </TableCell>
-              <TableCell>{tour.transportContractor}</TableCell>
-              <TableCell>{tour.driver}</TableCell>
-              <TableCell className="font-mono">{tour.vehicle}</TableCell>
-              <TableCell>
+              <TableCell className="text-base px-3">
+                {tour.transportContractor}
+              </TableCell>
+              <TableCell className="text-base px-3">{tour.driver}</TableCell>
+              <TableCell className="font-mono text-base px-3">
+                {tour.vehicle}
+              </TableCell>
+              <TableCell className="text-base px-3">
                 {tour.guide === "None" ? (
                   <span className="text-gray-400 italic">None</span>
                 ) : (
@@ -143,7 +173,7 @@ export function OperationsTable({
                 )}
               </TableCell>
               {isHomeStation && (
-                <TableCell className="flex items-center gap-4">
+                <TableCell className="flex items-center gap-2 px-3">
                   <button
                     className="text-blue-600 hover:text-blue-800 transition-colors"
                     onClick={() => handleEditClick(tour)}

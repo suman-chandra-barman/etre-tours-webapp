@@ -24,13 +24,13 @@ const MakeTicketDrawer = ({
 
   const handleConfirm = (ticketData: {
     buyerName: string;
-    phoneNumber: string;
     adults: number;
     children: number;
     infant: number;
     foc: number;
     paymentMethod: string;
     total: number;
+    notes: string;
   }) => {
     console.log("Ticket confirmed:", ticketData);
     // Handle ticket creation/confirmation

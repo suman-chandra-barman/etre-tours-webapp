@@ -13,6 +13,7 @@ import {
 } from "../ui/select";
 import PrintTicketModal from "../Modals/PrintTicketModal";
 import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
 
 interface TicketingSectionProps {
   tourName: string;
@@ -23,13 +24,13 @@ interface TicketingSectionProps {
 
 interface TicketData {
   buyerName: string;
-  phoneNumber: string;
   adults: number;
   children: number;
   infant: number;
   foc: number;
   paymentMethod: "cards" | "xpf" | "usd" | "aud" | "euro";
   total: number;
+  notes: string;
 }
 
 const TicketingSection = ({
@@ -39,7 +40,6 @@ const TicketingSection = ({
   onCancel,
 }: TicketingSectionProps) => {
   const [buyerName, setBuyerName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [adults, setAdults] = useState(0);
   const [children, setChildren] = useState(0);
   const [infant, setInfant] = useState(0);
@@ -47,6 +47,7 @@ const TicketingSection = ({
   const [paymentMethod, setPaymentMethod] = useState<
     "cards" | "xpf" | "usd" | "aud" | "euro"
   >("xpf");
+  const [notes, setNotes] = useState("");
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const ADULT_PRICE = 49.0;
@@ -106,13 +107,13 @@ const TicketingSection = ({
     if (onConfirm) {
       onConfirm({
         buyerName,
-        phoneNumber,
         adults,
         children,
         infant,
         foc,
         paymentMethod,
         total,
+        notes,
       });
     }
   };
@@ -141,22 +142,13 @@ const TicketingSection = ({
           <h3 className="text-sm font-medium text-gray-700 mb-3">
             Buyer&apos;s Details
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <Input
-              type="text"
-              placeholder="Full Name"
-              value={buyerName}
-              onChange={(e) => setBuyerName(e.target.value)}
-              className="w-full border-gray-300"
-            />
-            <Input
-              type="tel"
-              placeholder="Phone Number"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              className="w-full border-gray-300 "
-            />
-          </div>
+          <Input
+            type="text"
+            placeholder="Full Name"
+            value={buyerName}
+            onChange={(e) => setBuyerName(e.target.value)}
+            className="w-full border-gray-300"
+          />
         </div>
 
         {/* Passenger Details */}
@@ -209,6 +201,20 @@ const TicketingSection = ({
               <span>${total.toFixed(2)}</span>
             </div>
           </div>
+        </div>
+
+        {/* Notes / Comments */}
+        <div className="mb-6">
+          <h3 className="text-sm font-medium text-gray-700 mb-3">
+            Notes / Comments
+          </h3>
+          <Textarea
+            placeholder="Add any notes (e.g. late departure, sick passenger, refund requested, operational issue, special requirements...)"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            rows={3}
+            className="w-full border-gray-300 resize-none"
+          />
         </div>
 
         {/* Payment Method */}
