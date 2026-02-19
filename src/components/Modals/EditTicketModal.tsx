@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import { NumberStepper } from "@/components/ui/number-stepper";
 import {
   Select,
@@ -43,6 +44,11 @@ export default function EditTicketModal({
     ticket?.paymentMethod || "",
   );
   const [notes, setNotes] = useState(ticket?.notes || "");
+  const [transportCompany, setTransportCompany] = useState(
+    ticket?.transportCompany || "",
+  );
+  const [driver, setDriver] = useState(ticket?.driver || "");
+  const [guide, setGuide] = useState(ticket?.guide || "");
 
   const ADULT_PRICE = 49.0;
   const CHILD_PRICE = 39.0;
@@ -57,6 +63,9 @@ export default function EditTicketModal({
       setFoc(ticket.foc);
       setPaymentMethod(ticket.paymentMethod);
       setNotes(ticket.notes);
+      setTransportCompany(ticket.transportCompany || "");
+      setDriver(ticket.driver || "");
+      setGuide(ticket.guide || "");
     } else if (!open) {
       // Reset when closed
       setBuyerName("");
@@ -66,6 +75,9 @@ export default function EditTicketModal({
       setFoc(0);
       setPaymentMethod("");
       setNotes("");
+      setTransportCompany("");
+      setDriver("");
+      setGuide("");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -87,6 +99,9 @@ export default function EditTicketModal({
       paymentMethod,
       amount: calculateTotal(),
       notes,
+      transportCompany,
+      driver,
+      guide,
     };
 
     onSave(updatedTicket);
@@ -99,21 +114,82 @@ export default function EditTicketModal({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl">Edit Ticket</DialogTitle>
-          <p className="text-gray-600">{ticket.tourName}</p>
+          <p>{ticket.tourName}</p>
         </DialogHeader>
 
-        <div className="space-y-4 mt-4">
+        <div className="space-y-4">
           {/* Buyer Name */}
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
-              Buyer Name
-            </label>
-            <Input
-              type="text"
-              placeholder="Full Name"
-              value={buyerName}
-              onChange={(e) => setBuyerName(e.target.value)}
-            />
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="text-sm font-normal text-gray-700 block">
+                Buyer Name
+              </label>
+              <Input
+                type="text"
+                placeholder="Full Name"
+                value={buyerName}
+                onChange={(e) => setBuyerName(e.target.value)}
+              />
+            </div>
+            {/* Transport Company */}
+            <div>
+              <Label className="text-sm text-gray-700 font-normal">
+                Transport Company
+              </Label>
+              <Select
+                value={transportCompany}
+                onValueChange={setTransportCompany}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Company" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Fast delivery">Fast delivery</SelectItem>
+                  <SelectItem value="Edmond Transport">
+                    Edmond Transport
+                  </SelectItem>
+                  <SelectItem value="Nice Tours">Nice Tours</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Driver */}
+            <div>
+              <Label className="text-sm text-gray-700 font-normal">
+                Driver
+              </Label>
+              <Select value={driver} onValueChange={setDriver}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Driver" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Paul John">Paul John</SelectItem>
+                  <SelectItem value="Joseph King">Joseph King</SelectItem>
+                  <SelectItem value="Walter Smith">Walter Smith</SelectItem>
+                  <SelectItem value="Ben Harper">Ben Harper</SelectItem>
+                  <SelectItem value="Michael Jordan">Michael Jordan</SelectItem>
+                  <SelectItem value="Fred Carson">Fred Carson</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Guide */}
+            <div >
+              <Label className="text-sm text-gray-700 font-normal">Guide</Label>
+              <Select value={guide} onValueChange={setGuide}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Guide" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="None">None</SelectItem>
+                  <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
+                  <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
+                  <SelectItem value="Brenda Davidson">
+                    Brenda Davidson
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           {/* Passenger Details */}
@@ -152,7 +228,9 @@ export default function EditTicketModal({
               <Button
                 type="button"
                 onClick={() => setPaymentMethod("credit card")}
-                variant={paymentMethod === "credit card" ? "default" : "outline"}
+                variant={
+                  paymentMethod === "credit card" ? "default" : "outline"
+                }
                 className={`px-4 lg:px-8 rounded-full ${
                   paymentMethod === "credit card"
                     ? "bg-gray-900 hover:bg-gray-800"

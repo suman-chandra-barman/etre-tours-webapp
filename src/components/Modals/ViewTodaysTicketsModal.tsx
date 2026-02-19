@@ -33,6 +33,9 @@ export interface Ticket {
   status: "in-progress" | "cancelled" | "refunded";
   notes: string;
   createdAt: Date;
+  transportCompany?: string;
+  driver?: string;
+  guide?: string;
 }
 
 interface ViewTodaysTicketsModalProps {
