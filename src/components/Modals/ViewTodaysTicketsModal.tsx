@@ -30,7 +30,7 @@ export interface Ticket {
   foc: number;
   paymentMethod: string;
   amount: number;
-  status: "active" | "cancelled" | "refunded";
+  status: "in-progress" | "cancelled" | "refunded";
   notes: string;
   createdAt: Date;
 }
@@ -69,8 +69,8 @@ export default function ViewTodaysTicketsModal({
 
   const getStatusBadge = (status: Ticket["status"]) => {
     switch (status) {
-      case "active":
-        return <Badge className="bg-green-600">Active</Badge>;
+      case "in-progress":
+        return <Badge className="bg-green-600">In Progress</Badge>;
       case "cancelled":
         return <Badge className="bg-red-600">Cancelled</Badge>;
       case "refunded":
@@ -159,7 +159,7 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0"
                               onClick={() => handleEditClick(ticket)}
-                              disabled={ticket.status !== "active"}
+                              disabled={ticket.status !== "in-progress"}
                               title="Edit ticket"
                             >
                               <Edit className="w-4 h-4" />
@@ -169,7 +169,7 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
                               onClick={() => onCancelTicket(ticket.id)}
-                              disabled={ticket.status !== "active"}
+                              disabled={ticket.status !== "in-progress"}
                               title="Cancel ticket"
                             >
                               <XCircle className="w-4 h-4" />
@@ -179,7 +179,7 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0 text-orange-600 hover:text-orange-700"
                               onClick={() => onRefundTicket(ticket.id)}
-                              disabled={ticket.status !== "active"}
+                              disabled={ticket.status !== "in-progress"}
                               title="Mark refund"
                             >
                               <RefreshCcw className="w-4 h-4" />

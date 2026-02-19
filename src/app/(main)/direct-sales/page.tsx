@@ -242,8 +242,7 @@ export default function OperationsBoardPage() {
               Operations Board
             </h1>
             <div className="mt-2 space-y-1">
-              <p className="text-lg font-semibold text-gray-800">
-                📅{" "}
+              <p className=" text-gray-600"> Live operations for
                 {new Date().toLocaleDateString("en-US", {
                   weekday: "long",
                   year: "numeric",
@@ -251,6 +250,7 @@ export default function OperationsBoardPage() {
                   day: "numeric",
                 })}
               </p>
+              <p className="text-lg font-semibold">Carnival Adventurer</p>
             </div>
           </div>
           <div className="flex gap-2">

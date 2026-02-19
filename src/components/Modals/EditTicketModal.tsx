@@ -151,15 +151,15 @@ export default function EditTicketModal({
             <div className="flex gap-3">
               <Button
                 type="button"
-                onClick={() => setPaymentMethod("cards")}
-                variant={paymentMethod === "cards" ? "default" : "outline"}
+                onClick={() => setPaymentMethod("credit card")}
+                variant={paymentMethod === "credit card" ? "default" : "outline"}
                 className={`px-4 lg:px-8 rounded-full ${
-                  paymentMethod === "cards"
+                  paymentMethod === "credit card"
                     ? "bg-gray-900 hover:bg-gray-800"
                     : ""
                 }`}
               >
-                Cards
+                Credit Card
               </Button>
               <Select
                 value={paymentMethod}

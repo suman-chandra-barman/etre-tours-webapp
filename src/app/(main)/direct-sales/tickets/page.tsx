@@ -25,7 +25,7 @@ export interface Ticket {
   foc: number;
   paymentMethod: string;
   amount: number;
-  status: "active" | "cancelled" | "refunded";
+  status: "in-progress" | "cancelled" | "refunded";
   notes: string;
   createdAt: Date;
 }
@@ -45,9 +45,9 @@ export default function TicketsPage() {
       children: 1,
       infant: 0,
       foc: 0,
-      paymentMethod: "cards",
+      paymentMethod: "credit card",
       amount: 137.0,
-      status: "active",
+      status: "in-progress",
       notes: "Confirmed booking",
       createdAt: new Date(),
     },
@@ -61,7 +61,7 @@ export default function TicketsPage() {
       foc: 0,
       paymentMethod: "usd",
       amount: 196.0,
-      status: "active",
+      status: "in-progress",
       notes: "Late departure requested",
       createdAt: new Date(),
     },
@@ -125,8 +125,8 @@ export default function TicketsPage() {
 
   const getStatusBadge = (status: Ticket["status"]) => {
     switch (status) {
-      case "active":
-        return <Badge className="bg-green-600">Active</Badge>;
+      case "in-progress":
+        return <Badge className="bg-green-600">In Progress</Badge>;
       case "cancelled":
         return <Badge className="bg-red-600">Cancelled</Badge>;
       case "refunded":
@@ -241,7 +241,7 @@ export default function TicketsPage() {
                           variant="ghost"
                           className="h-8 w-8 p-0"
                           onClick={() => handleEditClick(ticket)}
-                          disabled={ticket.status !== "active"}
+                          disabled={ticket.status !== "in-progress"}
                           title="Edit ticket"
                         >
                           <Edit className="w-4 h-4" />
@@ -251,7 +251,7 @@ export default function TicketsPage() {
                           variant="ghost"
                           className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
                           onClick={() => handleCancelTicket(ticket.id)}
-                          disabled={ticket.status !== "active"}
+                          disabled={ticket.status !== "in-progress"}
                           title="Cancel ticket"
                         >
                           <XCircle className="w-4 h-4" />
@@ -261,7 +261,7 @@ export default function TicketsPage() {
                           variant="ghost"
                           className="h-8 w-8 p-0 text-orange-600 hover:text-orange-700"
                           onClick={() => handleRefundTicket(ticket.id)}
-                          disabled={ticket.status !== "active"}
+                          disabled={ticket.status !== "in-progress"}
                           title="Mark refund"
                         >
                           <RefreshCcw className="w-4 h-4" />

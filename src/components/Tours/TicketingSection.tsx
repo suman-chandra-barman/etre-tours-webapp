@@ -28,7 +28,8 @@ interface TicketData {
   children: number;
   infant: number;
   foc: number;
-  paymentMethod: "cards" | "xpf" | "usd" | "aud" | "euro";
+  paymentMethod: "credit card" | "xpf" | "usd" | "aud" | "euro";
+
   total: number;
   notes: string;
 }
@@ -45,7 +46,7 @@ const TicketingSection = ({
   const [infant, setInfant] = useState(0);
   const [foc, setFoc] = useState(0);
   const [paymentMethod, setPaymentMethod] = useState<
-    "cards" | "xpf" | "usd" | "aud" | "euro"
+    "credit card" | "xpf" | "usd" | "aud" | "euro"
   >("xpf");
   const [notes, setNotes] = useState("");
   const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
@@ -224,13 +225,13 @@ const TicketingSection = ({
           </h3>
           <div className="flex gap-3">
             <Button
-              onClick={() => setPaymentMethod("cards")}
-              variant={paymentMethod === "cards" ? "default" : "outline"}
+              onClick={() => setPaymentMethod("credit card")}
+              variant={paymentMethod === "credit card" ? "default" : "outline"}
               className={`px-4 lg:px-8 rounded-full ${
-                paymentMethod === "cards" ? "bg-gray-900 hover:bg-gray-800" : ""
+                paymentMethod === "credit card" ? "bg-gray-900 hover:bg-gray-800" : ""
               }`}
             >
-              Cards
+              Credit Card
             </Button>
             <Select
               value={paymentMethod}
