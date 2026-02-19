@@ -32,7 +32,8 @@ const CreateNewTourDrawer = ({
     "boat",
   );
   const [departureDate, setDepartureDate] = useState(getTodayDate());
-  const [returnDate, setReturnDate] = useState(getTodayDate());
+  const [returnDate, setReturnDate] = useState("");
+  const [returnTime, setReturnTime] = useState("18:00"); 
 
   const handleConfirmSetup = () => {
     // Handle form submission here
@@ -166,23 +167,26 @@ const CreateNewTourDrawer = ({
                   placeholder="Return"
                   className="w-full"
                   value={returnDate}
-                  onChange={(e) => setReturnDate(e.target.value)}
                 />
               </div>
-              <div className="space-y-1">
-                <Label
-                  htmlFor="return-time"
-                  className="text-xs text-gray-500 font-normal"
-                >
-                  Return Time
-                </Label>
-                <Input
-                  id="return-time"
-                  type="time"
-                  placeholder="Time"
-                  className="w-full"
-                />
-              </div>
+              {returnTime && (
+                <div className="space-y-1">
+                  <Label
+                    htmlFor="return-time"
+                    className="text-xs text-gray-500 font-normal"
+                  >
+                    Return Time
+                  </Label>
+                  <Input
+                    id="return-time"
+                    type="time"
+                    value={returnTime}
+                    disabled
+                    placeholder="Time"
+                    className="w-full"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
