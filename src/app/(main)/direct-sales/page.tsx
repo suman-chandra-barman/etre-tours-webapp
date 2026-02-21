@@ -35,7 +35,7 @@ export interface OperationsTour {
 
 export default function OperationsBoardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   const { role } = useUser();
 
   // Mock data for TODAY's tours - in real app, this would come from API
@@ -242,7 +242,9 @@ export default function OperationsBoardPage() {
               Operations Board
             </h1>
             <div className="mt-2 space-y-1">
-              <p className=" text-gray-600"> Live operations for
+              <p className=" text-gray-600">
+                {" "}
+                Live operations for
                 {new Date().toLocaleDateString("en-US", {
                   weekday: "long",
                   year: "numeric",
@@ -250,7 +252,15 @@ export default function OperationsBoardPage() {
                   day: "numeric",
                 })}
               </p>
-              <p className="text-lg font-semibold">Carnival Adventurer</p>
+              <div className="flex items-center gap-3">
+                <p className="text-lg font-semibold">Carnival Adventurer</p>
+                <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-lg">
+                  <span className="text-sm text-gray-600">Return Time:</span>
+                  <span className="text-sm font-semibold text-blue-700">
+                    17:00
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex gap-2">
