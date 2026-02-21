@@ -18,6 +18,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OperationsTour } from "@/app/(main)/direct-sales/page";
+import { Separator } from "@/components/ui/separator";
+
+export function SeparatorVertical() {
+  return (
+    <div className="flex h-5 items-center gap-4 text-sm">
+      <div>Blog</div>
+      <Separator orientation="vertical" />
+      <div>Docs</div>
+      <Separator orientation="vertical" />
+      <div>Source</div>
+    </div>
+  );
+}
 
 interface EditOperationsTourModalProps {
   open: boolean;
@@ -278,29 +291,8 @@ const EditOperationsTourModal = ({
             </div>
           </div>
 
-          {/* Status */}
-          <div className="space-y-1">
-            <Label className="text-xs text-gray-500 font-normal">Status</Label>
-            <Select
-              value={status}
-              onValueChange={(value) =>
-                setStatus(value as OperationsTour["status"])
-              }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="Pre-departure">Pre-departure</SelectItem>
-                <SelectItem value="In progress">In progress</SelectItem>
-                <SelectItem value="Completed">Completed</SelectItem>
-                <SelectItem value="Cancelled">Cancelled</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
           {/* Action Buttons */}
-          <div className="flex justify-end gap-3 pt-4">
+          <div className="flex justify-end items-center gap-3 pt-4">
             <Button
               variant="ghost"
               onClick={() => onOpenChange(false)}
@@ -308,6 +300,14 @@ const EditOperationsTourModal = ({
             >
               Cancel
             </Button>
+
+            <Button
+              onClick={handleSave}
+              className="bg-blue-500 hover:bg-blue-600 rounded-full"
+            >
+              Create New Tour
+            </Button>
+            <div className="h-10 w-px bg-gray-300" />
             <Button
               onClick={handleSave}
               className="bg-blue-500 hover:bg-blue-600 rounded-full"
