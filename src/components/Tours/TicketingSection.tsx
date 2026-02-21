@@ -89,9 +89,10 @@ const TicketingSection = ({
     guide: "GUY HAWKINS", // This should come from your tour data
     from: "DEMO LOCATION", // This should come from your tour data
     vehicle: "ISLAND TRANSPORT LTD.", // This should come from your tour data
-    to: tourName || "LAGOON SNORKELING",
+    tour: tourName || "LAGOON SNORKELING",
     registrationNumber: "PE 27095", // This should come from your tour data
     departure: formatDepartureTime(new Date()),
+    return: formatDepartureTime(new Date(new Date().setDate(new Date().getDate() + 1))), // Example return time (1 day later)
     tourCode: "CV57 XNK", // This should come from your tour data
     adults: adults,
     adultPrice: ADULT_PRICE,
