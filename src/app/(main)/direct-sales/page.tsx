@@ -255,7 +255,15 @@ export default function OperationsBoardPage() {
               <div className="flex items-center gap-3">
                 <p className="text-lg font-semibold">Carnival Adventurer</p>
                 <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-lg">
-                  <span className="text-sm text-gray-600">Return Time:</span>
+                  <span className="text-sm text-gray-600">Departure Time:</span>
+                  <span className="text-sm font-semibold text-blue-700">
+                    08:00
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 px-3 py-1 bg-blue-50 border border-blue-200 rounded-lg">
+                  <span className="text-sm text-gray-600">
+                    Final Tender Time:
+                  </span>
                   <span className="text-sm font-semibold text-blue-700">
                     17:00
                   </span>

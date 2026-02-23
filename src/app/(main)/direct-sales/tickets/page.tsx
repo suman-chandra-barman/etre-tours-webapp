@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import EditTicketModal from "@/components/Modals/EditTicketModal";
 import { useRouter } from "next/navigation";
+import PrintTicketModal from "@/components/Modals/PrintTicketModal";
 
 export interface Ticket {
   id: number;
@@ -31,10 +32,12 @@ export interface Ticket {
 }
 
 export default function TicketsPage() {
-  const router = useRouter();
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
+  const [ticketForPrint, setTicketForPrint] = useState<Ticket | null>(null);
 
+  const router = useRouter();
   // Mock tickets data - in real app, this would come from API
   const [tickets, setTickets] = useState<Ticket[]>([
     {
@@ -119,8 +122,8 @@ export default function TicketsPage() {
   };
 
   const handleReprintTicket = (ticket: Ticket) => {
-    console.log("Reprinting ticket:", ticket);
-    // In real app, this would trigger print modal
+    setTicketForPrint(ticket);
+    setIsPrintModalOpen(true);
   };
 
   const getStatusBadge = (status: Ticket["status"]) => {
@@ -136,6 +139,78 @@ export default function TicketsPage() {
 
   const getTotalPassengers = (ticket: Ticket) => {
     return ticket.adults + ticket.children + ticket.infant + ticket.foc;
+  };
+
+  // Format date for ticket
+  const formatDate = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
+  };
+
+  // Format departure time
+  const formatDepartureTime = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    return `${day} ${month}, ${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  // Prepare ticket data for printing
+  const getPrintTicketData = (ticket: Ticket | null) => {
+    if (!ticket) {
+      return {
+        dateOfIssue: formatDate(new Date()),
+        driver: "BROOKLYN SIMMONS",
+        buyer: "BUYER NAME",
+        guide: "GUY HAWKINS",
+        from: "DEMO LOCATION",
+        transport: "ISLAND TRANSPORT LTD.",
+        tour: "TOUR NAME",
+        registrationNumber: "PE 27095",
+        departure: formatDepartureTime(new Date()),
+        return: formatDepartureTime(new Date()),
+        tourCode: "CV57 XNK",
+        adults: 0,
+        adultPrice: 49.0,
+        children: 0,
+        childPrice: 39.0,
+        totalFare: 0,
+      };
+    }
+
+    const ADULT_PRICE = 49.0;
+    const CHILD_PRICE = 39.0;
+
+    return {
+      dateOfIssue: formatDate(ticket.createdAt),
+      driver: "BROOKLYN SIMMONS", // TODO: Get from tour data
+      buyer: ticket.buyerName,
+      guide: "GUY HAWKINS", // TODO: Get from tour data
+      from: "DEMO LOCATION", // TODO: Get from tour data
+      transport: "ISLAND TRANSPORT LTD.", // TODO: Get from tour data
+      tour: ticket.tourName,
+      registrationNumber: "PE 27095", // TODO: Get from tour data
+      departure: formatDepartureTime(ticket.createdAt),
+      return: formatDepartureTime(
+        new Date(ticket.createdAt.getTime() + 24 * 60 * 60 * 1000),
+      ),
+      tourCode: "CV57 XNK", // TODO: Get from tour data
+      adults: ticket.adults,
+      adultPrice: ADULT_PRICE,
+      children: ticket.children,
+      childPrice: CHILD_PRICE,
+      totalFare: ticket.amount,
+    };
   };
 
   return (
@@ -213,9 +288,7 @@ export default function TicketsPage() {
                     </TableCell>
                     <TableCell className="text-center">
                       <div className="text-base">
-                        <div>
-                           {getTotalPassengers(ticket)}
-                        </div>
+                        <div>{getTotalPassengers(ticket)}</div>
                         <div className="text-gray-500 text-sm">
                           A:{ticket.adults} C:{ticket.children} I:
                           {ticket.infant} F:{ticket.foc}
@@ -223,6 +296,23 @@ export default function TicketsPage() {
                       </div>
                     </TableCell>
                     <TableCell className="uppercase text-base">
+                      {/* Print Ticket Modal */}
+                      <PrintTicketModal
+                        isOpen={isPrintModalOpen}
+                        onClose={() => {
+                          setIsPrintModalOpen(false);
+                          setTicketForPrint(null);
+                        }}
+                        onSave={() => {
+                          // Ticket is already saved, just confirm the action
+                          console.log(
+                            "Ticket saved successfully:",
+                            ticketForPrint,
+                          );
+                          // In real app, this could update the ticket status or trigger an API call
+                        }}
+                        ticketData={getPrintTicketData(ticketForPrint)}
+                      />{" "}
                       {ticket.paymentMethod}
                     </TableCell>
                     <TableCell className="font-semibold text-base">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Armchair, Printer } from "lucide-react";
+import { Armchair } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NumberStepper } from "@/components/ui/number-stepper";
 import {
@@ -11,33 +11,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import PrintTicketModal from "../Modals/PrintTicketModal";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 
 interface TicketingSectionProps {
   tourName: string;
   availableSeats?: number;
-  onConfirm?: (ticketData: TicketData) => void;
   onCancel?: () => void;
-}
-
-interface TicketData {
-  buyerName: string;
-  adults: number;
-  children: number;
-  infant: number;
-  foc: number;
-  paymentMethod: "credit card" | "xpf" | "usd" | "aud" | "euro";
-
-  total: number;
-  notes: string;
 }
 
 const TicketingSection = ({
   tourName,
   availableSeats = 33,
-  onConfirm,
   onCancel,
 }: TicketingSectionProps) => {
   const [buyerName, setBuyerName] = useState("");
@@ -49,7 +34,6 @@ const TicketingSection = ({
     "credit card" | "xpf" | "usd" | "aud" | "euro"
   >("xpf");
   const [notes, setNotes] = useState("");
-  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const ADULT_PRICE = 49.0;
   const CHILD_PRICE = 39.0;
@@ -58,66 +42,9 @@ const TicketingSection = ({
   const childTotal = children * CHILD_PRICE;
   const total = adultTotal + childTotal;
 
-  // Format current date
-  const formatDate = (date: Date) => {
-    const day = date.getDate();
-    const month = date
-      .toLocaleString("en-US", { month: "short" })
-      .toUpperCase();
-    const year = date.getFullYear();
-    return `${day} ${month}, ${year}`;
-  };
-
-  // Format departure time
-  const formatDepartureTime = (date: Date) => {
-    const day = date.getDate();
-    const month = date
-      .toLocaleString("en-US", { month: "short" })
-      .toUpperCase();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
-    const ampm = hours >= 12 ? "PM" : "AM";
-    const formattedHours = hours % 12 || 12;
-    const formattedMinutes = minutes.toString().padStart(2, "0");
-    return `${day} ${month}, ${formattedHours}:${formattedMinutes} ${ampm}`;
-  };
-
-  const ticketData = {
-    dateOfIssue: formatDate(new Date()),
-    driver: "BROOKLYN SIMMONS", // This should come from your tour data
-    buyer: buyerName || "ALEX MORGAN",
-    guide: "GUY HAWKINS", // This should come from your tour data
-    from: "DEMO LOCATION", // This should come from your tour data
-    vehicle: "ISLAND TRANSPORT LTD.", // This should come from your tour data
-    tour: tourName || "LAGOON SNORKELING",
-    registrationNumber: "PE 27095", // This should come from your tour data
-    departure: formatDepartureTime(new Date()),
-    return: formatDepartureTime(new Date(new Date().setDate(new Date().getDate() + 1))), // Example return time (1 day later)
-    tourCode: "CV57 XNK", // This should come from your tour data
-    adults: adults,
-    adultPrice: ADULT_PRICE,
-    children: children,
-    childPrice: CHILD_PRICE,
-    totalFare: total,
-  };
-
   const handleConfirm = () => {
-    // Open print modal instead of just calling onConfirm
-    setIsPrintModalOpen(true);
     console.log("Opening print modal, isPrintModalOpen:", true);
-
-    if (onConfirm) {
-      onConfirm({
-        buyerName,
-        adults,
-        children,
-        infant,
-        foc,
-        paymentMethod,
-        total,
-        notes,
-      });
-    }
+    onCancel?.();
   };
 
   return (
@@ -229,7 +156,9 @@ const TicketingSection = ({
               onClick={() => setPaymentMethod("credit card")}
               variant={paymentMethod === "credit card" ? "default" : "outline"}
               className={`px-4 lg:px-8 rounded-full ${
-                paymentMethod === "credit card" ? "bg-gray-900 hover:bg-gray-800" : ""
+                paymentMethod === "credit card"
+                  ? "bg-gray-900 hover:bg-gray-800"
+                  : ""
               }`}
             >
               Credit Card
@@ -264,20 +193,12 @@ const TicketingSection = ({
           </Button>
           <Button
             onClick={handleConfirm}
-            className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
+            className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-full"
           >
-            Confirm & print ticket
-            <Printer className="w-4 h-4" />
+            Save
           </Button>
         </div>
       </div>
-
-      {/* Print Ticket Modal */}
-      <PrintTicketModal
-        isOpen={isPrintModalOpen}
-        onClose={() => setIsPrintModalOpen(false)}
-        ticketData={ticketData}
-      />
     </div>
   );
 };

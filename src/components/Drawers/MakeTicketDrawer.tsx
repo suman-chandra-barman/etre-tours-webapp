@@ -22,21 +22,6 @@ const MakeTicketDrawer = ({
 }: MakeTicketDrawerProps) => {
   if (!tour) return null;
 
-  const handleConfirm = (ticketData: {
-    buyerName: string;
-    adults: number;
-    children: number;
-    infant: number;
-    foc: number;
-    paymentMethod: string;
-    total: number;
-    notes: string;
-  }) => {
-    console.log("Ticket confirmed:", ticketData);
-    // Handle ticket creation/confirmation
-    // In real app, this would save to API
-  };
-
   const handleCancel = () => {
     onOpenChange(false);
   };
@@ -51,7 +36,6 @@ const MakeTicketDrawer = ({
           <TicketingSection
             tourName={tour.tourName}
             availableSeats={tour.seatsAvailable}
-            onConfirm={handleConfirm}
             onCancel={handleCancel}
           />
         </div>

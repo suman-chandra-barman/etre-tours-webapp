@@ -8,13 +8,14 @@ import styles from "@/components/styles/Print.module.css";
 interface PrintTicketModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSave?: () => void;
   ticketData: {
     dateOfIssue: string;
     driver: string;
     buyer: string;
     guide: string;
     from: string;
-    vehicle: string;
+    transport: string;
     tour: string;
     registrationNumber: string;
     departure: string;
@@ -67,14 +68,6 @@ const PrintTicketModal = ({
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Driver
-                  </p>
-                  <p className="text-base font-semibold uppercase">
-                    {ticketData.driver}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">
                     Buyer
                   </p>
                   <p className="text-base font-semibold uppercase">
@@ -83,24 +76,26 @@ const PrintTicketModal = ({
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Guide
+                    Tour
                   </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.guide}
+                    {ticketData.tour}
                   </p>
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Vehicle
+                    Tour Code
                   </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.vehicle}
+                    {ticketData.tourCode}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">Tour</p>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Transport
+                  </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.tour}
+                    {ticketData.transport}
                   </p>
                 </div>
                 <div>
@@ -109,6 +104,22 @@ const PrintTicketModal = ({
                   </p>
                   <p className="text-base font-semibold uppercase">
                     {ticketData.registrationNumber}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Driver
+                  </p>
+                  <p className="text-base font-semibold uppercase">
+                    {ticketData.driver}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Guide
+                  </p>
+                  <p className="text-base font-semibold uppercase">
+                    {ticketData.guide}
                   </p>
                 </div>
                 <div>
@@ -125,14 +136,6 @@ const PrintTicketModal = ({
                   </p>
                   <p className="text-base font-semibold uppercase">
                     {ticketData.return}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Tour Code
-                  </p>
-                  <p className="text-base font-semibold uppercase">
-                    {ticketData.tourCode}
                   </p>
                 </div>
               </div>
@@ -197,14 +200,6 @@ const PrintTicketModal = ({
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Driver
-                  </p>
-                  <p className="text-base font-semibold uppercase">
-                    {ticketData.driver}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">
                     Buyer
                   </p>
                   <p className="text-base font-semibold uppercase">
@@ -213,24 +208,26 @@ const PrintTicketModal = ({
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Guide
+                    Tour
                   </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.guide}
+                    {ticketData.tour}
                   </p>
                 </div>
                 <div>
                   <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Vehicle
+                    Tour Code
                   </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.vehicle}
+                    {ticketData.tourCode}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">Tour</p>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Transport
+                  </p>
                   <p className="text-base font-semibold uppercase">
-                    {ticketData.tour}
+                    {ticketData.transport}
                   </p>
                 </div>
                 <div>
@@ -239,6 +236,22 @@ const PrintTicketModal = ({
                   </p>
                   <p className="text-base font-semibold uppercase">
                     {ticketData.registrationNumber}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Driver
+                  </p>
+                  <p className="text-base font-semibold uppercase">
+                    {ticketData.driver}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[11px] text-gray-600 uppercase mb-1">
+                    Guide
+                  </p>
+                  <p className="text-base font-semibold uppercase">
+                    {ticketData.guide}
                   </p>
                 </div>
                 <div>
@@ -255,14 +268,6 @@ const PrintTicketModal = ({
                   </p>
                   <p className="text-base font-semibold uppercase">
                     {ticketData.return}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-[11px] text-gray-600 uppercase mb-1">
-                    Tour Code
-                  </p>
-                  <p className="text-base font-semibold uppercase">
-                    {ticketData.tourCode}
                   </p>
                 </div>
               </div>

@@ -91,6 +91,12 @@ const EditOperationsTourModal = ({
 
   if (!tour) return null;
 
+  const handleDelete = () => {
+    // For simplicity, we'll just call onSave with a null tour to indicate deletion
+    onSave({ ...tour, tourName: "Deleted Tour" } as OperationsTour);
+    onOpenChange(false);
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="md:min-w-150 max-h-[90vh] overflow-y-auto">
@@ -302,15 +308,15 @@ const EditOperationsTourModal = ({
             </Button>
 
             <Button
-              onClick={handleSave}
-              className="bg-blue-500 hover:bg-blue-600 rounded-full"
+              onClick={handleDelete}
+              className="bg-red-500 hover:bg-red-600 rounded-full"
             >
-              Create New Tour
+              Delete Tour
             </Button>
             <div className="h-10 w-px bg-gray-300" />
             <Button
               onClick={handleSave}
-              className="bg-blue-500 hover:bg-blue-600 rounded-full"
+              className="bg-green-500 hover:bg-green-600 rounded-full"
             >
               Save Changes
             </Button>
