@@ -63,7 +63,7 @@ const EditOperationsTourModal = ({
   const [departureDate, setDepartureDate] = useState(today);
   const [departureTime, setDepartureTime] = useState(tour?.departureTime || "");
   const [returnDate, setReturnDate] = useState(today);
-  const [returnTime, setReturnTime] = useState(tour?.returnTime || "");
+  const [returnTime, setReturnTime] = useState("17:00");
   const [status, setStatus] = useState<OperationsTour["status"]>(
     tour?.status || "Pre-departure",
   );
@@ -95,7 +95,18 @@ const EditOperationsTourModal = ({
     // For simplicity, we'll just call onSave with a null tour to indicate deletion
     onSave({ ...tour, tourName: "Deleted Tour" } as OperationsTour);
     onOpenChange(false);
-  }
+  };
+
+  const handleDuplicate = () => {
+    const duplicatedTour: OperationsTour = {
+      ...tour,
+      id: Math.floor(Math.random() * 1000000), // Generate a new random ID for the duplicated tour
+      tourName: `${tour.tourName} (Copy)`,
+    };
+
+    onSave(duplicatedTour);
+    onOpenChange(false);
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -213,11 +224,7 @@ const EditOperationsTourModal = ({
                 <Label className="text-xs text-gray-500 font-normal">
                   Return Time
                 </Label>
-                <Input
-                  type="time"
-                  value={returnTime}
-                  onChange={(e) => setReturnTime(e.target.value)}
-                />
+                <Input type="time" value={returnTime} disabled />
               </div>
             </div>
           </div>
@@ -298,7 +305,7 @@ const EditOperationsTourModal = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end items-center gap-3 pt-4">
+          <div className="flex justify-end items-center gap-2 pt-4">
             <Button
               variant="ghost"
               onClick={() => onOpenChange(false)}
@@ -306,19 +313,26 @@ const EditOperationsTourModal = ({
             >
               Cancel
             </Button>
-
+            <div className="h-8 w-px bg-gray-300" />
             <Button
               onClick={handleDelete}
               className="bg-red-500 hover:bg-red-600 rounded-full"
             >
               Delete Tour
             </Button>
-            <div className="h-10 w-px bg-gray-300" />
+            <div className="h-8 w-px bg-gray-300" />
+            <Button
+              onClick={handleDuplicate}
+              className="bg-blue-500 hover:bg-blue-600 rounded-full"
+            >
+              Duplicate
+            </Button>
+            <div className="h-8 w-px bg-gray-300" />
             <Button
               onClick={handleSave}
               className="bg-green-500 hover:bg-green-600 rounded-full"
             >
-              Save Changes
+              Save
             </Button>
           </div>
         </div>

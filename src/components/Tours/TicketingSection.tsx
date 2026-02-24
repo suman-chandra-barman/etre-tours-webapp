@@ -183,7 +183,7 @@ const TicketingSection = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 justify-end">
+        <div className="flex gap-2 justify-end">
           <Button
             onClick={onCancel}
             variant="outline"
@@ -191,11 +191,19 @@ const TicketingSection = ({
           >
             Cancel
           </Button>
+           <div className="h-8 w-px bg-gray-300" />
           <Button
             onClick={handleConfirm}
             className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-full"
           >
             Save
+          </Button>
+          <div className="h-8 w-px bg-gray-300" />
+          <Button
+            onClick={handleConfirm}
+            className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
+          >
+            Print Ticket
           </Button>
         </div>
       </div>
