@@ -13,6 +13,7 @@ import {
 } from "../ui/select";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import PrintTicketModal from "@/components/Modals/PrintTicketModal";
 
 interface TicketingSectionProps {
   tourName: string;
@@ -34,6 +35,7 @@ const TicketingSection = ({
     "credit card" | "xpf" | "usd" | "aud" | "euro"
   >("xpf");
   const [notes, setNotes] = useState("");
+  const [isPrintModalOpen, setIsPrintModalOpen] = useState(false);
 
   const ADULT_PRICE = 49.0;
   const CHILD_PRICE = 39.0;
@@ -43,8 +45,60 @@ const TicketingSection = ({
   const total = adultTotal + childTotal;
 
   const handleConfirm = () => {
-    console.log("Opening print modal, isPrintModalOpen:", true);
+    console.log("Saving ticket");
     onCancel?.();
+  };
+
+  const handlePrintTicket = () => {
+    setIsPrintModalOpen(true);
+  };
+
+  // Format date for ticket
+  const formatDate = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
+  };
+
+  // Format departure time
+  const formatDepartureTime = (date: Date) => {
+    const day = date.getDate();
+    const month = date
+      .toLocaleString("en-US", { month: "short" })
+      .toUpperCase();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "PM" : "AM";
+    const formattedHours = hours % 12 || 12;
+    const formattedMinutes = minutes.toString().padStart(2, "0");
+    return `${day} ${month}, ${formattedHours}:${formattedMinutes} ${ampm}`;
+  };
+
+  const getTicketData = () => {
+    const now = new Date();
+    return {
+      dateOfIssue: formatDate(now),
+      driver: "BROOKLYN SIMMONS",
+      buyer: buyerName || "BUYER NAME",
+      guide: "GUY HAWKINS",
+      from: "DEMO LOCATION",
+      transport: "ISLAND TRANSPORT LTD.",
+      tour: tourName,
+      registrationNumber: "PE 27095",
+      departure: formatDepartureTime(now),
+      return: formatDepartureTime(
+        new Date(now.getTime() + 24 * 60 * 60 * 1000),
+      ),
+      tourCode: "CV57 XNK",
+      adults: adults,
+      adultPrice: ADULT_PRICE,
+      children: children,
+      childPrice: CHILD_PRICE,
+      totalFare: total,
+    };
   };
 
   return (
@@ -191,7 +245,7 @@ const TicketingSection = ({
           >
             Cancel
           </Button>
-           <div className="h-8 w-px bg-gray-300" />
+          <div className="h-8 w-px bg-gray-300" />
           <Button
             onClick={handleConfirm}
             className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-full"
@@ -200,13 +254,20 @@ const TicketingSection = ({
           </Button>
           <div className="h-8 w-px bg-gray-300" />
           <Button
-            onClick={handleConfirm}
+            onClick={handlePrintTicket}
             className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
           >
             Print Ticket
           </Button>
         </div>
       </div>
+
+      {/* Print Ticket Modal */}
+      <PrintTicketModal
+        isOpen={isPrintModalOpen}
+        onClose={() => setIsPrintModalOpen(false)}
+        ticketData={getTicketData()}
+      />
     </div>
   );
 };

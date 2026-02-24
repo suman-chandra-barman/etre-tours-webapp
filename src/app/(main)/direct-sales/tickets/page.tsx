@@ -239,7 +239,6 @@ export default function TicketsPage() {
           </p>
         </div>
       </div>
-
       {/* Tickets Table */}
       <div className="bg-white rounded-lg shadow-sm border">
         {tickets.length === 0 ? (
@@ -296,23 +295,6 @@ export default function TicketsPage() {
                       </div>
                     </TableCell>
                     <TableCell className="uppercase text-base">
-                      {/* Print Ticket Modal */}
-                      <PrintTicketModal
-                        isOpen={isPrintModalOpen}
-                        onClose={() => {
-                          setIsPrintModalOpen(false);
-                          setTicketForPrint(null);
-                        }}
-                        onSave={() => {
-                          // Ticket is already saved, just confirm the action
-                          console.log(
-                            "Ticket saved successfully:",
-                            ticketForPrint,
-                          );
-                          // In real app, this could update the ticket status or trigger an API call
-                        }}
-                        ticketData={getPrintTicketData(ticketForPrint)}
-                      />{" "}
                       {ticket.paymentMethod}
                     </TableCell>
                     <TableCell className="font-semibold text-base">
@@ -381,6 +363,21 @@ export default function TicketsPage() {
         onOpenChange={setEditModalOpen}
         ticket={selectedTicket}
         onSave={handleSaveTicket}
+      />
+      
+      {/* Print Ticket Modal */}
+      <PrintTicketModal
+        isOpen={isPrintModalOpen}
+        onClose={() => {
+          setIsPrintModalOpen(false);
+          setTicketForPrint(null);
+        }}
+        onSave={() => {
+          // Ticket is already saved, just confirm the action
+          console.log("Ticket saved successfully:", ticketForPrint);
+          // In real app, this could update the ticket status or trigger an API call
+        }}
+        ticketData={getPrintTicketData(ticketForPrint)}
       />
     </div>
   );
