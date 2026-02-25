@@ -30,6 +30,7 @@ export interface Ticket {
   foc: number;
   paymentMethod: string;
   amount: number;
+  refundAmount?: number;
   status: "in-progress" | "cancelled" | "refunded";
   notes: string;
   createdAt: Date;
@@ -147,7 +148,25 @@ export default function ViewTodaysTicketsModal({
                           {ticket.paymentMethod}
                         </TableCell>
                         <TableCell className="font-semibold">
-                          ${ticket.amount.toFixed(2)}
+                          {ticket.status === "cancelled" ? (
+                            <span className="text-red-600">
+                              ({"$"}
+                              {ticket.amount.toFixed(2)})
+                            </span>
+                          ) : ticket.status === "refunded" ? (
+                            <span className="text-orange-600">
+                              ${ticket.amount.toFixed(2)}
+                              {ticket.refundAmount &&
+                                ticket.refundAmount > 0 && (
+                                  <span>
+                                    {" "}
+                                    - ${ticket.refundAmount.toFixed(2)}
+                                  </span>
+                                )}
+                            </span>
+                          ) : (
+                            <span>${ticket.amount.toFixed(2)}</span>
+                          )}
                         </TableCell>
                         <TableCell>{getStatusBadge(ticket.status)}</TableCell>
                         <TableCell className="max-w-50">
@@ -162,7 +181,6 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0"
                               onClick={() => handleEditClick(ticket)}
-                              disabled={ticket.status !== "in-progress"}
                               title="Edit ticket"
                             >
                               <Edit className="w-4 h-4" />
@@ -172,7 +190,6 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0 text-red-600 hover:text-red-700"
                               onClick={() => onCancelTicket(ticket.id)}
-                              disabled={ticket.status !== "in-progress"}
                               title="Cancel ticket"
                             >
                               <XCircle className="w-4 h-4" />
@@ -182,7 +199,6 @@ export default function ViewTodaysTicketsModal({
                               variant="ghost"
                               className="h-8 w-8 p-0 text-orange-600 hover:text-orange-700"
                               onClick={() => onRefundTicket(ticket.id)}
-                              disabled={ticket.status !== "in-progress"}
                               title="Mark refund"
                             >
                               <RefreshCcw className="w-4 h-4" />

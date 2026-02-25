@@ -174,7 +174,7 @@ export default function EditTicketModal({
             </div>
 
             {/* Guide */}
-            <div >
+            <div>
               <Label className="text-sm text-gray-700 font-normal">Guide</Label>
               <Select value={guide} onValueChange={setGuide}>
                 <SelectTrigger className="w-full">
