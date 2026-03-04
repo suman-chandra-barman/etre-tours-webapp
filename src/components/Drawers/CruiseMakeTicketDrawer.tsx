@@ -6,10 +6,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import TicketingSection from "@/components/Tours/TicketingSection";
 import { OperationsTour } from "@/app/(main)/direct-sales/page";
 import CruiseTicketingSection from "../Tours/CruiseTicketingSection";
-import { useUser } from "@/contexts/UserContext";
 
 interface MakeTicketDrawerProps {
   open: boolean;
@@ -22,8 +20,6 @@ const MakeTicketDrawer = ({
   onOpenChange,
   tour,
 }: MakeTicketDrawerProps) => {
-  const { role } = useUser();
-
   if (!tour) return null;
 
   const handleCancel = () => {
@@ -37,20 +33,12 @@ const MakeTicketDrawer = ({
           <SheetTitle>Make Ticket</SheetTitle>
         </SheetHeader>
         <div className="mt-4">
-          {role === "direct-sales" ? (
-            <TicketingSection
-              tourName={tour.tourName}
-              availableSeats={tour.seatsAvailable}
-              onCancel={handleCancel}
-            />
-          ) : (
-            <CruiseTicketingSection
+           <CruiseTicketingSection
               tourName={tour.tourName}
               availableSeats={tour.seatsAvailable}
               // onConfirm={handleTicketConfirm}
               onCancel={() => handleCancel}
             />
-          )}
         </div>
       </SheetContent>
     </Sheet>

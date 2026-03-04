@@ -94,26 +94,6 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       label: "Operations",
       icon: <Monitor className="w-6 h-6 mb-1" />,
     },
-    {
-      href: "/cruise-sales",
-      label: "Headcounts",
-      icon: <PiUsersFour className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/cruise-sales/my-station-tours",
-      label: "My Station",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/cruise-sales/other-station-tours",
-      label: "Other Stations",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-       {
-      href: "/cruise-sales/drivers",
-      label: "Drivers",
-      icon: <GiSteeringWheel className="w-6 h-6 mb-1" />,
-    }
   ],
   "partner-sales": [
     {

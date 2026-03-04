@@ -53,6 +53,8 @@ export function OperationsTable({
   const handleSaveTour = (updatedTour: OperationsTour) => {
     onTourUpdate(updatedTour);
   };
+  console.log("HOME STATION:", isHomeStation);
+
   return (
     <div className="overflow-x-auto">
       <Table>

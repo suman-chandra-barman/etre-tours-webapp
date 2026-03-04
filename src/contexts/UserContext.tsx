@@ -21,7 +21,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   // Start with no user - will be set on login
   const [user, setUser] = useState<TUser | null>(null);
 
-  const role = user?.role || "direct-sales";
+  const role = user?.role || null;
 
   // Store role in cookie whenever user changes
   useEffect(() => {

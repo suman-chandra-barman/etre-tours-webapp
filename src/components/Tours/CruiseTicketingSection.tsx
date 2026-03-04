@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import PrintInvoiceModal from "../Modals/PrintInvoiceModal";
+import { NumberStepper } from "../ui/number-stepper";
 
 interface CruiseTicketingSectionProps {
   tourName: string;
@@ -189,6 +190,7 @@ const CruiseTicketingSection = ({
     children: totalChildren,
     childPrice: CHILD_PRICE,
     totalFare: total,
+    foc: totalFoc,
     shipProvided: 10,
   };
 
@@ -357,146 +359,33 @@ const CruiseTicketingSection = ({
                     </div>
 
                     {/* Passenger Details */}
-                    <div className="mb-4">
-                      <h4 className="text-sm font-medium text-gray-700 mb-3">
-                        Passengers Details
-                      </h4>
+                    <div className="mb-6">
+                      <h3 className="text-sm font-medium text-gray-700 mb-3">
+                        Passenger Details
+                      </h3>
                       <div className="grid grid-cols-2 gap-3">
-                        {/* Adults */}
-                        <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm text-gray-900">
-                              Adults
-                            </span>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "adults", false)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </Button>
-                              <span className="w-8 text-center">
-                                {transport.adults.toString().padStart(2, "0")}
-                              </span>
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "adults", true)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Children */}
-                        <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-                          <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm text-gray-900">
-                              Children
-                            </span>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "children", false)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </Button>
-                              <span className="w-8 text-center">
-                                {transport.children.toString().padStart(2, "0")}
-                              </span>
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "children", true)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Infant */}
-                        <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-900">
-                              Infant
-                            </span>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "infant", false)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </Button>
-                              <span className="w-8 text-center">
-                                {transport.infant.toString().padStart(2, "0")}
-                              </span>
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "infant", true)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* FOC */}
-                        <div className="border border-gray-300 rounded-lg px-3 py-1.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm text-gray-900">
-                              FOC
-                            </span>
-                            <div className="flex items-center gap-3">
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "foc", false)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Minus className="w-3 h-3" />
-                              </Button>
-                              <span className="w-8 text-center">
-                                {transport.foc.toString().padStart(2, "0")}
-                              </span>
-                              <Button
-                                onClick={() =>
-                                  updateCounter(transport.id, "foc", true)
-                                }
-                                variant="outline"
-                                size="icon-sm"
-                                className="w-7 h-7 rounded-full"
-                              >
-                                <Plus className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
+                        <NumberStepper
+                          label="Adults"
+                          value={transport.adults}
+                          onChange={(value) => updateTransport(transport.id, "adults", value)}
+                          description={`$${ADULT_PRICE.toFixed(2)} per adults`}
+                        />
+                        <NumberStepper
+                          label="Children"
+                          value={transport.children}
+                          onChange={(value) => updateTransport(transport.id, "children", value)}
+                          description={`$${CHILD_PRICE.toFixed(2)} per child above 18 y/o`}
+                        />
+                        <NumberStepper
+                          label="Infant"
+                          value={transport.infant}
+                          onChange={(value) => updateTransport(transport.id, "infant", value)}
+                        />
+                        <NumberStepper
+                          label="FOC"
+                          value={transport.foc}
+                          onChange={(value) => updateTransport(transport.id, "foc", value)}
+                        />
                       </div>
                     </div>
 
@@ -614,20 +503,26 @@ const CruiseTicketingSection = ({
 
         {/* Action Buttons */}
         <div className="flex gap-3 justify-end">
-          <Button
-            onClick={onCancel}
-            variant="outline"
-            className="px-6 py-3 rounded-full"
-          >
-            Cancel
-          </Button>
-          <Button
-            onClick={handleConfirm}
-            className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
-          >
-            Update data & print invoice
-            <Printer className="w-4 h-4" />
-          </Button>
+          <div className="flex gap-2 justify-end">
+            <Button
+              onClick={onCancel}
+              variant="outline"
+              className="px-6 py-3 rounded-full"
+            >
+              Cancel
+            </Button>
+            <div className="h-8 w-px bg-gray-300" />
+            <Button className="px-6 py-3 bg-green-500 hover:bg-green-600 rounded-full">
+              Save
+            </Button>
+            <div className="h-8 w-px bg-gray-300" />
+            <Button
+              onClick={handleConfirm}
+              className="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded-full"
+            >
+              Print Ticket
+            </Button>
+          </div>
         </div>
       </div>
 
