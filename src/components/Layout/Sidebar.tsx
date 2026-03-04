@@ -32,9 +32,7 @@ function Sidebar() {
   const currentRole = role || getRoleFromPath();
 
   const handleLogout = () => {
-    // Clear user role cookie
-    document.cookie = "userRole=; path=/; max-age=0";
-    setUser(null);
+    setUser(null); // This will clear localStorage and cookies
     router.push("/login");
   };
 
@@ -76,7 +74,9 @@ function Sidebar() {
               href={link.href}
               className={cn(
                 "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 text-center",
-                isActive ? "text-blue-600" : "text-gray-400 hover:text-gray-600"
+                isActive
+                  ? "text-blue-600"
+                  : "text-gray-400 hover:text-gray-600",
               )}
               aria-label={link.label}
               aria-current={isActive ? "page" : undefined}

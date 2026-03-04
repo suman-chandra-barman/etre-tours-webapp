@@ -13,7 +13,6 @@ import {
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
 import { GiSteeringWheel } from "react-icons/gi";
-import { PiUsersFour } from "react-icons/pi";
 
 interface NavLink {
   href: string;
@@ -90,14 +89,14 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
   ],
   "cruise-sales": [
     {
-      href: "/operations-board",
+      href: "/cruise-sales",
       label: "Operations",
       icon: <Monitor className="w-6 h-6 mb-1" />,
     },
   ],
   "partner-sales": [
     {
-      href: "/operations-board",
+      href: "/partner-sales",
       label: "Operations",
       icon: <Monitor className="w-6 h-6 mb-1" />,
     },
