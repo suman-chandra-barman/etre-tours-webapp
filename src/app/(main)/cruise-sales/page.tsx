@@ -283,7 +283,7 @@ export default function OperationsBoardPage() {
               asChild
               className="bg-green-100 hover:bg-green-200 rounded-full border-green-300"
             >
-              <Link href="/direct-sales/tickets">
+              <Link href={`/${role}/tickets`}>
                 <TicketIcon className="w-4 h-4" /> View Today&apos;s Tickets
               </Link>
             </Button>

@@ -241,10 +241,10 @@ export default function TicketsPage() {
         <Button
           variant="ghost"
           className="mb-4 -ml-2"
-          onClick={() => router.push("/direct-sales")}
+          onClick={() => router.back()}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Operations Board
+          Back
         </Button>
         <div>
           <h1 className="text-3xl font-bold text-gray-900">
