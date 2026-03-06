@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { tourStatus } from "@/constants";
+import { useUser } from "@/contexts/UserContext";
 
 interface OperationsTableProps {
   tours: OperationsTour[];
@@ -40,6 +41,8 @@ export function OperationsTable({
   const [ticketDrawerOpen, setTicketDrawerOpen] = useState(false);
   const [ticketTour, setTicketTour] = useState<OperationsTour | null>(null);
 
+  const { role } = useUser();
+
   const handleEditClick = (tour: OperationsTour) => {
     setSelectedTour(tour);
     setEditModalOpen(true);
@@ -53,7 +56,6 @@ export function OperationsTable({
   const handleSaveTour = (updatedTour: OperationsTour) => {
     onTourUpdate(updatedTour);
   };
-  console.log("HOME STATION:", isHomeStation);
 
   return (
     <div className="overflow-x-auto">
@@ -182,12 +184,14 @@ export function OperationsTable({
                   >
                     <Edit className="w-4 h-4" />
                   </button>
-                  <Button
-                    className="rounded-full px-2 h-8"
-                    onClick={() => handleMakeTicketClick(tour)}
-                  >
-                    Make Ticket
-                  </Button>
+                  {role !== "cruise-sales" && (
+                    <Button
+                      className="rounded-full px-2 h-8"
+                      onClick={() => handleMakeTicketClick(tour)}
+                    >
+                      Make Ticket
+                    </Button>
+                  )}
                 </TableCell>
               )}
             </TableRow>

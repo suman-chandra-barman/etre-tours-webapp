@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import {
   Select,
   SelectContent,
@@ -18,18 +18,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OperationsTour } from "@/app/(main)/direct-sales/page";
-import { Separator } from "@/components/ui/separator";
 
-export function SeparatorVertical() {
-  return (
-    <div className="flex h-5 items-center gap-4 text-sm">
-      <div>Blog</div>
-      <Separator orientation="vertical" />
-      <div>Docs</div>
-      <Separator orientation="vertical" />
-      <div>Source</div>
-    </div>
-  );
+// Transport entry for multi-transport support
+interface TransportEntry {
+  id: number;
+  transportType: string;
+  transportContractor: string;
+  vehicleNumber: string;
+  numberOfSeats: number;
+  guide: string;
+  extraGuide: string;
+  adults: number;
+  children: number;
+  infants: number;
+  foc: number;
 }
 
 interface EditOperationsTourModalProps {
@@ -39,50 +41,112 @@ interface EditOperationsTourModalProps {
   onSave: (updatedTour: OperationsTour) => void;
 }
 
+// Generate tour code from tour name
+const generateTourCode = (tourName: string): string => {
+  if (!tourName) return "";
+  const words = tourName.split(" ");
+  const code = words.map((word) => word.charAt(0).toUpperCase()).join("");
+  return `${code}-${Date.now().toString().slice(-4)}`;
+};
+
 const EditOperationsTourModal = ({
   open,
   onOpenChange,
   tour,
   onSave,
 }: EditOperationsTourModalProps) => {
-  // Get today's date
-  const today = new Date().toISOString().split("T")[0];
+  // Get today's date formatted
+  const today = new Date().toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
-  // Form state - initialize from tour prop
-  const [tourName, setTourName] = useState(tour?.tourName || "");
-  const [transportContractor, setTransportContractor] = useState(
-    tour?.transportContractor || "",
-  );
-  const [driver, setDriver] = useState(tour?.driver || "");
-  const [vehicle, setVehicle] = useState(tour?.vehicle || "");
-  const [guide, setGuide] = useState(tour?.guide || "");
-  const [extraGuide, setExtraGuide] = useState(tour?.extraGuide || "");
-  const [numberOfSeats, setNumberOfSeats] = useState(
-    tour?.numberOfSeats?.toString() || "",
-  );
-  const [departureDate, setDepartureDate] = useState(today);
-  const [departureTime, setDepartureTime] = useState(tour?.departureTime || "");
-  const [returnDate, setReturnDate] = useState(today);
-  const [returnTime, setReturnTime] = useState("17:00");
-  const [status, setStatus] = useState<OperationsTour["status"]>(
-    tour?.status || "Pre-departure",
-  );
+  // Tour code - auto generated from tour name
+  const tourCode = useMemo(() => {
+    return tour?.tourName ? generateTourCode(tour.tourName) : "";
+  }, [tour]);
+
+  // Transport entries
+  const [transportEntries, setTransportEntries] = useState<TransportEntry[]>([
+    {
+      id: 1,
+      transportType: "",
+      transportContractor: tour?.transportContractor || "",
+      vehicleNumber: tour?.vehicle || "",
+      numberOfSeats: tour?.numberOfSeats || 0,
+      guide: tour?.guide || "",
+      extraGuide: tour?.extraGuide || "",
+      adults: 0,
+      children: 0,
+      infants: 0,
+      foc: 0,
+    },
+  ]);
+
+  // Get current transport entry (first one since no pagination)
+  const currentTransport = transportEntries[0];
+
+  // Update current transport entry
+  const updateCurrentTransport = (
+    field: keyof TransportEntry,
+    value: string | number,
+  ) => {
+    setTransportEntries((prev) =>
+      prev.map((entry, index) =>
+        index === 0 ? { ...entry, [field]: value } : entry,
+      ),
+    );
+  };
+
+  // Vehicle to seats mapping (mock data - would come from API)
+  const vehicleSeatsMap: Record<string, number> = {
+    "24456": 16,
+    "56009": 24,
+    "54322": 32,
+    "88990": 20,
+    "33345": 12,
+    "222999": 28,
+  };
+
+  // Update seats when vehicle changes
+  const handleVehicleChange = (vehicleNumber: string) => {
+    updateCurrentTransport("vehicleNumber", vehicleNumber);
+    const seats = vehicleSeatsMap[vehicleNumber] || 0;
+    updateCurrentTransport("numberOfSeats", seats);
+  };
+
+  // Add new transport entry
+  const handleAddTransport = () => {
+    const newEntry: TransportEntry = {
+      id: transportEntries.length + 1,
+      transportType: "",
+      transportContractor: "",
+      vehicleNumber: "",
+      numberOfSeats: 0,
+      guide: "",
+      extraGuide: "",
+      adults: 0,
+      children: 0,
+      infants: 0,
+      foc: 0,
+    };
+    setTransportEntries((prev) => [...prev, newEntry]);
+  };
 
   const handleSave = () => {
     if (!tour) return;
 
+    // Use the first transport entry for the main tour data
+    const firstTransport = transportEntries[0];
+
     const updatedTour: OperationsTour = {
       ...tour,
-      tourName,
-      transportContractor,
-      driver,
-      vehicle,
-      guide,
-      extraGuide,
-      numberOfSeats: numberOfSeats ? parseInt(numberOfSeats) : undefined,
-      departureTime,
-      returnTime,
-      status,
+      transportContractor: firstTransport.transportContractor,
+      vehicle: firstTransport.vehicleNumber,
+      guide: firstTransport.guide,
+      extraGuide: firstTransport.extraGuide,
+      numberOfSeats: firstTransport.numberOfSeats,
     };
 
     onSave(updatedTour);
@@ -92,7 +156,6 @@ const EditOperationsTourModal = ({
   if (!tour) return null;
 
   const handleDelete = () => {
-    // For simplicity, we'll just call onSave with a null tour to indicate deletion
     onSave({ ...tour, tourName: "Deleted Tour" } as OperationsTour);
     onOpenChange(false);
   };
@@ -100,7 +163,7 @@ const EditOperationsTourModal = ({
   const handleDuplicate = () => {
     const duplicatedTour: OperationsTour = {
       ...tour,
-      id: Math.floor(Math.random() * 1000000), // Generate a new random ID for the duplicated tour
+      id: Math.floor(Math.random() * 1000000),
       tourName: `${tour.tourName} (Copy)`,
     };
 
@@ -109,49 +172,102 @@ const EditOperationsTourModal = ({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="md:min-w-150 max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-semibold">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="min-w-md overflow-y-auto">
+        <SheetHeader>
+          <SheetTitle className="text-2xl font-semibold">
             Edit Tour Information
-          </DialogTitle>
-        </DialogHeader>
+          </SheetTitle>
+        </SheetHeader>
 
-        <div className="space-y-6">
-          {/* Tour Details */}
+        <div className="space-y-6 mt-6">
+          {/* Tour Info - Read Only Display Fields */}
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              {/* Tour Name */}
+              {/* Tour Name - Auto Display */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Tour Name
-                </Label>
-                <Select value={tourName} onValueChange={setTourName}>
+                <Label className="text-xs font-normal">Tour Name</Label>
+                <Input value={tour.tourName} disabled className="bg-gray-100" />
+              </div>
+
+              {/* Tour Code - Auto Generated */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Tour Code</Label>
+                <Input value={tourCode} disabled className="bg-gray-100" />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* Departure Date - Auto Today */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Departure Date</Label>
+                <Input value={today} disabled className="bg-gray-100" />
+              </div>
+
+              {/* Departure Time - Auto Display */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Departure Time</Label>
+                <Input
+                  value={tour.departureTime}
+                  disabled
+                  className="bg-gray-100"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* Return Date - Auto Today */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Return Date</Label>
+                <Input value={today} disabled className="bg-gray-100" />
+              </div>
+
+              {/* Return Time - Auto Display */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Return Time</Label>
+                <Input
+                  value={tour.returnTime}
+                  disabled
+                  className="bg-gray-100"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Editable Transport Details */}
+          <div className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              {/* Transport Type */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Transport Type</Label>
+                <Select
+                  value={currentTransport?.transportType || ""}
+                  onValueChange={(value) =>
+                    updateCurrentTransport("transportType", value)
+                  }
+                >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Pick a Tour" />
+                    <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Village and back">
-                      Village and back
-                    </SelectItem>
-                    <SelectItem value="Town adventure">
-                      Town adventure
-                    </SelectItem>
-                    <SelectItem value="Tribal encounter">
-                      Tribal encounter
-                    </SelectItem>
+                    <SelectItem value="Bus">Bus</SelectItem>
+                    <SelectItem value="Van">Van</SelectItem>
+                    <SelectItem value="Mini Bus">Mini Bus</SelectItem>
+                    <SelectItem value="Coach">Coach</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               {/* Transport Contractor */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
+                <Label className="text-xs font-normal">
                   Transport Contractor
                 </Label>
                 <Select
-                  value={transportContractor}
-                  onValueChange={setTransportContractor}
+                  value={currentTransport?.transportContractor || ""}
+                  onValueChange={(value) =>
+                    updateCurrentTransport("transportContractor", value)
+                  }
                 >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Sub-contractor Company" />
@@ -162,118 +278,61 @@ const EditOperationsTourModal = ({
                       Edmond Transport
                     </SelectItem>
                     <SelectItem value="Nice Tours">Nice Tours</SelectItem>
+                    <SelectItem value="Island culture">
+                      Island culture
+                    </SelectItem>
+                    <SelectItem value="Cruising adventure">
+                      Cruising adventure
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {/* Number of Seats */}
-            <div className="space-y-1">
-              <Label className="text-xs text-gray-500 font-normal">
-                Number of Seats
-              </Label>
-              <Input
-                type="number"
-                placeholder="Number of Seats"
-                value={numberOfSeats}
-                onChange={(e) => setNumberOfSeats(e.target.value)}
-                min="1"
-              />
-            </div>
-          </div>
-
-          {/* Time Details */}
-          <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
-              {/* Departure Date & Time */}
+              {/* Vehicle Number */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Departure Date
-                </Label>
-                <Input
-                  type="date"
-                  value={departureDate}
-                  onChange={(e) => setDepartureDate(e.target.value)}
-                />
-              </div>
-              <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Departure Time
-                </Label>
-                <Input
-                  type="time"
-                  value={departureTime}
-                  onChange={(e) => setDepartureTime(e.target.value)}
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {/* Return Date & Time */}
-              <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Return Date
-                </Label>
-                <Input
-                  type="date"
-                  value={returnDate}
-                  onChange={(e) => setReturnDate(e.target.value)}
-                />
-              </div>
-              <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Return Time
-                </Label>
-                <Input type="time" value={returnTime} disabled />
-              </div>
-            </div>
-          </div>
-
-          {/* Assignment Details */}
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {/* Driver */}
-              <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Driver Name
-                </Label>
-                <Select value={driver} onValueChange={setDriver}>
+                <Label className="text-xs font-normal">Vehicle Number</Label>
+                <Select
+                  value={currentTransport?.vehicleNumber || ""}
+                  onValueChange={handleVehicleChange}
+                >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Driver" />
+                    <SelectValue placeholder="Select Vehicle" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Paul John">Paul John</SelectItem>
-                    <SelectItem value="Joseph King">Joseph King</SelectItem>
-                    <SelectItem value="Walter Smith">Walter Smith</SelectItem>
-                    <SelectItem value="Ben Harper">Ben Harper</SelectItem>
-                    <SelectItem value="Michael Jordan">
-                      Michael Jordan
-                    </SelectItem>
-                    <SelectItem value="Fred Carson">Fred Carson</SelectItem>
+                    <SelectItem value="24456">24456</SelectItem>
+                    <SelectItem value="56009">56009</SelectItem>
+                    <SelectItem value="54322">54322</SelectItem>
+                    <SelectItem value="88990">88990</SelectItem>
+                    <SelectItem value="33345">33345</SelectItem>
+                    <SelectItem value="222999">222999</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Vehicle */}
+              {/* Number of Seats - Auto Display when vehicle selected */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Vehicle Number
-                </Label>
+                <Label className="text-xs font-normal">Number of Seats</Label>
                 <Input
-                  placeholder="Vehicle Number"
-                  value={vehicle}
-                  onChange={(e) => setVehicle(e.target.value)}
+                  value={currentTransport?.numberOfSeats || ""}
+                  disabled
+                  className="bg-gray-100"
+                  placeholder="Auto-fills when vehicle selected"
                 />
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              {/* Main Guide */}
+              {/* Guide */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Guide
-                </Label>
-                <Select value={guide} onValueChange={setGuide}>
+                <Label className="text-xs font-normal">Guide</Label>
+                <Select
+                  value={currentTransport?.guide || ""}
+                  onValueChange={(value) =>
+                    updateCurrentTransport("guide", value)
+                  }
+                >
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Guide" />
                   </SelectTrigger>
@@ -288,56 +347,148 @@ const EditOperationsTourModal = ({
                 </Select>
               </div>
 
-              {/* Extra Guide (Optional) */}
+              {/* Extra Guide */}
               <div className="space-y-1">
-                <Label className="text-xs text-gray-500 font-normal">
-                  Extra Guide <span className="text-gray-400">(Optional)</span>
-                </Label>
-                <div>
-                  <Input
-                    placeholder="Extra Guide Name"
-                    value={extraGuide}
-                    onChange={(e) => setExtraGuide(e.target.value)}
-                  />
-                </div>
+                <Label className="text-xs font-normal">Extra Guide</Label>
+                <Select
+                  value={currentTransport?.extraGuide || ""}
+                  onValueChange={(value) =>
+                    updateCurrentTransport("extraGuide", value)
+                  }
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Extra Guide" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="None">None</SelectItem>
+                    <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
+                    <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
+                    <SelectItem value="Brenda Davidson">
+                      Brenda Davidson
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
+
+          {/* Passenger Details Section */}
+          <div className="space-y-4">
+            <h3 className="text-sm font-semibold">Passenger Details</h3>
+            <div className="grid grid-cols-2 gap-4">
+              {/* Adults */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Adults</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={currentTransport?.adults || ""}
+                  onChange={(e) =>
+                    updateCurrentTransport(
+                      "adults",
+                      parseInt(e.target.value) || 0,
+                    )
+                  }
+                  placeholder="0"
+                />
+              </div>
+
+              {/* Children */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Children</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={currentTransport?.children || ""}
+                  onChange={(e) =>
+                    updateCurrentTransport(
+                      "children",
+                      parseInt(e.target.value) || 0,
+                    )
+                  }
+                  placeholder="0"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {/* Infants */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Infants</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={currentTransport?.infants || ""}
+                  onChange={(e) =>
+                    updateCurrentTransport(
+                      "infants",
+                      parseInt(e.target.value) || 0,
+                    )
+                  }
+                  placeholder="0"
+                />
+              </div>
+
+              {/* FOC (Free of Charge) */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">FOC</Label>
+                <Input
+                  type="number"
+                  min="0"
+                  value={currentTransport?.foc || ""}
+                  onChange={(e) =>
+                    updateCurrentTransport("foc", parseInt(e.target.value) || 0)
+                  }
+                  placeholder="0"
+                />
               </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end items-center gap-2 pt-4">
-            <Button
-              variant="ghost"
-              onClick={() => onOpenChange(false)}
-              className="rounded-full"
-            >
-              Cancel
-            </Button>
-            <div className="h-8 w-px bg-gray-300" />
-            <Button
-              onClick={handleDelete}
-              className="bg-red-500 hover:bg-red-600 rounded-full"
-            >
-              Delete Tour
-            </Button>
-            <div className="h-8 w-px bg-gray-300" />
-            <Button
-              onClick={handleDuplicate}
-              className="bg-blue-500 hover:bg-blue-600 rounded-full"
-            >
-              Duplicate
-            </Button>
-            <div className="h-8 w-px bg-gray-300" />
-            <Button
-              onClick={handleSave}
-              className="bg-green-500 hover:bg-green-600 rounded-full"
-            >
-              Save
-            </Button>
+          <div className="flex justify-between items-center gap-2 pt-4">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                onClick={() => onOpenChange(false)}
+                className="rounded-full"
+              >
+                Cancel
+              </Button>
+              <div className="h-8 w-px bg-gray-300" />
+              <Button
+                onClick={handleDelete}
+                className="bg-red-500 hover:bg-red-600 rounded-full"
+              >
+                Delete
+              </Button>
+              <div className="h-8 w-px bg-gray-300" />
+              <Button
+                onClick={handleDuplicate}
+                className="bg-amber-400 hover:bg-amber-500 text-black rounded-full"
+              >
+                Duplicate
+              </Button>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={handleAddTransport}
+                className="bg-orange-500 hover:bg-orange-600 rounded-full"
+              >
+                Add Transport
+              </Button>
+              <div className="h-8 w-px bg-gray-300" />
+              <Button
+                onClick={handleSave}
+                className="bg-green-500 hover:bg-green-600 rounded-full"
+              >
+                Save
+              </Button>
+            </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 };
 
