@@ -6,8 +6,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { OperationsTour } from "@/app/(main)/direct-sales/page";
 import CruiseTicketingSection from "../Tours/CruiseTicketingSection";
+import { OperationsTour } from "@/types/tours.types";
 
 interface MakeTicketDrawerProps {
   open: boolean;

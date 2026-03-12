@@ -7,9 +7,9 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import TicketingSection from "@/components/Tours/TicketingSection";
-import { OperationsTour } from "@/app/(main)/direct-sales/page";
 import CruiseTicketingSection from "../Tours/CruiseTicketingSection";
 import { useUser } from "@/contexts/UserContext";
+import { OperationsTour } from "@/types/tours.types";
 
 interface MakeTicketDrawerProps {
   open: boolean;

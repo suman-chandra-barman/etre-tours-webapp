@@ -1,5 +1,6 @@
-import { OperationsTour } from "@/app/(main)/direct-sales/page";
+
 import { tourStatus } from "@/constants";
+import { OperationsTour } from "@/types/tours.types";
 
 export const getStatusStyles = (status: OperationsTour["status"]) => {
   switch (status) {
