@@ -1,4 +1,4 @@
-import { OperationsTour } from "@/app/(main)/direct-sales/page";
+
 import {
   Table,
   TableBody,
@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { tourStatus } from "@/constants";
 import { useUser } from "@/contexts/UserContext";
+import { OperationsTour } from "@/types/tours.types";
 
 interface OperationsTableProps {
   tours: OperationsTour[];

@@ -7,8 +7,9 @@ import { OperationsStationSection } from "@/components/OperationsBoard/Operation
 import { Button } from "@/components/ui/button";
 import { Plus, Ticket as TicketIcon } from "lucide-react";
 import CreateNewTourDrawer from "@/components/Drawers/CreateNewTourDrawer";
-import { tourStatus, TourStatus, userRoles } from "@/constants";
+import { tourStatus, userRoles } from "@/constants";
 import Link from "next/link";
+import { OperationsTour } from "@/types/tours.types";
 
 // Station sync status type
 export interface StationSyncStatus {
@@ -16,31 +17,7 @@ export interface StationSyncStatus {
   lastSyncMinutes?: number;
 }
 
-// Tour data type for operations board
-export interface OperationsTour {
-  id: number;
-  departureDate: string;
-  departureTime: string;
-  returnDate: string;
-  returnTime: string;
-  tourName: string;
-  tourCode: string;
-  status: TourStatus;
-  transportType: "bus" | "boat";
-  transportContractor: string;
-  vehicleNumber: string;
-  seatsSold: number;
-  seatsAvailable: number;
-  numberOfSeats: number;
-  driver: string;
-  vehicle: string;
-  guide: string;
-  extraGuide?: string;
-  adult?: number;
-  child?: number;
-  infants?: number;
-  foc?: number;
-}
+
 
 export default function OperationsBoardPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
