@@ -37,7 +37,7 @@ export function OperationsStationSection({
       className={`bg-white rounded-lg shadow-md overflow-hidden ${isHomeStation ? styles.homeStation : styles.otherStation}`}
     >
       {/* Station Header */}
-      <div className="bg-linear-to-r from-blue-600 to-blue-700 px-4 py-3 no-print">
+      <div className={`px-4 py-3 no-print ${isHomeStation ? "bg-blue-600" : "bg-gray-600"}`}>
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-bold text-white flex items-center gap-3">

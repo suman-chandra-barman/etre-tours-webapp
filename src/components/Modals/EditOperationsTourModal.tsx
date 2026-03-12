@@ -250,10 +250,8 @@ const EditOperationsTourModal = ({
                     <SelectValue placeholder="Select Type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Bus">Bus</SelectItem>
-                    <SelectItem value="Van">Van</SelectItem>
-                    <SelectItem value="Mini Bus">Mini Bus</SelectItem>
-                    <SelectItem value="Coach">Coach</SelectItem>
+                    <SelectItem value="bus">Bus</SelectItem>
+                    <SelectItem value="boat">Boat</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

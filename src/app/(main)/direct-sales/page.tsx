@@ -19,18 +19,27 @@ export interface StationSyncStatus {
 // Tour data type for operations board
 export interface OperationsTour {
   id: number;
+  departureDate: string;
   departureTime: string;
+  returnDate: string;
   returnTime: string;
   tourName: string;
+  tourCode: string;
   status: TourStatus;
+  transportType: "bus" | "boat";
+  transportContractor: string;
+  vehicleNumber: string;
   seatsSold: number;
   seatsAvailable: number;
-  transportContractor: string;
+  numberOfSeats: number;
   driver: string;
   vehicle: string;
   guide: string;
-  numberOfSeats?: number;
   extraGuide?: string;
+  adult?: number;
+  child?: number;
+  infants?: number;
+  foc?: number;
 }
 
 export default function OperationsBoardPage() {
@@ -42,123 +51,177 @@ export default function OperationsBoardPage() {
   const [directSalesTours, setDirectSalesTours] = useState<OperationsTour[]>([
     {
       id: 1,
+      departureDate: "2026-03-12",
       departureTime: "09:00",
+      returnDate: "2026-03-12",
       returnTime: "10:00",
       tourName: "Village and back",
+      tourCode: "VIL001",
       status: tourStatus.IN_PROGRESS,
+      transportType: "bus",
+      transportContractor: "Fast delivery",
+      vehicleNumber: "24456",
       seatsSold: 4,
       seatsAvailable: 2,
-      transportContractor: "Fast delivery",
+      numberOfSeats: 6,
       driver: "Paul John",
       vehicle: "24456",
-      guide: "None",
+      guide: "Brenda Davidson",
     },
     {
       id: 2,
+      departureDate: "2026-03-12",
       departureTime: "10:00",
+      returnDate: "2026-03-12",
       returnTime: "12:00",
       tourName: "Town adventure",
+      tourCode: "TWN001",
       status: tourStatus.IN_PROGRESS,
+      transportType: "bus",
+      transportContractor: "Edmond Transport",
+      vehicleNumber: "56009",
       seatsSold: 4,
       seatsAvailable: 2,
-      transportContractor: "Edmond Transport",
+      numberOfSeats: 6,
       driver: "Joseph King",
       vehicle: "56009",
       guide: "Jane Gerry",
     },
     {
       id: 3,
+      departureDate: "2026-03-12",
       departureTime: "11:00",
+      returnDate: "2026-03-12",
       returnTime: "12:00",
       tourName: "Tribal encounter",
+      tourCode: "TRB001",
       status: tourStatus.PRE_DEPARTURE,
+      transportType: "bus",
+      transportContractor: "Nice Tours",
+      vehicleNumber: "54322",
       seatsSold: 15,
       seatsAvailable: 0,
-      transportContractor: "Nice Tours",
+      numberOfSeats: 15,
       driver: "Walter Smith",
       vehicle: "54322",
-      guide: "None",
+      guide: "John Doe",
     },
     {
       id: 4,
+      departureDate: "2026-03-12",
       departureTime: "12:00",
+      returnDate: "2026-03-12",
       returnTime: "15:00",
       tourName: "Dine & Dine",
+      tourCode: "DIN001",
       status: tourStatus.PRE_DEPARTURE,
+      transportType: "bus",
+      transportContractor: "Island culture",
+      vehicleNumber: "88990",
       seatsSold: 4,
       seatsAvailable: 12,
-      transportContractor: "Island culture",
+      numberOfSeats: 16,
       driver: "Ben Harper",
       vehicle: "88990",
       guide: "Barbara Tovey",
     },
     {
       id: 5,
+      departureDate: "2026-03-12",
       departureTime: "13:00",
+      returnDate: "2026-03-12",
       returnTime: "16:00",
       tourName: "Snorkel haven",
+      tourCode: "SNR001",
       status: tourStatus.CANCELLED,
+      transportType: "boat",
+      transportContractor: "Cruising adventure",
+      vehicleNumber: "33345",
       seatsSold: 2,
       seatsAvailable: 8,
-      transportContractor: "Cruising adventure",
+      numberOfSeats: 10,
       driver: "Michael Jordan",
       vehicle: "33345",
-      guide: "None",
+      guide: "Harry Davidson",
     },
   ]);
 
   const [cruiseSalesTours, setCruiseSalesTours] = useState<OperationsTour[]>([
     {
       id: 6,
+      departureDate: "2026-03-12",
       departureTime: "08:00",
+      returnDate: "2026-03-12",
       returnTime: "10:00",
       tourName: "Forest walk",
+      tourCode: "FOR001",
       status: tourStatus.IN_PROGRESS,
+      transportType: "bus",
+      transportContractor: "Fast delivery",
+      vehicleNumber: "24456",
       seatsSold: 22,
       seatsAvailable: 2,
-      transportContractor: "Fast delivery",
+      numberOfSeats: 24,
       driver: "Paul John",
       vehicle: "24456",
-      guide: "None",
+      guide: "Jane Davidson",
     },
     {
       id: 7,
+      departureDate: "2026-03-12",
       departureTime: "10:00",
+      returnDate: "2026-03-12",
       returnTime: "12:00",
       tourName: "Castle bay",
+      tourCode: "CTL001",
       status: tourStatus.IN_PROGRESS,
+      transportType: "boat",
+      transportContractor: "Edmond Transport",
+      vehicleNumber: "56009",
       seatsSold: 89,
       seatsAvailable: 22,
-      transportContractor: "Edmond Transport",
+      numberOfSeats: 111,
       driver: "Joseph King",
       vehicle: "56009",
       guide: "Jane Gerry",
     },
     {
       id: 8,
+      departureDate: "2026-03-12",
       departureTime: "12:00",
+      returnDate: "2026-03-12",
       returnTime: "14:00",
       tourName: "Cave and dive",
+      tourCode: "CVB001",
       status: tourStatus.PRE_DEPARTURE,
+      transportType: "boat",
+      transportContractor: "Nice Tours",
+      vehicleNumber: "54322",
       seatsSold: 38,
       seatsAvailable: 11,
-      transportContractor: "Nice Tours",
+      numberOfSeats: 49,
       driver: "Walter Smith",
       vehicle: "54322",
-      guide: "None",
+      guide: "Carol Davidson",
     },
   ]);
 
   const [partnerSalesTours, setPartnerSalesTours] = useState<OperationsTour[]>([
     {
       id: 9,
+      departureDate: "2026-03-12",
       departureTime: "09:00",
+      returnDate: "2026-03-12",
       returnTime: "10:00",
       tourName: "All day discover",
+      tourCode: "ALL001",
       status: tourStatus.IN_PROGRESS,
+      transportType: "bus",
+      transportContractor: "Jimmy roadrunner",
+      vehicleNumber: "222999",
       seatsSold: 22,
       seatsAvailable: 5,
-      transportContractor: "Jimmy roadrunner",
+      numberOfSeats: 27,
       driver: "Fred Carson",
       vehicle: "222999",
       guide: "Brenda Davidson",
@@ -243,7 +306,6 @@ export default function OperationsBoardPage() {
             </h1>
             <div className="mt-2 space-y-1">
               <p className=" text-gray-600">
-                {" "}
                 Live operations for
                 {new Date().toLocaleDateString("en-US", {
                   weekday: "long",

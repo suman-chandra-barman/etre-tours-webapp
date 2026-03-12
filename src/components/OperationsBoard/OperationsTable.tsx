@@ -72,6 +72,9 @@ export function OperationsTable({
               Tour name
             </TableHead>
             <TableHead className="font-semibold text-base px-3">
+              Tour code
+            </TableHead>
+            <TableHead className="font-semibold text-base px-3">
               Status
             </TableHead>
             <TableHead className="font-semibold text-base text-center px-3">
@@ -115,6 +118,9 @@ export function OperationsTable({
               </TableCell>
               <TableCell className="font-medium text-base px-3">
                 {tour.tourName}
+              </TableCell>
+              <TableCell className="px-3">
+                {tour.tourCode}
               </TableCell>
               <TableCell className="px-3">
                 {isHomeStation ? (
