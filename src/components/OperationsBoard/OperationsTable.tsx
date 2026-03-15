@@ -191,7 +191,7 @@ export function OperationsTable({
                   >
                     <Edit className="w-4 h-4" />
                   </button>
-                  {role !== "cruise-sales" && (
+                  {role === "direct-sales" && (
                     <Button
                       className="rounded-full px-2 h-8"
                       onClick={() => handleMakeTicketClick(tour)}
