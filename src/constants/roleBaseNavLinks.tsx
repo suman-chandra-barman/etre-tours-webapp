@@ -46,47 +46,47 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/admin",
       label: "Overview",
-      icon: <LayoutDashboard className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/admin/staff",
-      label: "Staff",
-      icon: <Users className="w-6 h-6 mb-1" />,
-    },
-    {
-      href:"/admin/transport",
-      label: "Transport",
-      icon: <Van className="w-6 h-6 mb-1" />,
+      icon: <LayoutDashboard className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/tours",
       label: "Tours",
-      icon: <PiIslandDuotone className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/admin/finance",
-      label: "Finance",
-      icon: <Landmark className="w-6 h-6 mb-1" />,
+      icon: <PiIslandDuotone className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/station",
       label: "Station",
-      icon: <Users className="w-6 h-6 mb-1" />,
+      icon: <Monitor className="w-4 h-4 mb-1" />,
+    },
+    {
+      href: "/admin/finance",
+      label: "Finance",
+      icon: <Landmark className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/subcontractor",
       label: "Sub-con.",
-      icon: <UserRoundCog className="w-6 h-6 mb-1" />,
+      icon: <UserRoundCog className="w-4 h-4 mb-1" />,
+    },
+    {
+      href: "/admin/staff",
+      label: "Staff",
+      icon: <Users className="w-4 h-4 mb-1" />,
+    },
+    {
+      href: "/admin/transport",
+      label: "Transport",
+      icon: <Van className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/billing",
       label: "Billing",
-      icon: <CreditCard className="w-6 h-6 mb-1" />,
+      icon: <CreditCard className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/setting",
       label: "Settings",
-      icon: <Settings className="w-6 h-6 mb-1" />,
+      icon: <Settings className="w-4 h-4 mb-1" />,
     },
   ],
   "direct-sales": [

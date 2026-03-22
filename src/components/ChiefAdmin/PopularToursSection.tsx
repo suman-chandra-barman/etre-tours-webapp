@@ -60,41 +60,6 @@ export default function PopularToursSection() {
 
       {/* Content Grid */}
       <div>
-        {/* Bar Chart Visualization */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 items-center mb-6">
-          <div className="md:col-span-2">
-            <h4 className="text-lg font-semibold text-gray-900 mb-4">
-              82% of tourists are more likely choose transport than boat.
-            </h4>
-
-            {/* Gradient Bar */}
-            <div className="relative h-8 mb-2">
-              <div
-                className="h-full rounded"
-                style={{
-                  background:
-                    "linear-gradient(to right, #FFA500, #FFD700, #90EE90, #008000)",
-                  width: "82%",
-                }}
-              />
-              <div
-                className="absolute right-0 top-0 bottom-0 bg-gray-200 rounded-r"
-                style={{ width: "18%" }}
-              />
-            </div>
-
-            {/* Percentage Markers */}
-            <div className="flex justify-between text-xs text-gray-500">
-              <span>1</span>
-              <span>80%</span>
-            </div>
-          </div>
-
-          {/* Vehicle/Surfboard Illustration */}
-          <div className="col-span-1 flex justify-center">
-            <Image src={vanIllustration} alt="Van Illustration" />
-          </div>
-        </div>
 
         {/* Top 3 Tourist Spots */}
         <div className="bg-gray-100 rounded-md p-4">

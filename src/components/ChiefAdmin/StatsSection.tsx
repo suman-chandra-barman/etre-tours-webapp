@@ -15,10 +15,6 @@ export default function StatsSection() {
     cruiseOperation: { value: "$4,280.00", change: "36%", isPositive: true },
     partnerBooking: { value: "$875.99", change: "1.36%", isPositive: true },
     totalSales: { value: "$6,005.37", change: "121.2%", isPositive: true },
-    transport: { value: "$850.00" },
-    serviceProviderFee: { value: "$400.00" },
-    totalCost: { value: "$1,250.00" },
-    netProfit: { value: "$1,615.88", change: "26.9%", isPositive: true },
   };
 
   return (
@@ -69,20 +65,6 @@ export default function StatsSection() {
           value={stats.totalSales.value}
           change={stats.totalSales.change}
           isPositive={stats.totalSales.isPositive}
-        />
-
-        {/* Row 2 */}
-        <StatCard label="TRANSPORT" value={stats.transport.value} />
-        <StatCard
-          label="SERVICE PROVIDER FEE"
-          value={stats.serviceProviderFee.value}
-        />
-        <StatCard label="TOTAL COST" value={stats.totalCost.value} />
-        <StatCard
-          label="NET PROFIT"
-          value={stats.netProfit.value}
-          change={stats.netProfit.change}
-          isPositive={stats.netProfit.isPositive}
         />
       </div>
     </div>

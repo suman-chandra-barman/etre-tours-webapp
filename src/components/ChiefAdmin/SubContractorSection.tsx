@@ -1,6 +1,4 @@
 "use client";
-
-import { ChevronRight } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -79,14 +77,6 @@ export default function SubContractorSection() {
             </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </div>
-
-      {/* Show all link */}
-      <div className="mt-4 flex justify-start">
-        <button className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1 transition-colors">
-          Show all
-          <ChevronRight className="w-4 h-4" />
-        </button>
       </div>
     </div>
   );
