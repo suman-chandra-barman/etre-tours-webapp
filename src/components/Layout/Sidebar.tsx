@@ -62,7 +62,7 @@ function Sidebar() {
 
       {/* Navigation Links */}
       <nav
-        className="flex flex-col items-center space-y-6 flex-1"
+        className="flex flex-col items-center space-y-2 flex-1"
         aria-label="Main navigation"
       >
         {navLinks.map((link) => {

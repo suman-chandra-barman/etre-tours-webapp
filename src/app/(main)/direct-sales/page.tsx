@@ -283,7 +283,7 @@ export default function OperationsBoardPage() {
             </h1>
             <div className="mt-2 space-y-1">
               <p className=" text-gray-600">
-                Live operations for
+                Live operations for {" "}
                 {new Date().toLocaleDateString("en-US", {
                   weekday: "long",
                   year: "numeric",

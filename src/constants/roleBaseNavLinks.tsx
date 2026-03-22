@@ -8,6 +8,7 @@ import {
   ChartLine,
   CreditCard,
   Monitor,
+  Van,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 import { PiIslandDuotone } from "react-icons/pi";
@@ -46,6 +47,16 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       href: "/admin",
       label: "Overview",
       icon: <LayoutDashboard className="w-6 h-6 mb-1" />,
+    },
+    {
+      href: "/admin/staff",
+      label: "Staff",
+      icon: <Users className="w-6 h-6 mb-1" />,
+    },
+    {
+      href:"/admin/transport",
+      label: "Transport",
+      icon: <Van className="w-6 h-6 mb-1" />,
     },
     {
       href: "/admin/tours",
