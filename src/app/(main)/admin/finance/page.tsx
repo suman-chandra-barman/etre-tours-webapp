@@ -1,16 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
-import {
-  Calendar,
-  Search,
-  ChevronLeft,
-  ChevronRight,
-  Paperclip,
-  Download,
-  Trash2,
-  FileText,
-} from "lucide-react";
+import { useState } from "react";
+import { Calendar, Search, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 
 interface InvoiceItem {
@@ -20,11 +11,7 @@ interface InvoiceItem {
   tourSpots: string;
   departureFrom: string;
   tourCode: string;
-  subContractor: string;
-  paymentInvoice?: string | null; // Image filename or null
-  voucher?: string | null; // Image filename or null
-  totalCost: number;
-  totalProfit: number;
+  amount: number;
   status: "Paid" | "Pending";
 }
 
@@ -37,11 +24,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Batarahitol, Baijanathpur",
     departureFrom: "Batarahitol, Baijanathpur",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Primer Inc.",
-    paymentInvoice: "uppervca...",
-    voucher: "uppervca...",
-    totalCost: 176,
-    totalProfit: 26000,
+    amount: 26000,
     status: "Paid",
   },
   {
@@ -51,11 +34,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Bargachhi Chok, Biratnagar",
     departureFrom: "Bargachhi Chok, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
-    subContractor: "Larson & Larson",
-    paymentInvoice: "blockedfun...",
-    voucher: null,
-    totalCost: 120,
-    totalProfit: 37000,
+    amount: 37000,
     status: "Pending",
   },
   {
@@ -65,11 +44,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Hospital chowk, Biratnagar",
     departureFrom: "Hospital chowk, Biratnagar",
     tourCode: "CFCA-3F50-E459-9E57",
-    subContractor: "Mertz Group",
-    paymentInvoice: "blockedfun...",
-    voucher: "blockedfun...",
-    totalCost: 340,
-    totalProfit: 33000,
+    amount: 33000,
     status: "Paid",
   },
   {
@@ -79,11 +54,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Kanchanbari, Biratnagar",
     departureFrom: "Kanchanbari, Biratnagar",
     tourCode: "D5WC-3F5C-4E6C-C258",
-    subContractor: "Wintheiser LLC",
-    paymentInvoice: "schemaskd",
-    voucher: "schemaskd",
-    totalCost: 265,
-    totalProfit: 42000,
+    amount: 42000,
     status: "Paid",
   },
   {
@@ -93,11 +64,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Hatkhola Chok, Biratnagar",
     departureFrom: "Hatkhola Chok, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Solenoid",
-    paymentInvoice: "deletepunc...",
-    voucher: null,
-    totalCost: 187,
-    totalProfit: 42000,
+    amount: 42000,
     status: "Pending",
   },
   {
@@ -107,11 +74,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Chadani Chok, Biratnagar",
     departureFrom: "Chadani Chok, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Wiegand-Shields",
-    paymentInvoice: "chuffleproud",
-    voucher: "shuffleproud",
-    totalCost: 345,
-    totalProfit: 74000,
+    amount: 74000,
     status: "Paid",
   },
   {
@@ -121,11 +84,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Rani, Biratnagar",
     departureFrom: "Rani, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Metaful",
-    paymentInvoice: "coastlinevou...",
-    voucher: "coastlinevou...",
-    totalCost: 376,
-    totalProfit: 17000,
+    amount: 17000,
     status: "Paid",
   },
   {
@@ -135,11 +94,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Ghinaghat, Baijanathpur",
     departureFrom: "Ghinaghat, Baijanathpur",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "Batz Group",
-    paymentInvoice: "catchtablee...",
-    voucher: null,
-    totalCost: 145,
-    totalProfit: 16300,
+    amount: 16300,
     status: "Pending",
   },
   {
@@ -149,11 +104,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Jaynepal chowk, Biratnagar",
     departureFrom: "Jaynepal chowk, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "Performante",
-    paymentInvoice: "potsunfair",
-    voucher: "potsunfair",
-    totalCost: 223,
-    totalProfit: 21000,
+    amount: 21000,
     status: "Paid",
   },
   {
@@ -163,11 +114,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Kohobarachok, Biratnagar",
     departureFrom: "Kohobarachok, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "TypeSafe",
-    paymentInvoice: "chummynit...",
-    voucher: null,
-    totalCost: 205,
-    totalProfit: 21000,
+    amount: 21000,
     status: "Pending",
   },
   {
@@ -177,11 +124,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Kohobara, Biratnagar",
     departureFrom: "Kohobara, Biratnagar",
     tourCode: "KDSS-2424-6565-HYJU",
-    subContractor: "Advanta Inc.",
-    paymentInvoice: "pinslaunch",
-    voucher: "pinslaunch",
-    totalCost: 228,
-    totalProfit: 82000,
+    amount: 82000,
     status: "Paid",
   },
   {
@@ -191,11 +134,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Bhattimud, Biratnagar",
     departureFrom: "Bhattimud, Biratnagar",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Leannon and Sons",
-    paymentInvoice: "germlessoh...",
-    voucher: null,
-    totalCost: 234,
-    totalProfit: 57000,
+    amount: 57000,
     status: "Pending",
   },
   {
@@ -205,11 +144,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Jwalatol, Biratnagar",
     departureFrom: "Jwalatol, Biratnagar",
     tourCode: "295A-6774-9EA2-5338",
-    subContractor: "FastTrak",
-    paymentInvoice: "dutiesvee...",
-    voucher: "dutiesvee...",
-    totalCost: 178,
-    totalProfit: 46000,
+    amount: 46000,
     status: "Paid",
   },
   {
@@ -219,11 +154,7 @@ const mockInvoiceData: InvoiceItem[] = [
     tourSpots: "Dhanpura, Baijanathpur",
     departureFrom: "Dhanpura, Baijanathpur",
     tourCode: "CAAC-3SDC-4E6C-C258",
-    subContractor: "Verify",
-    paymentInvoice: "chummynit...",
-    voucher: "chummynit...",
-    totalCost: 324,
-    totalProfit: 12000,
+    amount: 12000,
     status: "Paid",
   },
 ];
@@ -233,26 +164,11 @@ export default function FinancePage() {
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("Any time");
   const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
-  const [selectedSubContractor, setSelectedSubContractor] = useState(
-    "Filter by sub-contractor",
-  );
   const [activeTab, setActiveTab] = useState<
     "Direct Sales" | "Cruise Operations" | "Partner"
   >("Direct Sales");
   const [currentPage, setCurrentPage] = useState(1);
   const [invoices, setInvoices] = useState<InvoiceItem[]>(mockInvoiceData);
-  const [hoveredFile, setHoveredFile] = useState<{
-    id: number;
-    type: "payment" | "voucher";
-  } | null>(null);
-
-  // Refs for file inputs
-  const paymentFileInputRefs = useRef<{
-    [key: number]: HTMLInputElement | null;
-  }>({});
-  const voucherFileInputRefs = useRef<{
-    [key: number]: HTMLInputElement | null;
-  }>({});
 
   const itemsPerPage = 10;
 
@@ -261,45 +177,6 @@ export default function FinancePage() {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const currentData = filteredData.slice(startIndex, endIndex);
-
-  const handleFileUpload = (
-    invoiceId: number,
-    type: "payment" | "voucher",
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setInvoices((prev) =>
-        prev.map((invoice) =>
-          invoice.id === invoiceId
-            ? {
-                ...invoice,
-                [type === "payment" ? "paymentInvoice" : "voucher"]: file.name,
-              }
-            : invoice,
-        ),
-      );
-    }
-  };
-
-  const handleFileDelete = (invoiceId: number, type: "payment" | "voucher") => {
-    setInvoices((prev) =>
-      prev.map((invoice) =>
-        invoice.id === invoiceId
-          ? {
-              ...invoice,
-              [type === "payment" ? "paymentInvoice" : "voucher"]: null,
-            }
-          : invoice,
-      ),
-    );
-  };
-
-  const handleFileDownload = (fileName: string) => {
-    // Simulate download
-    console.log("Downloading:", fileName);
-    alert(`Downloading: ${fileName}`);
-  };
 
   const handleStatusChange = (
     invoiceId: number,
@@ -321,9 +198,7 @@ export default function FinancePage() {
             className={`flex items-center justify-between mb-6 ${styles.noPrint}`}
           >
             <div className={`flex items-center gap-3 `}>
-              <h1 className="text-2xl font-semibold text-gray-900">
-                Invoices & Vouchers
-              </h1>
+              <h1 className="text-2xl font-semibold text-gray-900">Invoices</h1>
             </div>
           </div>
 
@@ -333,7 +208,7 @@ export default function FinancePage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search by tour code or sub-contractor..."
+                placeholder="Search by tour code..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -412,21 +287,6 @@ export default function FinancePage() {
                   <option>Island Hopping</option>
                   <option>City Tour</option>
                 </select>
-
-                {/* Sub-contractor Company Dropdown */}
-                <select
-                  value={selectedSubContractor}
-                  onChange={(e) => setSelectedSubContractor(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  }}
-                >
-                  <option>Filter by sub-contractor</option>
-                  <option>Primer Inc.</option>
-                  <option>Larson & Larson</option>
-                  <option>Mertz Group</option>
-                </select>
               </div>
 
               <div className="flex items-center gap-4">
@@ -459,19 +319,7 @@ export default function FinancePage() {
                       Tour Code
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Sub-contractor company
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Payment Invoice
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Voucher
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Total Cost (USD)
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Total Profit (USD)
+                      Amount
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Status
@@ -500,173 +348,23 @@ export default function FinancePage() {
                         {item.tourCode}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.subContractor}
+                        ${item.amount.toLocaleString()}
                       </td>
 
-                      {/* Payment Invoice Cell */}
+                      {/* Status Cell: Paid is locked, Pending can be marked as Paid */}
                       <td className="px-4 py-3 text-sm whitespace-nowrap">
-                        {item.paymentInvoice ? (
-                          <div
-                            className="relative inline-block"
-                            onMouseEnter={() =>
-                              setHoveredFile({ id: item.id, type: "payment" })
-                            }
-                            onMouseLeave={() => setHoveredFile(null)}
-                          >
-                            <button className="flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors">
-                              <FileText className="w-4 h-4" />
-                              <span className="underline">
-                                {item.paymentInvoice}
-                              </span>
-                            </button>
-                            {hoveredFile?.id === item.id &&
-                              hoveredFile?.type === "payment" && (
-                                <div className="absolute left-0 top-full bg-white shadow-lg rounded-lg border border-gray-200 p-2 flex gap-2 z-10">
-                                  <button
-                                    onClick={() =>
-                                      handleFileDownload(item.paymentInvoice!)
-                                    }
-                                    className="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded transition-colors"
-                                  >
-                                    <Download className="w-4 h-4" />
-                                    Download
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleFileDelete(item.id, "payment")
-                                    }
-                                    className="flex items-center gap-1 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded transition-colors"
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                    Delete
-                                  </button>
-                                </div>
-                              )}
-                          </div>
+                        {item.status === "Paid" ? (
+                          <span className="inline-flex px-4 py-1.5 rounded-full text-xs font-medium bg-green-100 text-green-700 border border-green-200">
+                            Paid
+                          </span>
                         ) : (
-                          <div>
-                            <input
-                              type="file"
-                              ref={(el) => {
-                                paymentFileInputRefs.current[item.id] = el;
-                              }}
-                              onChange={(e) =>
-                                handleFileUpload(item.id, "payment", e)
-                              }
-                              className="hidden"
-                              accept="image/*,.pdf"
-                            />
-                            <button
-                              onClick={() =>
-                                paymentFileInputRefs.current[item.id]?.click()
-                              }
-                              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors"
-                            >
-                              <Paperclip className="w-4 h-4" />
-                              <span className="underline">Attach</span>
-                            </button>
-                          </div>
-                        )}
-                      </td>
-
-                      {/* Voucher Cell */}
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
-                        {item.voucher ? (
-                          <div
-                            className="relative inline-block"
-                            onMouseEnter={() =>
-                              setHoveredFile({ id: item.id, type: "voucher" })
-                            }
-                            onMouseLeave={() => setHoveredFile(null)}
+                          <button
+                            onClick={() => handleStatusChange(item.id, "Paid")}
+                            className="inline-flex px-4 py-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700 border border-gray-200 hover:bg-blue-50 hover:text-blue-700 hover:border-blue-200 transition-colors"
                           >
-                            <button className="flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors">
-                              <FileText className="w-4 h-4" />
-                              <span className="underline">{item.voucher}</span>
-                            </button>
-                            {hoveredFile?.id === item.id &&
-                              hoveredFile?.type === "voucher" && (
-                                <div className="absolute left-0 top-full bg-white shadow-lg rounded-lg border border-gray-200 p-2 flex gap-2 z-10">
-                                  <button
-                                    onClick={() =>
-                                      handleFileDownload(item.voucher!)
-                                    }
-                                    className="flex items-center gap-1 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-100 rounded transition-colors"
-                                  >
-                                    <Download className="w-4 h-4" />
-                                    Download
-                                  </button>
-                                  <button
-                                    onClick={() =>
-                                      handleFileDelete(item.id, "voucher")
-                                    }
-                                    className="flex items-center gap-1 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 rounded transition-colors"
-                                  >
-                                    <Trash2 className="w-4 h-4" />
-                                    Delete
-                                  </button>
-                                </div>
-                              )}
-                          </div>
-                        ) : (
-                          <div>
-                            <input
-                              type="file"
-                              ref={(el) => {
-                                voucherFileInputRefs.current[item.id] = el;
-                              }}
-                              onChange={(e) =>
-                                handleFileUpload(item.id, "voucher", e)
-                              }
-                              className="hidden"
-                              accept="image/*,.pdf"
-                            />
-                            <button
-                              onClick={() =>
-                                voucherFileInputRefs.current[item.id]?.click()
-                              }
-                              className="flex items-center gap-1 text-blue-600 hover:text-blue-700 transition-colors"
-                            >
-                              <Paperclip className="w-4 h-4" />
-                              <span className="underline">Attach</span>
-                            </button>
-                          </div>
+                            Mark as Paid
+                          </button>
                         )}
-                      </td>
-
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">
-                        ${item.totalCost}
-                      </td>
-                      <td className="px-4 py-3 text-sm font-medium text-gray-900 whitespace-nowrap">
-                        ${item.totalProfit.toLocaleString()}
-                      </td>
-
-                      {/* Status Cell with Dropdown */}
-                      <td className="px-4 py-3 text-sm whitespace-nowrap">
-                        <div className="relative inline-block">
-                          <select
-                            value={item.status}
-                            onChange={(e) =>
-                              handleStatusChange(
-                                item.id,
-                                e.target.value as "Paid" | "Pending",
-                              )
-                            }
-                            className={`px-4 py-1.5 pr-8 rounded-full text-xs font-medium appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                              item.status === "Paid"
-                                ? "bg-green-100 text-green-700 border border-green-200"
-                                : "bg-gray-100 text-gray-700 border border-gray-200"
-                            }`}
-                            style={{
-                              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                              backgroundRepeat: "no-repeat",
-                              backgroundPosition: "right 0.5rem center",
-                              backgroundSize: "12px 12px",
-                            }}
-                          >
-                            <option value="Paid">Paid</option>
-                            <option value="Pending">Pending</option>
-                          </select>
-                        </div>
                       </td>
                     </tr>
                   ))}
