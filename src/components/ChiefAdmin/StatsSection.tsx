@@ -2,13 +2,7 @@
 
 import { useState } from "react";
 import StatCard from "../Cards/StatCard";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type TimePeriod = "Week" | "Month" | "Quarter" | "Year";
 
@@ -76,21 +70,21 @@ export default function StatsSection() {
         >
           Time Period
         </label>
-        <Select
+        <Tabs
           value={selectedPeriod}
           onValueChange={(value) => setSelectedPeriod(value as TimePeriod)}
         >
-          <SelectTrigger id="stats-period" className="w-full md:w-56">
-            <SelectValue placeholder="Select period" />
-          </SelectTrigger>
-          <SelectContent>
+          <TabsList
+            id="stats-period"
+            className="bg-gray-100 rounded-full"
+          >
             {periods.map((period) => (
-              <SelectItem key={period} value={period}>
+              <TabsTrigger key={period} value={period} className="rounded-full">
                 {period}
-              </SelectItem>
+              </TabsTrigger>
             ))}
-          </SelectContent>
-        </Select>
+          </TabsList>
+        </Tabs>
       </div>
 
       {/* Stats Grid */}
