@@ -1,8 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { AddEditMemberModal } from "@/components/Modals/AddEditMemberModal";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -11,388 +18,253 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Printer } from "lucide-react";
-import styles from "@/components/styles/Print.module.css";
+import { Eye, Pen, Plus } from "lucide-react";
 
-type TourStatus = "Pre-departure" | "In-progress" | "Completed" | "Cancelled";
-type FilterStatus =
-  | "All"
-  | "Today"
-  | "Awaiting departure"
-  | "In-progress"
-  | "Completed"
-  | "Cancelled";
-
-interface StationData {
-  status: "Online" | "Offline";
-  dateTime: string;
-  tourSpots: string;
-  departureFrom: string;
-  tourCode: string;
-  subContractor: string;
-  totalPax: number;
-  vehicleBoats: string;
-  totalAmount: string;
-  tourStatus: TourStatus;
+interface StationMember {
+  id: string;
+  name: string;
+  station: string;
+  status: "online" | "offline";
+  email: string;
+  phoneNumber: string;
+  city: string;
+  presentAddress: string;
+  permanentAddress: string;
+  password: string;
+  photo?: string;
 }
 
-const mockData: StationData[] = [
-  {
-    status: "Online",
-    dateTime: "Feb 21, 2023 at 08:05 am",
-    tourSpots: "Batarahlot, Baijanathpur",
-    departureFrom: "Batarahlot, Baijanathpur",
-    tourCode: "295A-6774-96A2-5338",
-    subContractor: "Primer Inc.",
-    totalPax: 426,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$26,000",
-    tourStatus: "Pre-departure",
-  },
-  {
-    status: "Offline",
-    dateTime: "Aug 3, 2023",
-    tourSpots: "Bargachhi Chok, Biratnagar",
-    departureFrom: "Bargachhi Chok, Biratnagar",
-    tourCode: "DSWC-3F5C-4E8C-CZ58",
-    subContractor: "Larson & Larson",
-    totalPax: 447,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$42,000",
-    tourStatus: "In-progress",
-  },
-  {
-    status: "Online",
-    dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Hospital chowk, Biratnagar",
-    departureFrom: "Hospital chowk, Biratnagar",
-    tourCode: "CFCA-3F50-E469-9E57",
-    subContractor: "Mertz Group",
-    totalPax: 600,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$12,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kanchanbari, Biratnagar",
-    departureFrom: "Kanchanbari, Biratnagar",
-    tourCode: "DSWC-3F5C-4E8C-CZ58",
-    subContractor: "Wintheiser LLC",
-    totalPax: 883,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$00",
-    tourStatus: "Cancelled",
-  },
-  {
-    status: "Online",
-    dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Hatikhola Chok, Biratnagar",
-    departureFrom: "Hatikhola Chok, Biratnagar",
-    tourCode: "CAAC-350C-4E8C-CZ58",
-    subContractor: "Solenoid",
-    totalPax: 154,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$62,000",
-    tourStatus: "In-progress",
-  },
-  {
-    status: "Online",
-    dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Chadani Chok, Biratnagar",
-    departureFrom: "Chadani Chok, Biratnagar",
-    tourCode: "295A-6774-96A2-5338",
-    subContractor: "Wiegand-Shields",
-    totalPax: 536,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$16,300",
-    tourStatus: "In-progress",
-  },
-  {
-    status: "Online",
-    dateTime: "Aug 18, 2023 at 04:12 pm",
-    tourSpots: "Rani, Biratnagar",
-    departureFrom: "Rani, Biratnagar",
-    tourCode: "CAAC-350C-4E8C-CZ58",
-    subContractor: "Metaful",
-    totalPax: 429,
-    vehicleBoats: "By boat",
-    totalAmount: "$17,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Oct 13, 2023 at 08:05 am",
-    tourSpots: "Ghinaghat, Baijanathpur",
-    departureFrom: "Ghinaghat, Baijanathpur",
-    tourCode: "KDSS-2424-6565-HVIU",
-    subContractor: "Batz Group",
-    totalPax: 423,
-    vehicleBoats: "By boat",
-    totalAmount: "$65,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Jaynspal chowk, Biratnagar",
-    departureFrom: "Jaynspal chowk, Biratnagar",
-    tourCode: "295A-6774-96A2-5338",
-    subContractor: "Performante",
-    totalPax: 583,
-    vehicleBoats: "By boat",
-    totalAmount: "$21,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kohobaranchok, Biratnagar",
-    departureFrom: "Kohobaranchok, Biratnagar",
-    tourCode: "KDSS-2424-6565-HVIU",
-    subContractor: "TypeSafe",
-    totalPax: 185,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$21,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Nov 4, 2023 at 12:13 am",
-    tourSpots: "Kohobara, Biratnagar",
-    departureFrom: "Kohobara, Biratnagar",
-    tourCode: "KDSS-2424-6565-HVIU",
-    subContractor: "Advanta Inc.",
-    totalPax: 196,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$26,000",
-    tourStatus: "Completed",
-  },
-  {
-    status: "Online",
-    dateTime: "Sep 4, 2021 at 12:14 am",
-    tourSpots: "Bhattimad, Biratnagar",
-    departureFrom: "Bhattimad, Biratnagar",
-    tourCode: "CAAC-350C-4E8C-CZ58",
-    subContractor: "Leannon and Sons",
-    totalPax: 922,
-    vehicleBoats: "By vehicle",
-    totalAmount: "$57,000",
-    tourStatus: "Completed",
-  },
-];
-
 function StationPage() {
-  const [activeTab, setActiveTab] = useState("direct-sales");
-  const [activeFilter, setActiveFilter] = useState<FilterStatus>("All");
+  const [isAddStationModalOpen, setIsAddStationModalOpen] = useState(false);
+  const [isEditStationModalOpen, setIsEditStationModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState<StationMember | null>(
+    null,
+  );
 
-  const getStatusColor = (status: TourStatus) => {
-    switch (status) {
-      case "Pre-departure":
-        return "text-yellow-600";
-      case "In-progress":
-        return "text-green-600";
-      case "Completed":
-        return "text-gray-600";
-      case "Cancelled":
-        return "text-red-600";
-      default:
-        return "text-gray-600";
-    }
+  const [stationMembers] = useState<StationMember[]>([
+    {
+      id: "1",
+      name: "Suman Barman",
+      station: "Direct Sales",
+      status: "online",
+      email: "suman.direct@etretours.com",
+      phoneNumber: "+1 234 567 111",
+      city: "New York",
+      presentAddress: "15 Hudson Street, New York",
+      permanentAddress: "18 Park Avenue, New York",
+      password: "******",
+      photo: "",
+    },
+    {
+      id: "2",
+      name: "Emma Moray",
+      station: "Cruise Operations",
+      status: "offline",
+      email: "emma.cruise@etretours.com",
+      phoneNumber: "+1 234 567 222",
+      city: "Miami",
+      presentAddress: "221 Ocean View, Miami",
+      permanentAddress: "44 Palm Drive, Florida",
+      password: "******",
+      photo: "",
+    },
+    {
+      id: "3",
+      name: "Jack Partner",
+      station: "Partner",
+      status: "online",
+      email: "jack.partner@etretours.com",
+      phoneNumber: "+1 234 567 333",
+      city: "Boston",
+      presentAddress: "54 Downtown Lane, Boston",
+      permanentAddress: "78 Central Street, Boston",
+      password: "******",
+      photo: "",
+    },
+  ]);
+
+  const handleEditStation = (member: StationMember) => {
+    setSelectedMember(member);
+    setIsEditStationModalOpen(true);
   };
 
-  // Helper function to check if a date is today
-  const isToday = (dateString: string) => {
-    const today = new Date();
-    const date = new Date(dateString);
-    return (
-      date.getDate() === today.getDate() &&
-      date.getMonth() === today.getMonth() &&
-      date.getFullYear() === today.getFullYear()
-    );
-  };
-
-  const filteredData = mockData.filter((item) => {
-    if (activeFilter === "All") return true;
-    if (activeFilter === "Today") return isToday(item.dateTime);
-    if (activeFilter === "Awaiting departure")
-      return item.tourStatus === "Pre-departure";
-    return item.tourStatus === activeFilter;
-  });
-
-  const handlePrint = () => {
-    window.print();
+  const handleViewDetails = (member: StationMember) => {
+    setSelectedMember(member);
+    setIsDetailsModalOpen(true);
   };
 
   return (
-    <main className="p-6 space-y-6 overflow-y-auto h-full">
-      <div>
-        <h1 className="text-2xl font-semibold text-gray-900">Stations</h1>
+    <main className="p-6 overflow-y-auto">
+      <h1 className="text-3xl font-bold mb-6">Station</h1>
+
+      <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 className="text-xl font-semibold">Station Members</h2>
+          <Button
+            onClick={() => setIsAddStationModalOpen(true)}
+            className="bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 rounded-full"
+          >
+            Add station
+            <span className="ml-2">
+              <Plus className="w-4 h-4" />
+            </span>
+          </Button>
+        </div>
+
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Member</TableHead>
+              <TableHead>Station</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>City</TableHead>
+              <TableHead className="text-right">Action</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {stationMembers.map((member) => (
+              <TableRow key={member.id}>
+                <TableCell>
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-full bg-linear-to-br from-pink-400 to-purple-500 flex items-center justify-center text-white font-semibold">
+                      {member.name.charAt(0)}
+                    </div>
+                    <span className="font-medium">{member.name}</span>
+                  </div>
+                </TableCell>
+                <TableCell>{member.station}</TableCell>
+                <TableCell>
+                  <Badge
+                    variant="outline"
+                    className={
+                      member.status === "online"
+                        ? "border-green-200 bg-green-50 text-green-700"
+                        : "border-gray-200 bg-gray-50 text-gray-600"
+                    }
+                  >
+                    {member.status}
+                  </Badge>
+                </TableCell>
+                <TableCell>{member.email}</TableCell>
+                <TableCell>{member.phoneNumber}</TableCell>
+                <TableCell>{member.city}</TableCell>
+                <TableCell>
+                  <div className="flex items-center justify-end gap-2">
+                    <button
+                      onClick={() => handleViewDetails(member)}
+                      className="p-1.5 rounded-md hover:bg-gray-100 transition-colors"
+                      aria-label="View station details"
+                    >
+                      <Eye className="w-4 h-4 text-gray-600" />
+                    </button>
+                    <button
+                      onClick={() => handleEditStation(member)}
+                      className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+                      aria-label="Edit station"
+                    >
+                      <Pen className="w-4 h-4 text-gray-600" />
+                    </button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="bg-gray-100">
-          <TabsTrigger value="direct-sales">Direct Sales</TabsTrigger>
-          <TabsTrigger value="cruise-operations">Cruise Operations</TabsTrigger>
-          <TabsTrigger value="partner">Partner</TabsTrigger>
-        </TabsList>
+      <AddEditMemberModal
+        key="add-station"
+        isOpen={isAddStationModalOpen}
+        onClose={() => setIsAddStationModalOpen(false)}
+        mode="add"
+      />
 
-        <TabsContent value={activeTab} className="mt-6 space-y-4">
-          {/* Filter Buttons */}
-          <div
-            className={`flex items-center justify-between ${styles.noPrint}`}
-          >
-            <div className="flex gap-2">
-              <Button
-                variant={activeFilter === "All" ? "default" : "outline"}
-                onClick={() => setActiveFilter("All")}
-                className="rounded-full"
-              >
-                All
-              </Button>
-              <Button
-                variant={activeFilter === "Today" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Today")}
-                className="rounded-full"
-              >
-                Today
-              </Button>
-              <Button
-                variant={
-                  activeFilter === "Awaiting departure" ? "default" : "outline"
-                }
-                onClick={() => setActiveFilter("Awaiting departure")}
-                className="rounded-full"
-              >
-                Awaiting departure
-              </Button>
-              <Button
-                variant={activeFilter === "In-progress" ? "default" : "outline"}
-                onClick={() => setActiveFilter("In-progress")}
-                className="rounded-full"
-              >
-                In-progress
-              </Button>
-              <Button
-                variant={activeFilter === "Completed" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Completed")}
-                className="rounded-full"
-              >
-                Completed
-              </Button>
-              <Button
-                variant={activeFilter === "Cancelled" ? "default" : "outline"}
-                onClick={() => setActiveFilter("Cancelled")}
-                className="rounded-full"
-              >
-                Cancelled
-              </Button>
+      <AddEditMemberModal
+        key={
+          selectedMember
+            ? `edit-station-${selectedMember.id}`
+            : "edit-station-empty"
+        }
+        isOpen={isEditStationModalOpen}
+        onClose={() => {
+          setIsEditStationModalOpen(false);
+          setSelectedMember(null);
+        }}
+        memberData={
+          selectedMember
+            ? {
+                name: selectedMember.name,
+                station: selectedMember.station
+                  .toLowerCase()
+                  .replace(/\s+/g, "-"),
+                email: selectedMember.email,
+                password: selectedMember.password,
+                city: selectedMember.city,
+                phoneNumber: selectedMember.phoneNumber,
+                presentAddress: selectedMember.presentAddress,
+                permanentAddress: selectedMember.permanentAddress,
+              }
+            : undefined
+        }
+        mode="edit"
+      />
+
+      <Dialog
+        open={isDetailsModalOpen}
+        onOpenChange={(open) => {
+          setIsDetailsModalOpen(open);
+          if (!open && !isEditStationModalOpen) {
+            setSelectedMember(null);
+          }
+        }}
+      >
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Station Details</DialogTitle>
+          </DialogHeader>
+          {selectedMember && (
+            <div className="space-y-3 text-sm">
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Name</p>
+                <p className="font-medium">{selectedMember.name}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Station</p>
+                <p className="font-medium">{selectedMember.station}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Status</p>
+                <p className="font-medium capitalize">
+                  {selectedMember.status}
+                </p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Email</p>
+                <p className="font-medium">{selectedMember.email}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Phone Number</p>
+                <p className="font-medium">{selectedMember.phoneNumber}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">City</p>
+                <p className="font-medium">{selectedMember.city}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Present Address</p>
+                <p className="font-medium">{selectedMember.presentAddress}</p>
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <p className="text-gray-500">Permanent Address</p>
+                <p className="font-medium">{selectedMember.permanentAddress}</p>
+              </div>
             </div>
-            <Button
-              onClick={handlePrint}
-              variant="ghost"
-              className="flex items-center gap-2 px-4 py-2 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-            >
-              <Printer className="w-4 h-4" />
-              Print
-            </Button>
-          </div>
-
-          {/* Data Table */}
-          <div className={`rounded-lg border bg-white ${styles.printArea}`}>
-            <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-50">
-                  <TableHead className="font-semibold text-gray-700">
-                    Status
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Date & Time
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Tour
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Departure From
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Tour Code
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Sub-contractor company
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Total Pax
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Vehicle/Boats
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Total Amount
-                  </TableHead>
-                  <TableHead className="font-semibold text-gray-700">
-                    Tour Status
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredData.map((row, index) => (
-                  <TableRow key={index} className="hover:bg-gray-50">
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <div
-                          className={`w-2 h-2 rounded-full ${
-                            row.status === "Online"
-                              ? "bg-green-500"
-                              : "bg-gray-400"
-                          }`}
-                        />
-                        <span className="text-sm">{row.status}</span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.dateTime}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.tourSpots}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.departureFrom}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.tourCode}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.subContractor}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.totalPax}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.vehicleBoats}
-                    </TableCell>
-                    <TableCell className="text-sm text-gray-600">
-                      {row.tourStatus === "Cancelled" ? (
-                        <span className="text-red-600">{row.totalAmount}</span>
-                      ) : (
-                        row.totalAmount
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <span
-                        className={`text-sm font-medium ${getStatusColor(row.tourStatus)}`}
-                      >
-                        {row.tourStatus}
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </TabsContent>
-      </Tabs>
+          )}
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

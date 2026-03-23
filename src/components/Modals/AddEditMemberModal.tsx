@@ -97,7 +97,7 @@ export function AddEditMemberModal({
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-semibold">
-            {mode === "add" ? "Add Member" : "Edit Member"}
+            {mode === "add" ? "Add Station" : "Edit Station"}
           </DialogTitle>
         </DialogHeader>
 
@@ -288,7 +288,11 @@ export function AddEditMemberModal({
 
           {/* Actions */}
           <div className="flex justify-end gap-3 pt-4">
-            <Button variant="outline" onClick={onClose} className="rounded-full">
+            <Button
+              variant="outline"
+              onClick={onClose}
+              className="rounded-full"
+            >
               Cancel
             </Button>
             <Button
