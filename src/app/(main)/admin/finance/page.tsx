@@ -197,9 +197,7 @@ export default function FinancePage() {
           <div
             className={`flex items-center justify-between mb-6 ${styles.noPrint}`}
           >
-            <div className={`flex items-center gap-3 `}>
-              <h1 className="text-2xl font-semibold text-gray-900">Invoices</h1>
-            </div>
+            <h1 className="text-2xl lg:text-3xl font-bold">Invoices</h1>
           </div>
 
           <div className={`flex items-center gap-4 mb-4 ${styles.noPrint}`}>

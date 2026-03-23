@@ -96,7 +96,7 @@ function StationPage() {
 
   return (
     <main className="p-6 overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-6">Station</h1>
+      <h1 className="text-2xl lg:text-3xl font-bold mb-6">Station</h1>
 
       <div className="bg-white rounded-lg shadow-sm p-6 space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

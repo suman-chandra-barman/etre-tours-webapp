@@ -247,7 +247,7 @@ export default function TicketsPage() {
           Back to Operations Board
         </Button>
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
             Today&apos;s Tickets
           </h1>
           <p className="text-lg text-gray-600 mt-2">

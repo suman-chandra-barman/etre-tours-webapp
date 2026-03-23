@@ -285,7 +285,7 @@ function SubContractorPage() {
   return (
     <main className="p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl lg:text-3xl font-bold mb-6">
           Sub-contractor Companies
         </h1>
       </div>

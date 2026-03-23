@@ -26,7 +26,7 @@ function SettingPage() {
 
   return (
     <main className="p-6 overflow-y-auto">
-      <h1 className="text-3xl font-bold mb-6">Manage settings</h1>
+      <h1 className="text-2xl lg:text-3xl font-bold mb-6">Manage settings</h1>
 
       <div className="max-w-xl mx-auto bg-white rounded-lg shadow-sm p-6 space-y-8">
         {/*Profile Section */}

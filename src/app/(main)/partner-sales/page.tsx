@@ -314,7 +314,7 @@ export default function OperationsBoardPage() {
       <div className="mb-4">
         <div className="flex justify-between items-start">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900">
               Operations Board
             </h1>
             <div className="mt-2 space-y-1">

@@ -204,14 +204,14 @@ export default function DailyTourTallyModal({
           <div className="flex items-start gap-8">
             <div>
               <p className="text-sm text-gray-600 mb-1">Total Head Count</p>
-              <p className="text-3xl font-bold text-gray-900">
+              <p className="text-2xl lg:text-3xl font-bold text-gray-900">
                 {totalHeadCount}
               </p>
             </div>
             <div>
               <p className="text-sm text-gray-600 mb-1">Total Amount Out</p>
               <div className="flex items-baseline gap-2">
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-2xl lg:text-3xl font-bold text-green-600">
                   ${totalAmount.toLocaleString()}
                 </p>
                 <button className="text-yellow-600 bg-yellow-50 px-2 py-1 rounded text-xs flex items-center gap-1">
