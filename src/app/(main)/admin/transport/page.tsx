@@ -29,7 +29,7 @@ const initialTransportList: Transport[] = [
   {
     id: 6656,
     name: "Koshi River Shuttle",
-    transportType: "Boat",
+    transportType: "Vehicle",
     transportContractor: "Sunrise Marine Services",
     seatCapacity: 30,
   },
@@ -43,7 +43,7 @@ const initialTransportList: Transport[] = [
   {
     id: 3353,
     name: "Delta Cruiser",
-    transportType: "Boat",
+    transportType: "Vehicle",
     transportContractor: "Blue Harbor Transport",
     seatCapacity: 24,
   },
@@ -110,7 +110,7 @@ function TransportPage() {
                   <Badge
                     variant="secondary"
                     className={
-                      transport.transportType === "Boat"
+                      transport.transportType === "Vehicle"
                         ? "bg-cyan-100 text-cyan-700"
                         : "bg-amber-100 text-amber-700"
                     }

@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export type TransportType = "Boat" | "Bus";
+export type TransportType = "Vehicle" | "Bus";
 
 export interface AddTransportFormData {
   name: string;
@@ -133,7 +133,7 @@ function AddTransportModal({
                 <SelectValue placeholder="Select transport type" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Boat">Boat</SelectItem>
+                <SelectItem value="Vehicle">Vehicle</SelectItem>
                 <SelectItem value="Bus">Bus</SelectItem>
               </SelectContent>
             </Select>

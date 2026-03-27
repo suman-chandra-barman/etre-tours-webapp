@@ -278,23 +278,6 @@ export default function AddSubContractorModal({
                   </div>
                   <div>
                     <h3 className="text-sm font-medium mb-3">Add details</h3>
-                    <Label
-                      htmlFor={`operatorName-${index}`}
-                      className="text-xs text-gray-600"
-                    >
-                      Operator Name
-                    </Label>
-                    <Input
-                      id={`operatorName-${index}`}
-                      placeholder="Enter operator name"
-                      className="mt-1"
-                      value={detail.operatorName}
-                      onChange={(e) => {
-                        const newDetails = [...vehicleDetails];
-                        newDetails[index].operatorName = e.target.value;
-                        setVehicleDetails(newDetails);
-                      }}
-                    />
                   </div>
 
                   <div>
