@@ -9,9 +9,9 @@ import {
   CreditCard,
   Monitor,
   Van,
+  Receipt,
 } from "lucide-react";
 import { TUserRole } from "@/types";
-import { PiIslandDuotone } from "react-icons/pi";
 
 interface NavLink {
   href: string;
@@ -59,9 +59,9 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Monitor className="w-4 h-4 mb-1" />,
     },
     {
-      href: "/admin/finance",
-      label: "Finance",
-      icon: <Landmark className="w-4 h-4 mb-1" />,
+      href: "/admin/invoices",
+      label: "Invoices",
+      icon: <Receipt className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/subcontractor",

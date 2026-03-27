@@ -1,16 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { Calendar, Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import styles from "@/components/styles/Print.module.css";
 
 interface InvoiceItem {
   id: number;
   invoiceNo: string;
-  dateTime: string;
-  tourSpots: string;
-  departureFrom: string;
-  tourCode: string;
+  contractor: string;
   amount: number;
   status: "Paid" | "Pending";
 }
@@ -20,150 +17,64 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 1,
     invoiceNo: "INV 23",
-    dateTime: "Feb 21, 2023 at 03:05 pm",
-    tourSpots: "Batarahitol, Baijanathpur",
-    departureFrom: "Batarahitol, Baijanathpur",
-    tourCode: "295A-6774-9EA2-5338",
+    contractor: "John Doe",
     amount: 26000,
     status: "Paid",
   },
   {
     id: 2,
     invoiceNo: "INV 13",
-    dateTime: "Aug 3, 2023 at 12:10 am",
-    tourSpots: "Bargachhi Chok, Biratnagar",
-    departureFrom: "Bargachhi Chok, Biratnagar",
-    tourCode: "D5WC-3F5C-4E6C-C258",
+    contractor: "Jane Smith",
     amount: 37000,
     status: "Pending",
   },
   {
     id: 3,
     invoiceNo: "INV 15",
-    dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Hospital chowk, Biratnagar",
-    departureFrom: "Hospital chowk, Biratnagar",
-    tourCode: "CFCA-3F50-E459-9E57",
+    contractor: "Acme Corp",
     amount: 33000,
     status: "Paid",
   },
   {
     id: 4,
     invoiceNo: "INV 78",
-    dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kanchanbari, Biratnagar",
-    departureFrom: "Kanchanbari, Biratnagar",
-    tourCode: "D5WC-3F5C-4E6C-C258",
+    contractor: "John Doe",
     amount: 42000,
     status: "Paid",
   },
   {
     id: 5,
     invoiceNo: "INV 25",
-    dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Hatkhola Chok, Biratnagar",
-    departureFrom: "Hatkhola Chok, Biratnagar",
-    tourCode: "CAAC-3SDC-4E6C-C258",
+    contractor: "Jane Smith",
     amount: 42000,
     status: "Pending",
   },
   {
     id: 6,
     invoiceNo: "INV 28",
-    dateTime: "Mar 13, 2023 at 08:05 am",
-    tourSpots: "Chadani Chok, Biratnagar",
-    departureFrom: "Chadani Chok, Biratnagar",
-    tourCode: "295A-6774-9EA2-5338",
+    contractor: "Acme Corp",
     amount: 74000,
     status: "Paid",
   },
   {
     id: 7,
     invoiceNo: "INV 64",
-    dateTime: "Aug 18, 2023 at 04:12 pm",
-    tourSpots: "Rani, Biratnagar",
-    departureFrom: "Rani, Biratnagar",
-    tourCode: "CAAC-3SDC-4E6C-C258",
+    contractor: "John Doe",
     amount: 17000,
     status: "Paid",
   },
   {
     id: 8,
     invoiceNo: "INV 15",
-    dateTime: "Oct 13, 2023 at 08:05 am",
-    tourSpots: "Ghinaghat, Baijanathpur",
-    departureFrom: "Ghinaghat, Baijanathpur",
-    tourCode: "KDSS-2424-6565-HYJU",
+    contractor: "Jane Smith",
     amount: 16300,
     status: "Pending",
-  },
-  {
-    id: 9,
-    invoiceNo: "INV 64",
-    dateTime: "Jan 11, 2023 at 01:49 pm",
-    tourSpots: "Jaynepal chowk, Biratnagar",
-    departureFrom: "Jaynepal chowk, Biratnagar",
-    tourCode: "295A-6774-9EA2-5338",
-    amount: 21000,
-    status: "Paid",
-  },
-  {
-    id: 10,
-    invoiceNo: "INV 56",
-    dateTime: "Jan 1, 2023 at 01:49 pm",
-    tourSpots: "Kohobarachok, Biratnagar",
-    departureFrom: "Kohobarachok, Biratnagar",
-    tourCode: "KDSS-2424-6565-HYJU",
-    amount: 21000,
-    status: "Pending",
-  },
-  {
-    id: 11,
-    invoiceNo: "INV 12",
-    dateTime: "Nov 4, 2023 at 12:13 am",
-    tourSpots: "Kohobara, Biratnagar",
-    departureFrom: "Kohobara, Biratnagar",
-    tourCode: "KDSS-2424-6565-HYJU",
-    amount: 82000,
-    status: "Paid",
-  },
-  {
-    id: 12,
-    invoiceNo: "INV 25",
-    dateTime: "Sep 4, 2021 at 12:14 am",
-    tourSpots: "Bhattimud, Biratnagar",
-    departureFrom: "Bhattimud, Biratnagar",
-    tourCode: "CAAC-3SDC-4E6C-C258",
-    amount: 57000,
-    status: "Pending",
-  },
-  {
-    id: 13,
-    invoiceNo: "INV 64",
-    dateTime: "Aug 18, 2023 at 04:12 pm",
-    tourSpots: "Jwalatol, Biratnagar",
-    departureFrom: "Jwalatol, Biratnagar",
-    tourCode: "295A-6774-9EA2-5338",
-    amount: 46000,
-    status: "Paid",
-  },
-  {
-    id: 14,
-    invoiceNo: "INV 15",
-    dateTime: "Sep 4, 2021 at 12:14 am",
-    tourSpots: "Dhanpura, Baijanathpur",
-    departureFrom: "Dhanpura, Baijanathpur",
-    tourCode: "CAAC-3SDC-4E6C-C258",
-    amount: 12000,
-    status: "Paid",
-  },
+  }
 ];
 
 export default function FinancePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [selectedTime, setSelectedTime] = useState("Any time");
-  const [selectedTourZone, setSelectedTourZone] = useState("Select tour zone");
+  const [selectedContractor, setSelectedContractor] = useState("Select contractor");
   const [activeTab, setActiveTab] = useState<
     "Direct Sales" | "Cruise Operations" | "Partner"
   >("Direct Sales");
@@ -206,13 +117,13 @@ export default function FinancePage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               <input
                 type="text"
-                placeholder="Search by tour code..."
+                placeholder="Search by invoice no."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-          </div>
+          </div>  
 
           {/* Tabs Section */}
           <div
@@ -244,43 +155,16 @@ export default function FinancePage() {
           >
             <div className="flex justify-between items-center">
               <div className="flex flex-wrap gap-3">
-                {/* Date Input */}
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="DD/MM/YY"
-                    value={selectedDate}
-                    onChange={(e) => setSelectedDate(e.target.value)}
-                    className="pl-4 pr-10 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-36"
-                  />
-                  <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                </div>
-
-                {/* Time Dropdown */}
+                {/* Contractor Dropdown */}
                 <select
-                  value={selectedTime}
-                  onChange={(e) => setSelectedTime(e.target.value)}
+                  value={selectedContractor}
+                  onChange={(e) => setSelectedContractor(e.target.value)}
                   className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
                   style={{
                     backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                   }}
                 >
-                  <option>Any time</option>
-                  <option>Morning (6-12)</option>
-                  <option>Afternoon (12-18)</option>
-                  <option>Evening (18-24)</option>
-                </select>
-
-                {/* Tour Zone Dropdown */}
-                <select
-                  value={selectedTourZone}
-                  onChange={(e) => setSelectedTourZone(e.target.value)}
-                  className="px-4 py-2 border border-gray-300 rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white pr-10 bg-no-repeat bg-[right_0.75rem_center] bg-[length:16px_16px] cursor-pointer"
-                  style={{
-                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  }}
-                >
-                  <option>Select tour zone</option>
+                  <option>Select contractor</option>
                   <option>Lagoon Snorkeling</option>
                   <option>Island Hopping</option>
                   <option>City Tour</option>
@@ -305,16 +189,7 @@ export default function FinancePage() {
                       Invoice No.
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Date & Time
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Departure From
-                    </th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
-                      Tour Code
+                      Contractor
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Amount
@@ -334,16 +209,7 @@ export default function FinancePage() {
                         {item.invoiceNo}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.dateTime}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.tourSpots}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.departureFrom}
-                      </td>
-                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
-                        {item.tourCode}
+                        {item.contractor}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         ${item.amount.toLocaleString()}
