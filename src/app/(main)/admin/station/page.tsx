@@ -27,10 +27,6 @@ interface StationMember {
   status: "online" | "offline";
   email: string;
   phoneNumber: string;
-  city: string;
-  presentAddress: string;
-  permanentAddress: string;
-  password: string;
   photo?: string;
 }
 
@@ -50,10 +46,6 @@ function StationPage() {
       status: "online",
       email: "suman.direct@etretours.com",
       phoneNumber: "+1 234 567 111",
-      city: "New York",
-      presentAddress: "15 Hudson Street, New York",
-      permanentAddress: "18 Park Avenue, New York",
-      password: "******",
       photo: "",
     },
     {
@@ -63,10 +55,6 @@ function StationPage() {
       status: "offline",
       email: "emma.cruise@etretours.com",
       phoneNumber: "+1 234 567 222",
-      city: "Miami",
-      presentAddress: "221 Ocean View, Miami",
-      permanentAddress: "44 Palm Drive, Florida",
-      password: "******",
       photo: "",
     },
     {
@@ -76,10 +64,6 @@ function StationPage() {
       status: "online",
       email: "jack.partner@etretours.com",
       phoneNumber: "+1 234 567 333",
-      city: "Boston",
-      presentAddress: "54 Downtown Lane, Boston",
-      permanentAddress: "78 Central Street, Boston",
-      password: "******",
       photo: "",
     },
   ]);
@@ -120,7 +104,6 @@ function StationPage() {
               <TableHead>Status</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Phone</TableHead>
-              <TableHead>City</TableHead>
               <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
@@ -138,11 +121,10 @@ function StationPage() {
                 <TableCell>{member.station}</TableCell>
                 <TableCell>
                   <Badge
-                    variant="outline"
                     className={
                       member.status === "online"
-                        ? "border-green-200 bg-green-50 text-green-700"
-                        : "border-gray-200 bg-gray-50 text-gray-600"
+                        ? " bg-green-500 text-white"
+                        : " bg-red-500 text-white"
                     }
                   >
                     {member.status}
@@ -150,7 +132,6 @@ function StationPage() {
                 </TableCell>
                 <TableCell>{member.email}</TableCell>
                 <TableCell>{member.phoneNumber}</TableCell>
-                <TableCell>{member.city}</TableCell>
                 <TableCell>
                   <div className="flex items-center justify-end gap-2">
                     <button
@@ -201,11 +182,7 @@ function StationPage() {
                   .toLowerCase()
                   .replace(/\s+/g, "-"),
                 email: selectedMember.email,
-                password: selectedMember.password,
-                city: selectedMember.city,
                 phoneNumber: selectedMember.phoneNumber,
-                presentAddress: selectedMember.presentAddress,
-                permanentAddress: selectedMember.permanentAddress,
               }
             : undefined
         }
@@ -248,18 +225,6 @@ function StationPage() {
               <div className="grid grid-cols-2 gap-3">
                 <p className="text-gray-500">Phone Number</p>
                 <p className="font-medium">{selectedMember.phoneNumber}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">City</p>
-                <p className="font-medium">{selectedMember.city}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Present Address</p>
-                <p className="font-medium">{selectedMember.presentAddress}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Permanent Address</p>
-                <p className="font-medium">{selectedMember.permanentAddress}</p>
               </div>
             </div>
           )}

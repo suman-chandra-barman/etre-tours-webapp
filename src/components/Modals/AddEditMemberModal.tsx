@@ -24,11 +24,7 @@ interface MemberData {
   name: string;
   station: string;
   email: string;
-  password: string;
-  city: string;
   phoneNumber: string;
-  presentAddress: string;
-  permanentAddress: string;
   photo?: string;
 }
 
@@ -50,11 +46,7 @@ export function AddEditMemberModal({
       name: "",
       station: "",
       email: "",
-      password: "",
-      city: "",
       phoneNumber: "",
-      presentAddress: "",
-      permanentAddress: "",
     },
   );
   const [photoPreview, setPhotoPreview] = useState<string | null>(
@@ -180,7 +172,7 @@ export function AddEditMemberModal({
             <h3 className="text-sm font-medium text-gray-600 mb-3">
               Login Credential
             </h3>
-            <div className="grid grid-cols-2 gap-4">
+            <div className={`${mode === "add" ? "grid-cols-2" : "grid-cols-1"} grid gap-4`}>
               <div>
                 <Label htmlFor="email" className="text-xs text-gray-500">
                   Email
@@ -195,20 +187,21 @@ export function AddEditMemberModal({
                   placeholder="Enter email address"
                 />
               </div>
-              <div>
-                <Label htmlFor="password" className="text-xs text-gray-500">
-                  Password
-                </Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="mt-1"
-                  placeholder="Enter password"
-                />
-              </div>
+              {mode === "add" && (
+                <div>
+                  <Label htmlFor="password" className="text-xs text-gray-500">
+                    Password
+                  </Label>
+                  <Input
+                    id="password"
+                    name="password"
+                    type="password"
+                    onChange={handleChange}
+                    className="mt-1"
+                    placeholder="Enter password"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
@@ -218,70 +211,18 @@ export function AddEditMemberModal({
               Contact Information
             </h3>
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="city" className="text-xs text-gray-500">
-                    City
-                  </Label>
-                  <Input
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className="mt-1"
-                    placeholder="Enter city"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="phoneNumber"
-                    className="text-xs text-gray-500"
-                  >
-                    Phone Number
-                  </Label>
-                  <Input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    className="mt-1"
-                    placeholder="Enter phone number"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label
-                    htmlFor="presentAddress"
-                    className="text-xs text-gray-500"
-                  >
-                    Present Address
-                  </Label>
-                  <Input
-                    id="presentAddress"
-                    name="presentAddress"
-                    value={formData.presentAddress}
-                    onChange={handleChange}
-                    className="mt-1"
-                    placeholder="Enter present address"
-                  />
-                </div>
-                <div>
-                  <Label
-                    htmlFor="permanentAddress"
-                    className="text-xs text-gray-500"
-                  >
-                    Permanent Address
-                  </Label>
-                  <Input
-                    id="permanentAddress"
-                    name="permanentAddress"
-                    value={formData.permanentAddress}
-                    onChange={handleChange}
-                    className="mt-1"
-                    placeholder="Enter permanent address"
-                  />
-                </div>
+              <div>
+                <Label htmlFor="phoneNumber" className="text-xs text-gray-500">
+                  Phone Number
+                </Label>
+                <Input
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="mt-1"
+                  placeholder="Enter phone number"
+                />
               </div>
             </div>
           </div>
