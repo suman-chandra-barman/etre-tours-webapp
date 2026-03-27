@@ -20,7 +20,7 @@ interface AddSubContractorModalProps {
 
 interface VehicleDetail {
   id: string;
-  transportType: "vehicle" | "boat";
+  transportType: ("vehicle" | "boat")[];
   operatorName: string;
   numberOfSeats: string;
   registerNumber?: File | null;
@@ -34,7 +34,7 @@ export default function AddSubContractorModal({
   const [vehicleDetails, setVehicleDetails] = useState<VehicleDetail[]>([
     {
       id: "1",
-      transportType: "vehicle",
+      transportType: [],
       operatorName: "",
       numberOfSeats: "",
       registerNumber: null,
@@ -51,7 +51,7 @@ export default function AddSubContractorModal({
       ...vehicleDetails,
       {
         id: Date.now().toString(),
-        transportType: "vehicle",
+        transportType: [],
         operatorName: "",
         numberOfSeats: "",
         registerNumber: null,
@@ -246,13 +246,20 @@ export default function AddSubContractorModal({
                     <div className="flex gap-4">
                       <label className="flex items-center cursor-pointer">
                         <input
-                          type="radio"
-                          name={`transportType-${index}`}
-                          value="vehicle"
-                          checked={detail.transportType === "vehicle"}
-                          onChange={() => {
+                          type="checkbox"
+                          checked={detail.transportType.includes("vehicle")}
+                          onChange={(e) => {
                             const newDetails = [...vehicleDetails];
-                            newDetails[index].transportType = "vehicle";
+                            if (e.target.checked) {
+                              newDetails[index].transportType = [
+                                ...newDetails[index].transportType,
+                                "vehicle",
+                              ];
+                            } else {
+                              newDetails[index].transportType = newDetails[
+                                index
+                              ].transportType.filter((t) => t !== "vehicle");
+                            }
                             setVehicleDetails(newDetails);
                           }}
                           className="w-4 h-4 text-blue-600"
@@ -261,13 +268,20 @@ export default function AddSubContractorModal({
                       </label>
                       <label className="flex items-center cursor-pointer">
                         <input
-                          type="radio"
-                          name={`transportType-${index}`}
-                          value="boat"
-                          checked={detail.transportType === "boat"}
-                          onChange={() => {
+                          type="checkbox"
+                          checked={detail.transportType.includes("boat")}
+                          onChange={(e) => {
                             const newDetails = [...vehicleDetails];
-                            newDetails[index].transportType = "boat";
+                            if (e.target.checked) {
+                              newDetails[index].transportType = [
+                                ...newDetails[index].transportType,
+                                "boat",
+                              ];
+                            } else {
+                              newDetails[index].transportType = newDetails[
+                                index
+                              ].transportType.filter((t) => t !== "boat");
+                            }
                             setVehicleDetails(newDetails);
                           }}
                           className="w-4 h-4 text-blue-600"
