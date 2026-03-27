@@ -20,7 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-export type StaffType = "Driver" | "Guide";
+export type StaffType = "Driver" | "Guide" | "Captain";
 
 export interface AddStaffFormData {
   name: string;
@@ -177,6 +177,7 @@ function AddStaffModal({ open, onOpenChange, onAddStaff }: AddStaffModalProps) {
                 <SelectValue placeholder="Select staff type" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="Captain">Captain</SelectItem>
                 <SelectItem value="Driver">Driver</SelectItem>
                 <SelectItem value="Guide">Guide</SelectItem>
               </SelectContent>

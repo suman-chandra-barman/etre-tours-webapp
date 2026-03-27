@@ -51,6 +51,15 @@ const initialStaff: StaffMember[] = [
     address: "Dharan-8, Sunsari",
     staffType: "Driver",
   },
+  {
+    id: 4,
+    name: "Sita Magar",
+    email: "sita.magar@etretours.com",
+    phone: "+977 9801122334",
+    address: "Itahari-2, Sunsari",
+    staffType: "Captain",
+
+  }
 ];
 
 function StaffPage() {
@@ -119,7 +128,9 @@ function StaffPage() {
                     className={
                       staff.staffType === "Driver"
                         ? "bg-blue-100 text-blue-700"
-                        : "bg-emerald-100 text-emerald-700"
+                        : staff.staffType === "Guide"
+                        ? "bg-emerald-100 text-emerald-700"
+                        : "bg-purple-100 text-purple-700"
                     }
                   >
                     {staff.staffType}
