@@ -1,13 +1,16 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, Edit, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import AddStaffModal, {
   AddStaffFormData,
   StaffType,
 } from "@/components/Modals/AddStaffModal";
+import EditStaffModal, {
+  EditStaffFormData,
+} from "@/components/Modals/EditStaffModal";
 import {
   Table,
   TableBody,
@@ -58,13 +61,15 @@ const initialStaff: StaffMember[] = [
     phone: "+977 9801122334",
     address: "Itahari-2, Sunsari",
     staffType: "Captain",
-
-  }
+  },
 ];
 
 function StaffPage() {
   const [staffList, setStaffList] = useState<StaffMember[]>(initialStaff);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState<StaffMember | null>(null);
+
   const handleAddStaff = (formData: AddStaffFormData) => {
     const newStaff: StaffMember = {
       id: Date.now(),
@@ -76,6 +81,32 @@ function StaffPage() {
     };
 
     setStaffList((prev) => [newStaff, ...prev]);
+  };
+
+  const handleEditStaff = (id: number, formData: EditStaffFormData) => {
+    setStaffList((prev) =>
+      prev.map((staff) =>
+        staff.id === id
+          ? {
+              ...staff,
+              name: formData.name,
+              email: formData.email,
+              phone: formData.phone,
+              address: formData.address,
+              staffType: formData.staffType,
+            }
+          : staff,
+      ),
+    );
+  };
+
+  const handleDeleteStaff = (id: number) => {
+    setStaffList((prev) => prev.filter((staff) => staff.id !== id));
+  };
+
+  const openEditModal = (staff: StaffMember) => {
+    setSelectedStaff(staff);
+    setIsEditModalOpen(true);
   };
 
   return (
@@ -111,6 +142,9 @@ function StaffPage() {
               <TableHead className="font-semibold text-gray-700">
                 Staff Type
               </TableHead>
+              <TableHead className="font-semibold text-gray-700">
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -129,12 +163,32 @@ function StaffPage() {
                       staff.staffType === "Driver"
                         ? "bg-blue-100 text-blue-700"
                         : staff.staffType === "Guide"
-                        ? "bg-emerald-100 text-emerald-700"
-                        : "bg-purple-100 text-purple-700"
+                          ? "bg-emerald-100 text-emerald-700"
+                          : "bg-purple-100 text-purple-700"
                     }
                   >
                     {staff.staffType}
                   </Badge>
+                </TableCell>
+                <TableCell>
+                  <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => openEditModal(staff)}
+                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleDeleteStaff(staff.id)}
+                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}
@@ -146,6 +200,13 @@ function StaffPage() {
         open={isAddModalOpen}
         onOpenChange={setIsAddModalOpen}
         onAddStaff={handleAddStaff}
+      />
+
+      <EditStaffModal
+        open={isEditModalOpen}
+        onOpenChange={setIsEditModalOpen}
+        onEditStaff={handleEditStaff}
+        staff={selectedStaff}
       />
     </main>
   );
