@@ -34,25 +34,19 @@ const subContractors = [
     contactNumber: "(319) 555-0115",
     vehicles: [
       {
-        operatorName: "John Smith",
-        driverName: "Mike Driver",
-        guideName: "Tom Guide",
+        name: "Vehicle 1",
         numberOfSeats: 45,
         registerNumber: "55gfGH898F",
       },
       {
-        operatorName: "Jane Doe",
-        driverName: "Sarah Driver",
-        guideName: "Lisa Guide",
+        name: "Vehicle 2",
         numberOfSeats: 32,
         registerNumber: "66hfJK909G",
       },
     ],
     boats: [
       {
-        operatorName: "Bob Captain",
-        driverName: "Jack Sailor",
-        guideName: "Emma Guide",
+        name: "Boat 500",
         numberOfSeats: 20,
         registerNumber: "BOAT123",
       },
@@ -76,18 +70,14 @@ const subContractors = [
     contactNumber: "(302) 555-0107",
     vehicles: [
       {
-        operatorName: "Alice Brown",
-        driverName: "Charlie Driver",
-        guideName: "David Guide",
+        name: "Vehicle 1",
         numberOfSeats: 50,
         registerNumber: "77ggKL010H",
       },
     ],
     boats: [
       {
-        operatorName: "Steve Captain",
-        driverName: "Paul Sailor",
-        guideName: "Mary Guide",
+        name:"Boat 1",
         numberOfSeats: 25,
         registerNumber: "BOAT456",
       },
@@ -111,18 +101,14 @@ const subContractors = [
     contactNumber: "(225) 555-0118",
     vehicles: [
       {
-        operatorName: "Robert Johnson",
-        driverName: "Frank Driver",
-        guideName: "Nancy Guide",
+        name: "Vehicle 1",
         numberOfSeats: 40,
         registerNumber: "88hhMN011I",
       },
     ],
     boats: [
       {
-        operatorName: "Dan Captain",
-        driverName: "Kevin Sailor",
-        guideName: "Sophie Guide",
+        name:"Boat Alex",
         numberOfSeats: 18,
         registerNumber: "BOAT789",
       },
@@ -146,18 +132,14 @@ const subContractors = [
     contactNumber: "(405) 555-0128",
     vehicles: [
       {
-        operatorName: "William Davis",
-        driverName: "George Driver",
-        guideName: "Helen Guide",
+        name: "Vehicle 1",
         numberOfSeats: 55,
         registerNumber: "99iiOP012J",
       },
     ],
     boats: [
       {
-        operatorName: "Chris Captain",
-        driverName: "Andrew Sailor",
-        guideName: "Rachel Guide",
+        name:"Boat 505",
         numberOfSeats: 22,
         registerNumber: "BOAT101",
       },
@@ -181,18 +163,14 @@ const subContractors = [
     contactNumber: "(671) 555-0110",
     vehicles: [
       {
-        operatorName: "James Wilson",
-        driverName: "Henry Driver",
-        guideName: "Patricia Guide",
+        name: "Vehicle 1",
         numberOfSeats: 38,
         registerNumber: "00jjQR013K",
       },
     ],
     boats: [
       {
-        operatorName: "Peter Captain",
-        driverName: "Mark Sailor",
-        guideName: "Jennifer Guide",
+        name:"Alar 500",
         numberOfSeats: 15,
         registerNumber: "BOAT202",
       },
@@ -216,18 +194,14 @@ const subContractors = [
     contactNumber: "(629) 555-0129",
     vehicles: [
       {
-        operatorName: "Linda Martinez",
-        driverName: "Joseph Driver",
-        guideName: "Barbara Guide",
+        name: "Vehicle 1",
         numberOfSeats: 42,
         registerNumber: "11kkST014L",
       },
     ],
     boats: [
       {
-        operatorName: "Anthony Captain",
-        driverName: "Brian Sailor",
-        guideName: "Susan Guide",
+        name:"Boat 2002",
         numberOfSeats: 19,
         registerNumber: "BOAT303",
       },
@@ -251,18 +225,14 @@ const subContractors = [
     contactNumber: "(907) 555-0101",
     vehicles: [
       {
-        operatorName: "Karen Anderson",
-        driverName: "Thomas Driver",
-        guideName: "Jessica Guide",
+        name: "Vehicle 1",
         numberOfSeats: 48,
         registerNumber: "22llUV015M",
       },
     ],
     boats: [
       {
-        operatorName: "Matthew Captain",
-        driverName: "Christopher Sailor",
-        guideName: "Ashley Guide",
+        name:"Boat 202",
         numberOfSeats: 24,
         registerNumber: "BOAT404",
       },
