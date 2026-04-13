@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import {
   Sheet,
   SheetContent,
@@ -63,6 +63,22 @@ const DEFAULT_DRIVER_OPTIONS = [
   "Robert Wilson",
 ];
 
+const createInitialTransportEntry = (
+  tour: OperationsTour | null,
+): TransportEntry => ({
+  id: 1,
+  transportType: "",
+  transportContractor: tour?.transportContractor || "",
+  vehicleNumber: tour?.vehicle || "",
+  numberOfSeats: tour?.numberOfSeats || 0,
+  guide: tour?.guide || DEFAULT_GUIDE_OPTIONS[0] || "",
+  driver: tour?.driver || DEFAULT_DRIVER_OPTIONS[0] || "",
+  adults: 0,
+  children: 0,
+  infants: 0,
+  foc: 0,
+});
+
 const EditOperationsTourModal = ({
   open,
   onOpenChange,
@@ -86,38 +102,20 @@ const EditOperationsTourModal = ({
 
   // Transport entries
   const [transportEntries, setTransportEntries] = useState<TransportEntry[]>([
-    {
-      id: 1,
-      transportType: "",
-      transportContractor: tour?.transportContractor || "",
-      vehicleNumber: tour?.vehicle || "",
-      numberOfSeats: tour?.numberOfSeats || 0,
-      guide: tour?.guide || "",
-      driver: tour?.driver || "",
-      adults: 0,
-      children: 0,
-      infants: 0,
-      foc: 0,
-    },
+    createInitialTransportEntry(tour),
   ]);
 
-  // Initialize default guide and driver if none selected
-  useEffect(() => {
-    if (open) {
-      if (
-        transportEntries[0]?.guide === "" &&
-        DEFAULT_GUIDE_OPTIONS.length > 0
-      ) {
-        updateCurrentTransport("guide", DEFAULT_GUIDE_OPTIONS[0]);
-      }
-      if (
-        transportEntries[0]?.driver === "" &&
-        DEFAULT_DRIVER_OPTIONS.length > 0
-      ) {
-        updateCurrentTransport("driver", DEFAULT_DRIVER_OPTIONS[0]);
-      }
-    }
-  }, [open]);
+  // Update current transport entry
+  const updateCurrentTransport = (
+    field: keyof TransportEntry,
+    value: string | number,
+  ) => {
+    setTransportEntries((prev) =>
+      prev.map((entry, index) =>
+        index === 0 ? { ...entry, [field]: value } : entry,
+      ),
+    );
+  };
 
   // Get current transport entry (first one since no pagination)
   const currentTransport = transportEntries[0];
@@ -135,18 +133,6 @@ const EditOperationsTourModal = ({
     () => Array.from(new Set([...DEFAULT_GUIDE_OPTIONS, ...selectedGuides])),
     [selectedGuides],
   );
-
-  // Update current transport entry
-  const updateCurrentTransport = (
-    field: keyof TransportEntry,
-    value: string | number,
-  ) => {
-    setTransportEntries((prev) =>
-      prev.map((entry, index) =>
-        index === 0 ? { ...entry, [field]: value } : entry,
-      ),
-    );
-  };
 
   // Vehicle to seats mapping (mock data - would come from API)
   const vehicleSeatsMap: Record<string, number> = {
@@ -428,7 +414,9 @@ const EditOperationsTourModal = ({
                         </span>
                       ))
                     ) : (
-                      <span className="text-gray-500 text-sm">Select guides...</span>
+                      <span className="text-gray-500 text-sm">
+                        Select guides...
+                      </span>
                     )}
                   </button>
 
