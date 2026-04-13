@@ -27,7 +27,7 @@ interface TransportEntry {
   vehicleNumber: string;
   numberOfSeats: number;
   guide: string;
-  extraGuide: string;
+  driver: string;
   adults: number;
   children: number;
   infants: number;
@@ -76,7 +76,7 @@ const EditOperationsTourModal = ({
       vehicleNumber: tour?.vehicle || "",
       numberOfSeats: tour?.numberOfSeats || 0,
       guide: tour?.guide || "",
-      extraGuide: tour?.extraGuide || "",
+      driver: tour?.driver || "",
       adults: 0,
       children: 0,
       infants: 0,
@@ -125,7 +125,7 @@ const EditOperationsTourModal = ({
       vehicleNumber: "",
       numberOfSeats: 0,
       guide: "",
-      extraGuide: "",
+      driver: "",
       adults: 0,
       children: 0,
       infants: 0,
@@ -145,7 +145,7 @@ const EditOperationsTourModal = ({
       transportContractor: firstTransport.transportContractor,
       vehicle: firstTransport.vehicleNumber,
       guide: firstTransport.guide,
-      extraGuide: firstTransport.extraGuide,
+      driver: firstTransport.driver,
       numberOfSeats: firstTransport.numberOfSeats,
     };
 
@@ -322,50 +322,28 @@ const EditOperationsTourModal = ({
             </div>
 
             <div className="grid grid-cols-2 gap-4">
+              {/* Driver */}
+              <div className="space-y-1">
+                <Label className="text-xs font-normal">Driver</Label>
+                <Input
+                  value={currentTransport?.driver || ""}
+                  onChange={(e) =>
+                    updateCurrentTransport("driver", e.target.value)
+                  }
+                  placeholder="Enter driver name"
+                />
+              </div>
+
               {/* Guide */}
               <div className="space-y-1">
                 <Label className="text-xs font-normal">Guide</Label>
-                <Select
+                <Input
                   value={currentTransport?.guide || ""}
-                  onValueChange={(value) =>
-                    updateCurrentTransport("guide", value)
+                  onChange={(e) =>
+                    updateCurrentTransport("guide", e.target.value)
                   }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Guide" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="None">None</SelectItem>
-                    <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
-                    <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
-                    <SelectItem value="Brenda Davidson">
-                      Brenda Davidson
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Extra Guide */}
-              <div className="space-y-1">
-                <Label className="text-xs font-normal">Extra Guide</Label>
-                <Select
-                  value={currentTransport?.extraGuide || ""}
-                  onValueChange={(value) =>
-                    updateCurrentTransport("extraGuide", value)
-                  }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Extra Guide" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="None">None</SelectItem>
-                    <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
-                    <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
-                    <SelectItem value="Brenda Davidson">
-                      Brenda Davidson
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                  placeholder="Enter guides separated by commas"
+                />
               </div>
             </div>
           </div>
