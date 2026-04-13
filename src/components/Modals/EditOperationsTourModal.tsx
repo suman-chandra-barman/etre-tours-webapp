@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import {
   Sheet,
   SheetContent,
@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OperationsTour } from "@/types/tours.types";
+import { X } from "lucide-react";
 
 // Transport entry for multi-transport support
 interface TransportEntry {
@@ -49,6 +50,19 @@ const generateTourCode = (tourName: string): string => {
   return `${code}-${Date.now().toString().slice(-4)}`;
 };
 
+const DEFAULT_GUIDE_OPTIONS = [
+  "Jane Gerry",
+  "Barbara Tovey",
+  "Brenda Davidson",
+];
+
+const DEFAULT_DRIVER_OPTIONS = [
+  "John Smith",
+  "Mike Johnson",
+  "David Brown",
+  "Robert Wilson",
+];
+
 const EditOperationsTourModal = ({
   open,
   onOpenChange,
@@ -67,6 +81,9 @@ const EditOperationsTourModal = ({
     return tour?.tourName ? generateTourCode(tour.tourName) : "";
   }, [tour]);
 
+  // Guide selector visibility
+  const [showGuideSelector, setShowGuideSelector] = useState(false);
+
   // Transport entries
   const [transportEntries, setTransportEntries] = useState<TransportEntry[]>([
     {
@@ -84,8 +101,40 @@ const EditOperationsTourModal = ({
     },
   ]);
 
+  // Initialize default guide and driver if none selected
+  useEffect(() => {
+    if (open) {
+      if (
+        transportEntries[0]?.guide === "" &&
+        DEFAULT_GUIDE_OPTIONS.length > 0
+      ) {
+        updateCurrentTransport("guide", DEFAULT_GUIDE_OPTIONS[0]);
+      }
+      if (
+        transportEntries[0]?.driver === "" &&
+        DEFAULT_DRIVER_OPTIONS.length > 0
+      ) {
+        updateCurrentTransport("driver", DEFAULT_DRIVER_OPTIONS[0]);
+      }
+    }
+  }, [open]);
+
   // Get current transport entry (first one since no pagination)
   const currentTransport = transportEntries[0];
+  const currentGuideValue = currentTransport?.guide || "";
+
+  const selectedGuides = useMemo(() => {
+    if (!currentGuideValue) return [];
+    return currentGuideValue
+      .split(",")
+      .map((guideName) => guideName.trim())
+      .filter(Boolean);
+  }, [currentGuideValue]);
+
+  const guideOptions = useMemo(
+    () => Array.from(new Set([...DEFAULT_GUIDE_OPTIONS, ...selectedGuides])),
+    [selectedGuides],
+  );
 
   // Update current transport entry
   const updateCurrentTransport = (
@@ -114,6 +163,14 @@ const EditOperationsTourModal = ({
     updateCurrentTransport("vehicleNumber", vehicleNumber);
     const seats = vehicleSeatsMap[vehicleNumber] || 0;
     updateCurrentTransport("numberOfSeats", seats);
+  };
+
+  const handleGuideCheckboxChange = (guideName: string, checked: boolean) => {
+    const nextSelectedGuides = checked
+      ? Array.from(new Set([...selectedGuides, guideName]))
+      : selectedGuides.filter((name) => name !== guideName);
+
+    updateCurrentTransport("guide", nextSelectedGuides.join(", "));
   };
 
   // Add new transport entry
@@ -321,29 +378,87 @@ const EditOperationsTourModal = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {/* Driver */}
+            <div className="grid grid-cols-1 gap-4">
+              {/* Driver - Select Dropdown */}
               <div className="space-y-1">
                 <Label className="text-xs font-normal">Driver</Label>
-                <Input
+                <Select
                   value={currentTransport?.driver || ""}
-                  onChange={(e) =>
-                    updateCurrentTransport("driver", e.target.value)
+                  onValueChange={(value) =>
+                    updateCurrentTransport("driver", value)
                   }
-                  placeholder="Enter driver name"
-                />
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select Driver" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {DEFAULT_DRIVER_OPTIONS.map((driver) => (
+                      <SelectItem key={driver} value={driver}>
+                        {driver}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
-              {/* Guide */}
+              {/* Guide - Click to Edit - Full Width */}
               <div className="space-y-1">
-                <Label className="text-xs font-normal">Guide</Label>
-                <Input
-                  value={currentTransport?.guide || ""}
-                  onChange={(e) =>
-                    updateCurrentTransport("guide", e.target.value)
-                  }
-                  placeholder="Enter guides separated by commas"
-                />
+                <Label className="text-xs font-normal">Guide(s)</Label>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowGuideSelector(!showGuideSelector)}
+                    className="w-full h-auto min-h-10 p-2 border border-input bg-background rounded-md text-left font-normal flex flex-wrap gap-1 items-start hover:bg-accent cursor-pointer"
+                  >
+                    {selectedGuides.length > 0 ? (
+                      selectedGuides.map((guide) => (
+                        <span
+                          key={guide}
+                          className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs flex items-center gap-1"
+                        >
+                          {guide}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleGuideCheckboxChange(guide, false);
+                            }}
+                            className="hover:bg-blue-200 rounded"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-gray-500 text-sm">Select guides...</span>
+                    )}
+                  </button>
+
+                  {/* Guide Selector Dropdown */}
+                  {showGuideSelector && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border rounded-md shadow-lg z-50 p-2">
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                        {guideOptions.map((guideName) => (
+                          <label
+                            key={guideName}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded cursor-pointer"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedGuides.includes(guideName)}
+                              onChange={(e) =>
+                                handleGuideCheckboxChange(
+                                  guideName,
+                                  e.target.checked,
+                                )
+                              }
+                              className="rounded"
+                            />
+                            <span className="text-sm">{guideName}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
