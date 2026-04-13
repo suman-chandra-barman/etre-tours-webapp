@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AddStaffModal, {
   AddStaffFormData,
   StaffType,
@@ -66,9 +67,14 @@ const initialStaff: StaffMember[] = [
 
 function StaffPage() {
   const [staffList, setStaffList] = useState<StaffMember[]>(initialStaff);
+  const [activeTab, setActiveTab] = useState<StaffType>("Driver");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedStaff, setSelectedStaff] = useState<StaffMember | null>(null);
+
+  const filteredStaffList = staffList.filter(
+    (staff) => staff.staffType === activeTab,
+  );
 
   const handleAddStaff = (formData: AddStaffFormData) => {
     const newStaff: StaffMember = {
@@ -123,78 +129,102 @@ function StaffPage() {
         </Button>
       </div>
 
-      <div className="rounded-lg border bg-white overflow-hidden">
-        <Table>
-          <TableHeader>
-            <TableRow className="bg-gray-50">
-              <TableHead className="font-semibold text-gray-700">
-                Name
-              </TableHead>
-              <TableHead className="font-semibold text-gray-700">
-                Email
-              </TableHead>
-              <TableHead className="font-semibold text-gray-700">
-                Phone
-              </TableHead>
-              <TableHead className="font-semibold text-gray-700">
-                Address
-              </TableHead>
-              <TableHead className="font-semibold text-gray-700">
-                Staff Type
-              </TableHead>
-              <TableHead className="font-semibold text-gray-700">
-                Actions
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {staffList.map((staff) => (
-              <TableRow key={staff.id} className="hover:bg-gray-50">
-                <TableCell className="font-medium text-gray-900">
-                  {staff.name}
-                </TableCell>
-                <TableCell>{staff.email}</TableCell>
-                <TableCell>{staff.phone}</TableCell>
-                <TableCell>{staff.address}</TableCell>
-                <TableCell>
-                  <Badge
-                    variant="secondary"
-                    className={
-                      staff.staffType === "Driver"
-                        ? "bg-blue-100 text-blue-700"
-                        : staff.staffType === "Guide"
-                          ? "bg-emerald-100 text-emerald-700"
-                          : "bg-purple-100 text-purple-700"
-                    }
-                  >
-                    {staff.staffType}
-                  </Badge>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => openEditModal(staff)}
-                      className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+      <Tabs
+        value={activeTab}
+        onValueChange={(value) => setActiveTab(value as StaffType)}
+      >
+        <TabsList className="grid w-full max-w-md grid-cols-3">
+          <TabsTrigger value="Driver">Driver</TabsTrigger>
+          <TabsTrigger value="Captain">Captain</TabsTrigger>
+          <TabsTrigger value="Guide">Guide</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value={activeTab} className="mt-4">
+          <div className="rounded-lg border bg-white overflow-hidden">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-gray-50">
+                  <TableHead className="font-semibold text-gray-700">
+                    Name
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-700">
+                    Email
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-700">
+                    Phone
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-700">
+                    Address
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-700">
+                    Staff Type
+                  </TableHead>
+                  <TableHead className="font-semibold text-gray-700">
+                    Actions
+                  </TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredStaffList.length > 0 ? (
+                  filteredStaffList.map((staff) => (
+                    <TableRow key={staff.id} className="hover:bg-gray-50">
+                      <TableCell className="font-medium text-gray-900">
+                        {staff.name}
+                      </TableCell>
+                      <TableCell>{staff.email}</TableCell>
+                      <TableCell>{staff.phone}</TableCell>
+                      <TableCell>{staff.address}</TableCell>
+                      <TableCell>
+                        <Badge
+                          variant="secondary"
+                          className={
+                            staff.staffType === "Driver"
+                              ? "bg-blue-100 text-blue-700"
+                              : staff.staffType === "Guide"
+                                ? "bg-emerald-100 text-emerald-700"
+                                : "bg-purple-100 text-purple-700"
+                          }
+                        >
+                          {staff.staffType}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex gap-2">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => openEditModal(staff)}
+                            className="text-blue-500 hover:text-blue-700 hover:bg-blue-50"
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            onClick={() => handleDeleteStaff(staff.id)}
+                            className="text-red-500 hover:text-red-700 hover:bg-red-50"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={6}
+                      className="py-10 text-center text-sm text-gray-500"
                     >
-                      <Edit className="h-4 w-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={() => handleDeleteStaff(staff.id)}
-                      className="text-red-500 hover:text-red-700 hover:bg-red-50"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+                      No {activeTab.toLowerCase()} staff found.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </TabsContent>
+      </Tabs>
 
       <AddStaffModal
         open={isAddModalOpen}
