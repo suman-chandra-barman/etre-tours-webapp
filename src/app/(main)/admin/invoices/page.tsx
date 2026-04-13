@@ -7,6 +7,7 @@ import styles from "@/components/styles/Print.module.css";
 interface InvoiceItem {
   id: number;
   invoiceNo: string;
+  date: string;
   contractor: string;
   amount: number;
   status: "Paid" | "Pending";
@@ -17,6 +18,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 1,
     invoiceNo: "INV 23",
+    date: "2026-04-01",
     contractor: "John Doe",
     amount: 26000,
     status: "Paid",
@@ -24,6 +26,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 2,
     invoiceNo: "INV 13",
+    date: "2026-04-02",
     contractor: "Jane Smith",
     amount: 37000,
     status: "Pending",
@@ -31,6 +34,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 3,
     invoiceNo: "INV 15",
+    date: "2026-04-03",
     contractor: "Acme Corp",
     amount: 33000,
     status: "Paid",
@@ -38,6 +42,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 4,
     invoiceNo: "INV 78",
+    date: "2026-04-04",
     contractor: "John Doe",
     amount: 42000,
     status: "Paid",
@@ -45,6 +50,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 5,
     invoiceNo: "INV 25",
+    date: "2026-04-05",
     contractor: "Jane Smith",
     amount: 42000,
     status: "Pending",
@@ -52,6 +58,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 6,
     invoiceNo: "INV 28",
+    date: "2026-04-06",
     contractor: "Acme Corp",
     amount: 74000,
     status: "Paid",
@@ -59,6 +66,7 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 7,
     invoiceNo: "INV 64",
+    date: "2026-04-07",
     contractor: "John Doe",
     amount: 17000,
     status: "Paid",
@@ -66,15 +74,17 @@ const mockInvoiceData: InvoiceItem[] = [
   {
     id: 8,
     invoiceNo: "INV 15",
+    date: "2026-04-08",
     contractor: "Jane Smith",
     amount: 16300,
     status: "Pending",
-  }
+  },
 ];
 
 export default function FinancePage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedContractor, setSelectedContractor] = useState("Select contractor");
+  const [selectedContractor, setSelectedContractor] =
+    useState("Select contractor");
   const [activeTab, setActiveTab] = useState<
     "Direct Sales" | "Cruise Operations" | "Partner"
   >("Direct Sales");
@@ -123,7 +133,7 @@ export default function FinancePage() {
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
-          </div>  
+          </div>
 
           {/* Tabs Section */}
           <div
@@ -189,6 +199,9 @@ export default function FinancePage() {
                       Invoice No.
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
                       Contractor
                     </th>
                     <th className="px-4 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">
@@ -207,6 +220,9 @@ export default function FinancePage() {
                     >
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.invoiceNo}
+                      </td>
+                      <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                        {item.date}
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
                         {item.contractor}
