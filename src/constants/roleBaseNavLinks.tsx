@@ -10,6 +10,7 @@ import {
   Monitor,
   Van,
   Receipt,
+  TicketPercent,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 
@@ -61,7 +62,7 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/admin/vouchers",
       label: "Vouchers",
-      icon: <Receipt className="w-4 h-4 mb-1" />,
+      icon: <TicketPercent className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/subcontractor",
