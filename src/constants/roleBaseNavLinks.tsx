@@ -48,11 +48,6 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       label: "Overview",
       icon: <LayoutDashboard className="w-4 h-4 mb-1" />,
     },
-    // {
-    //   href: "/admin/tours",
-    //   label: "Tours",
-    //   icon: <PiIslandDuotone className="w-4 h-4 mb-1" />,
-    // },
     {
       href: "/admin/station",
       label: "Station",
@@ -61,6 +56,11 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
     {
       href: "/admin/invoices",
       label: "Invoices",
+      icon: <Receipt className="w-4 h-4 mb-1" />,
+    },
+    {
+      href: "/admin/vouchers",
+      label: "Vouchers",
       icon: <Receipt className="w-4 h-4 mb-1" />,
     },
     {
