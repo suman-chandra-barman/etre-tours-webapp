@@ -13,17 +13,13 @@ import { Pencil, Trash2 } from "lucide-react";
 import Image from "next/image";
 
 interface Vehicle {
-  operatorName: string;
-  driverName: string;
-  guideName: string;
+  name: string;
   numberOfSeats: number;
   registerNumber?: string;
 }
 
 interface Boat {
-  operatorName: string;
-  driverName: string;
-  guideName: string;
+  name: string;
   numberOfSeats: number;
   registerNumber?: string;
 }
@@ -133,20 +129,11 @@ export default function ViewSubContractorModal({
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <p className="text-sm">
-                        <span className="font-medium">
-                          {vehicle.operatorName}
-                        </span>{" "}
-                        [Reg: {vehicle.registerNumber || "55gfGH898F"}]
+                        <span className="font-medium">{vehicle.name}</span>{" "}
+                        [Reg: {vehicle.registerNumber}]
                       </p>
                       <p className="text-sm text-gray-600">
-                        with{" "}
-                        <span className="font-medium">
-                          {vehicle.driverName}
-                        </span>{" "}
-                        [{vehicle.guideName}]
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        Of{" "}
+                        With{" "}
                         <span className="font-medium">
                           {vehicle.numberOfSeats} Seats
                         </span>
@@ -178,16 +165,12 @@ export default function ViewSubContractorModal({
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <p className="text-sm">
-                        <span className="font-medium">{boat.operatorName}</span>{" "}
-                        [Reg: {boat.registerNumber || "55gfGH898F"}]
+                        <span className="font-medium">{boat.name}</span> [Reg:{" "}
+                        {boat.registerNumber}]
                       </p>
+
                       <p className="text-sm text-gray-600">
-                        with{" "}
-                        <span className="font-medium">{boat.driverName}</span> [
-                        {boat.guideName}]
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        Of{" "}
+                        With{" "}
                         <span className="font-medium">
                           {boat.numberOfSeats} Seats
                         </span>

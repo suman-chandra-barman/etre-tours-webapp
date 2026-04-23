@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OperationsTour } from "@/types/tours.types";
+import { X } from "lucide-react";
 
 // Transport entry for multi-transport support
 interface TransportEntry {
@@ -27,7 +28,7 @@ interface TransportEntry {
   vehicleNumber: string;
   numberOfSeats: number;
   guide: string;
-  extraGuide: string;
+  driver: string;
   adults: number;
   children: number;
   infants: number;
@@ -49,6 +50,35 @@ const generateTourCode = (tourName: string): string => {
   return `${code}-${Date.now().toString().slice(-4)}`;
 };
 
+const DEFAULT_GUIDE_OPTIONS = [
+  "Jane Gerry",
+  "Barbara Tovey",
+  "Brenda Davidson",
+];
+
+const DEFAULT_DRIVER_OPTIONS = [
+  "John Smith",
+  "Mike Johnson",
+  "David Brown",
+  "Robert Wilson",
+];
+
+const createInitialTransportEntry = (
+  tour: OperationsTour | null,
+): TransportEntry => ({
+  id: 1,
+  transportType: "",
+  transportContractor: tour?.transportContractor || "",
+  vehicleNumber: tour?.vehicle || "",
+  numberOfSeats: tour?.numberOfSeats || 0,
+  guide: tour?.guide || DEFAULT_GUIDE_OPTIONS[0] || "",
+  driver: tour?.driver || DEFAULT_DRIVER_OPTIONS[0] || "",
+  adults: 0,
+  children: 0,
+  infants: 0,
+  foc: 0,
+});
+
 const EditOperationsTourModal = ({
   open,
   onOpenChange,
@@ -67,25 +97,13 @@ const EditOperationsTourModal = ({
     return tour?.tourName ? generateTourCode(tour.tourName) : "";
   }, [tour]);
 
+  // Guide selector visibility
+  const [showGuideSelector, setShowGuideSelector] = useState(false);
+
   // Transport entries
   const [transportEntries, setTransportEntries] = useState<TransportEntry[]>([
-    {
-      id: 1,
-      transportType: "",
-      transportContractor: tour?.transportContractor || "",
-      vehicleNumber: tour?.vehicle || "",
-      numberOfSeats: tour?.numberOfSeats || 0,
-      guide: tour?.guide || "",
-      extraGuide: tour?.extraGuide || "",
-      adults: 0,
-      children: 0,
-      infants: 0,
-      foc: 0,
-    },
+    createInitialTransportEntry(tour),
   ]);
-
-  // Get current transport entry (first one since no pagination)
-  const currentTransport = transportEntries[0];
 
   // Update current transport entry
   const updateCurrentTransport = (
@@ -98,6 +116,23 @@ const EditOperationsTourModal = ({
       ),
     );
   };
+
+  // Get current transport entry (first one since no pagination)
+  const currentTransport = transportEntries[0];
+  const currentGuideValue = currentTransport?.guide || "";
+
+  const selectedGuides = useMemo(() => {
+    if (!currentGuideValue) return [];
+    return currentGuideValue
+      .split(",")
+      .map((guideName) => guideName.trim())
+      .filter(Boolean);
+  }, [currentGuideValue]);
+
+  const guideOptions = useMemo(
+    () => Array.from(new Set([...DEFAULT_GUIDE_OPTIONS, ...selectedGuides])),
+    [selectedGuides],
+  );
 
   // Vehicle to seats mapping (mock data - would come from API)
   const vehicleSeatsMap: Record<string, number> = {
@@ -116,6 +151,14 @@ const EditOperationsTourModal = ({
     updateCurrentTransport("numberOfSeats", seats);
   };
 
+  const handleGuideCheckboxChange = (guideName: string, checked: boolean) => {
+    const nextSelectedGuides = checked
+      ? Array.from(new Set([...selectedGuides, guideName]))
+      : selectedGuides.filter((name) => name !== guideName);
+
+    updateCurrentTransport("guide", nextSelectedGuides.join(", "));
+  };
+
   // Add new transport entry
   const handleAddTransport = () => {
     const newEntry: TransportEntry = {
@@ -125,7 +168,7 @@ const EditOperationsTourModal = ({
       vehicleNumber: "",
       numberOfSeats: 0,
       guide: "",
-      extraGuide: "",
+      driver: "",
       adults: 0,
       children: 0,
       infants: 0,
@@ -145,7 +188,7 @@ const EditOperationsTourModal = ({
       transportContractor: firstTransport.transportContractor,
       vehicle: firstTransport.vehicleNumber,
       guide: firstTransport.guide,
-      extraGuide: firstTransport.extraGuide,
+      driver: firstTransport.driver,
       numberOfSeats: firstTransport.numberOfSeats,
     };
 
@@ -321,51 +364,89 @@ const EditOperationsTourModal = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              {/* Guide */}
+            <div className="grid grid-cols-1 gap-4">
+              {/* Driver - Select Dropdown */}
               <div className="space-y-1">
-                <Label className="text-xs font-normal">Guide</Label>
+                <Label className="text-xs font-normal">Driver</Label>
                 <Select
-                  value={currentTransport?.guide || ""}
+                  value={currentTransport?.driver || ""}
                   onValueChange={(value) =>
-                    updateCurrentTransport("guide", value)
+                    updateCurrentTransport("driver", value)
                   }
                 >
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Guide" />
+                    <SelectValue placeholder="Select Driver" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="None">None</SelectItem>
-                    <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
-                    <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
-                    <SelectItem value="Brenda Davidson">
-                      Brenda Davidson
-                    </SelectItem>
+                    {DEFAULT_DRIVER_OPTIONS.map((driver) => (
+                      <SelectItem key={driver} value={driver}>
+                        {driver}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Extra Guide */}
+              {/* Guide - Click to Edit - Full Width */}
               <div className="space-y-1">
-                <Label className="text-xs font-normal">Extra Guide</Label>
-                <Select
-                  value={currentTransport?.extraGuide || ""}
-                  onValueChange={(value) =>
-                    updateCurrentTransport("extraGuide", value)
-                  }
-                >
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select Extra Guide" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="None">None</SelectItem>
-                    <SelectItem value="Jane Gerry">Jane Gerry</SelectItem>
-                    <SelectItem value="Barbara Tovey">Barbara Tovey</SelectItem>
-                    <SelectItem value="Brenda Davidson">
-                      Brenda Davidson
-                    </SelectItem>
-                  </SelectContent>
-                </Select>
+                <Label className="text-xs font-normal">Guide(s)</Label>
+                <div className="relative">
+                  <button
+                    onClick={() => setShowGuideSelector(!showGuideSelector)}
+                    className="w-full h-auto min-h-10 p-2 border border-input bg-background rounded-md text-left font-normal flex flex-wrap gap-1 items-start hover:bg-accent cursor-pointer"
+                  >
+                    {selectedGuides.length > 0 ? (
+                      selectedGuides.map((guide) => (
+                        <span
+                          key={guide}
+                          className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded text-xs flex items-center gap-1"
+                        >
+                          {guide}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleGuideCheckboxChange(guide, false);
+                            }}
+                            className="hover:bg-blue-200 rounded"
+                          >
+                            <X className="w-3 h-3" />
+                          </button>
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-gray-500 text-sm">
+                        Select guides...
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Guide Selector Dropdown */}
+                  {showGuideSelector && (
+                    <div className="absolute top-full left-0 right-0 mt-1 bg-white border rounded-md shadow-lg z-50 p-2">
+                      <div className="space-y-2 max-h-48 overflow-y-auto">
+                        {guideOptions.map((guideName) => (
+                          <label
+                            key={guideName}
+                            className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded cursor-pointer"
+                          >
+                            <input
+                              type="checkbox"
+                              checked={selectedGuides.includes(guideName)}
+                              onChange={(e) =>
+                                handleGuideCheckboxChange(
+                                  guideName,
+                                  e.target.checked,
+                                )
+                              }
+                              className="rounded"
+                            />
+                            <span className="text-sm">{guideName}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

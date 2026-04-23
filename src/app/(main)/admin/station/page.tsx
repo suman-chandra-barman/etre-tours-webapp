@@ -5,12 +5,6 @@ import { AddEditMemberModal } from "@/components/Modals/AddEditMemberModal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Table,
   TableBody,
   TableCell,
@@ -18,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Eye, Pen, Plus } from "lucide-react";
+import {Pen, Plus } from "lucide-react";
 
 interface StationMember {
   id: string;
@@ -33,7 +27,6 @@ interface StationMember {
 function StationPage() {
   const [isAddStationModalOpen, setIsAddStationModalOpen] = useState(false);
   const [isEditStationModalOpen, setIsEditStationModalOpen] = useState(false);
-  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [selectedMember, setSelectedMember] = useState<StationMember | null>(
     null,
   );
@@ -71,11 +64,6 @@ function StationPage() {
   const handleEditStation = (member: StationMember) => {
     setSelectedMember(member);
     setIsEditStationModalOpen(true);
-  };
-
-  const handleViewDetails = (member: StationMember) => {
-    setSelectedMember(member);
-    setIsDetailsModalOpen(true);
   };
 
   return (
@@ -135,13 +123,6 @@ function StationPage() {
                 <TableCell>
                   <div className="flex items-center justify-end gap-2">
                     <button
-                      onClick={() => handleViewDetails(member)}
-                      className="p-1.5 rounded-md hover:bg-gray-100 transition-colors"
-                      aria-label="View station details"
-                    >
-                      <Eye className="w-4 h-4 text-gray-600" />
-                    </button>
-                    <button
                       onClick={() => handleEditStation(member)}
                       className="p-2 hover:bg-gray-100 rounded-md transition-colors"
                       aria-label="Edit station"
@@ -188,48 +169,6 @@ function StationPage() {
         }
         mode="edit"
       />
-
-      <Dialog
-        open={isDetailsModalOpen}
-        onOpenChange={(open) => {
-          setIsDetailsModalOpen(open);
-          if (!open && !isEditStationModalOpen) {
-            setSelectedMember(null);
-          }
-        }}
-      >
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Station Details</DialogTitle>
-          </DialogHeader>
-          {selectedMember && (
-            <div className="space-y-3 text-sm">
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Name</p>
-                <p className="font-medium">{selectedMember.name}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Station</p>
-                <p className="font-medium">{selectedMember.station}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Status</p>
-                <p className="font-medium capitalize">
-                  {selectedMember.status}
-                </p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Email</p>
-                <p className="font-medium">{selectedMember.email}</p>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <p className="text-gray-500">Phone Number</p>
-                <p className="font-medium">{selectedMember.phoneNumber}</p>
-              </div>
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </main>
   );
 }
