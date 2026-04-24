@@ -11,6 +11,7 @@ import {
   Van,
   Receipt,
   TicketPercent,
+  TreePalm,
 } from "lucide-react";
 import { TUserRole } from "@/types";
 
@@ -60,9 +61,9 @@ export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
       icon: <Receipt className="w-4 h-4 mb-1" />,
     },
     {
-      href: "/admin/vouchers",
-      label: "Vouchers",
-      icon: <TicketPercent className="w-4 h-4 mb-1" />,
+      href: "/admin/tours",
+      label: "Tours",
+      icon: <TreePalm className="w-4 h-4 mb-1" />,
     },
     {
       href: "/admin/subcontractor",
