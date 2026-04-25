@@ -7,6 +7,7 @@ import EditAdminTourModal, {
 } from "@/components/Modals/EditAdminTourModal";
 import AdminTourSetupModal, {
   AdminTourPayload,
+  TourCurrency,
 } from "@/components/Modals/AdminTourSetupModal";
 import { Button } from "@/components/ui/button";
 
@@ -20,6 +21,7 @@ type TourRow = {
   id: number;
   tourName: string;
   station: Exclude<StationFilter, "All tours">;
+  currency: TourCurrency;
   tourDurationHours: number;
   tourDurationMinutes: 15 | 30 | 45;
   adultPrice: number;
@@ -40,6 +42,7 @@ const initialRows: TourRow[] = [
     id: 1,
     tourName: "Lagoon Dive",
     station: "Direct Sales",
+    currency: "xpf",
     tourDurationHours: 2,
     tourDurationMinutes: 15,
     adultPrice: 12000,
@@ -51,6 +54,7 @@ const initialRows: TourRow[] = [
     id: 2,
     tourName: "Circle Island",
     station: "Cruise Sales",
+    currency: "usd",
     tourDurationHours: 3,
     tourDurationMinutes: 30,
     adultPrice: 15500,
@@ -62,6 +66,7 @@ const initialRows: TourRow[] = [
     id: 3,
     tourName: "Fishing day",
     station: "Partner Sales",
+    currency: "aud",
     tourDurationHours: 4,
     tourDurationMinutes: 45,
     adultPrice: 11000,
@@ -73,6 +78,7 @@ const initialRows: TourRow[] = [
 
 const emptyEditForm: EditAdminTourFormState = {
   station: "",
+  currency: "xpf",
   tourName: "",
   tourDurationHours: "",
   tourDurationMinutes: "15",
@@ -82,7 +88,15 @@ const emptyEditForm: EditAdminTourFormState = {
   transportChild: "",
 };
 
-const formatXpfPrice = (value: number) => `XPF ${value.toLocaleString()}`;
+const currencyLabel: Record<TourCurrency, string> = {
+  xpf: "XPF",
+  usd: "USD",
+  aud: "AUD",
+  euro: "EURO",
+};
+
+const formatTourPrice = (currency: TourCurrency, value: number) =>
+  `${currencyLabel[currency]} ${value.toLocaleString()}`;
 
 export default function AdminToursPage() {
   const [activeFilter, setActiveFilter] = useState<StationFilter>("All tours");
@@ -119,6 +133,7 @@ export default function AdminToursPage() {
     setEditingRowId(target.id);
     setEditForm({
       station: target.station,
+      currency: target.currency,
       tourName: target.tourName,
       tourDurationHours: String(target.tourDurationHours),
       tourDurationMinutes: String(target.tourDurationMinutes),
@@ -147,6 +162,7 @@ export default function AdminToursPage() {
         id: nextId,
         tourName: tour.tourName,
         station: tour.station,
+        currency: tour.currency,
         tourDurationHours: tour.tourDurationHours,
         tourDurationMinutes: tour.tourDurationMinutes,
         adultPrice: tour.adultPrice,
@@ -163,6 +179,7 @@ export default function AdminToursPage() {
     }
 
     const station = editForm.station as Exclude<StationFilter, "All tours">;
+    const currency = editForm.currency;
     const tourDurationHours = Number(editForm.tourDurationHours);
     const tourDurationMinutes = Number(editForm.tourDurationMinutes);
     const adultPrice = Number(editForm.adultPrice);
@@ -194,6 +211,7 @@ export default function AdminToursPage() {
           ? {
               ...row,
               station,
+              currency,
               tourName: editForm.tourName.trim(),
               tourDurationHours,
               tourDurationMinutes: tourDurationMinutes as 15 | 30 | 45,
@@ -319,16 +337,16 @@ export default function AdminToursPage() {
                     {`${row.tourDurationHours}h ${row.tourDurationMinutes}m`}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
-                    {formatXpfPrice(row.adultPrice)}
+                    {formatTourPrice(row.currency, row.adultPrice)}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
-                    {formatXpfPrice(row.childPrice)}
+                    {formatTourPrice(row.currency, row.childPrice)}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
-                    {formatXpfPrice(row.transportAdult)}
+                    {formatTourPrice(row.currency, row.transportAdult)}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
-                    {formatXpfPrice(row.transportChild)}
+                    {formatTourPrice(row.currency, row.transportChild)}
                   </td>
                   <td className="border border-gray-300 px-3 py-2">
                     <div className="flex items-center justify-center gap-2">

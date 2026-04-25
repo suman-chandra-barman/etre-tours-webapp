@@ -20,8 +20,11 @@ import {
 
 export type Station = "Direct Sales" | "Cruise Sales" | "Partner Sales";
 
+export type TourCurrency = "xpf" | "usd" | "aud" | "euro";
+
 export type AdminTourPayload = {
   station: Station;
+  currency: TourCurrency;
   tourName: string;
   tourDurationHours: number;
   tourDurationMinutes: 15 | 30 | 45;
@@ -44,6 +47,7 @@ const AdminTourSetupModal = ({
 }: AdminTourSetupModalProps) => {
   const [form, setForm] = useState({
     station: "",
+    currency: "xpf" as TourCurrency,
     tourName: "",
     tourDurationHours: "",
     tourDurationMinutes: "",
@@ -56,6 +60,7 @@ const AdminTourSetupModal = ({
   const resetForm = () => {
     setForm({
       station: "",
+      currency: "xpf" as TourCurrency,
       tourName: "",
       tourDurationHours: "",
       tourDurationMinutes: "",
@@ -75,6 +80,7 @@ const AdminTourSetupModal = ({
 
   const handleCreateTour = () => {
     const station = form.station as Station;
+    const currency = form.currency;
     const tourDurationHours = Number(form.tourDurationHours);
     const tourDurationMinutes = Number(form.tourDurationMinutes);
     const adultPrice = Number(form.adultPrice);
@@ -98,6 +104,7 @@ const AdminTourSetupModal = ({
 
     onCreateTour({
       station,
+      currency,
       tourName: form.tourName.trim(),
       tourDurationHours,
       tourDurationMinutes: tourDurationMinutes as 15 | 30 | 45,
@@ -182,6 +189,28 @@ const AdminTourSetupModal = ({
                   placeholder="Minutes"
                 />
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="select-currency">Currency</Label>
+              <Select
+                value={form.currency}
+                onValueChange={(value) =>
+                  setForm((prev) => ({
+                    ...prev,
+                    currency: value as TourCurrency,
+                  }))
+                }
+              >
+                <SelectTrigger id="select-currency" className="w-full">
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="xpf">XPF</SelectItem>
+                  <SelectItem value="usd">USD</SelectItem>
+                  <SelectItem value="aud">AUD</SelectItem>
+                  <SelectItem value="euro">EURO</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

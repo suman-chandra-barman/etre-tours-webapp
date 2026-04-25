@@ -17,10 +17,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Station } from "./AdminTourSetupModal";
+import { Station, TourCurrency } from "./AdminTourSetupModal";
 
 export type EditAdminTourFormState = {
   station: Station | "";
+  currency: TourCurrency;
   tourName: string;
   tourDurationHours: string;
   tourDurationMinutes: string;
@@ -74,7 +75,6 @@ export default function EditAdminTourModal({
                 </SelectContent>
               </Select>
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="edit-tour-name">Tour name</Label>
               <Input
@@ -120,6 +120,23 @@ export default function EditAdminTourModal({
                   <span className="text-xs text-muted-foreground">Minutes</span>
                 </div>
               </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-select-currency">Currency</Label>
+              <Select
+                value={form.currency}
+                onValueChange={(value) => onFieldChange("currency", value)}
+              >
+                <SelectTrigger id="edit-select-currency" className="w-full">
+                  <SelectValue placeholder="Select currency" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="xpf">XPF</SelectItem>
+                  <SelectItem value="usd">USD</SelectItem>
+                  <SelectItem value="aud">AUD</SelectItem>
+                  <SelectItem value="euro">EURO</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
