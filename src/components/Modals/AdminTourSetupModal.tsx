@@ -47,7 +47,7 @@ const AdminTourSetupModal = ({
 }: AdminTourSetupModalProps) => {
   const [form, setForm] = useState({
     station: "",
-    currency: "xpf" as TourCurrency,
+    currency: "" as TourCurrency | "",
     tourName: "",
     tourDurationHours: "",
     tourDurationMinutes: "",
@@ -60,7 +60,7 @@ const AdminTourSetupModal = ({
   const resetForm = () => {
     setForm({
       station: "",
-      currency: "xpf" as TourCurrency,
+      currency: "" as TourCurrency | "",
       tourName: "",
       tourDurationHours: "",
       tourDurationMinutes: "",
@@ -80,7 +80,7 @@ const AdminTourSetupModal = ({
 
   const handleCreateTour = () => {
     const station = form.station as Station;
-    const currency = form.currency;
+    const currency = form.currency as TourCurrency;
     const tourDurationHours = Number(form.tourDurationHours);
     const tourDurationMinutes = Number(form.tourDurationMinutes);
     const adultPrice = Number(form.adultPrice);
@@ -88,7 +88,8 @@ const AdminTourSetupModal = ({
     const transportAdult = Number(form.transportAdult);
     const transportChild = Number(form.transportChild);
 
-    const hasMissingRequiredValue = !form.station || !form.tourName.trim();
+    const hasMissingRequiredValue =
+      !form.station || !form.currency || !form.tourName.trim();
     const hasInvalidNumber = [
       tourDurationHours,
       adultPrice,
