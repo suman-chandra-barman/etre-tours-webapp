@@ -23,7 +23,6 @@ export type Station = "Direct Sales" | "Cruise Sales" | "Partner Sales";
 export type AdminTourPayload = {
   station: Station;
   tourName: string;
-  departureFrom: string;
   tourDurationHours: number;
   tourDurationMinutes: 15 | 30 | 45;
   adultPrice: number;
@@ -46,7 +45,6 @@ const AdminTourSetupModal = ({
   const [form, setForm] = useState({
     station: "",
     tourName: "",
-    departureFrom: "",
     tourDurationHours: "",
     tourDurationMinutes: "",
     adultPrice: "",
@@ -59,7 +57,6 @@ const AdminTourSetupModal = ({
     setForm({
       station: "",
       tourName: "",
-      departureFrom: "",
       tourDurationHours: "",
       tourDurationMinutes: "",
       adultPrice: "",
@@ -85,8 +82,7 @@ const AdminTourSetupModal = ({
     const transportAdult = Number(form.transportAdult);
     const transportChild = Number(form.transportChild);
 
-    const hasMissingRequiredValue =
-      !form.station || !form.tourName.trim() || !form.departureFrom.trim();
+    const hasMissingRequiredValue = !form.station || !form.tourName.trim();
     const hasInvalidNumber = [
       tourDurationHours,
       adultPrice,
@@ -103,7 +99,6 @@ const AdminTourSetupModal = ({
     onCreateTour({
       station,
       tourName: form.tourName.trim(),
-      departureFrom: form.departureFrom.trim(),
       tourDurationHours,
       tourDurationMinutes: tourDurationMinutes as 15 | 30 | 45,
       adultPrice,
@@ -158,21 +153,6 @@ const AdminTourSetupModal = ({
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="departure-from">Departure from</Label>
-              <Input
-                id="departure-from"
-                value={form.departureFrom}
-                onChange={(event) =>
-                  setForm((prev) => ({
-                    ...prev,
-                    departureFrom: event.target.value,
-                  }))
-                }
-                placeholder="Enter departure location"
-              />
-            </div>
-
             <div className="space-y-2">
               <Label>Tour duration</Label>
               <div className="grid grid-cols-2 gap-2">

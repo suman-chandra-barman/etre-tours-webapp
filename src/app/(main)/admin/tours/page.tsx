@@ -20,7 +20,6 @@ type TourRow = {
   id: number;
   tourName: string;
   station: Exclude<StationFilter, "All tours">;
-  departureFrom: string;
   tourDurationHours: number;
   tourDurationMinutes: 15 | 30 | 45;
   adultPrice: number;
@@ -41,7 +40,6 @@ const initialRows: TourRow[] = [
     id: 1,
     tourName: "Lagoon Dive",
     station: "Direct Sales",
-    departureFrom: "Papeete Pier",
     tourDurationHours: 2,
     tourDurationMinutes: 15,
     adultPrice: 12000,
@@ -53,7 +51,6 @@ const initialRows: TourRow[] = [
     id: 2,
     tourName: "Circle Island",
     station: "Cruise Sales",
-    departureFrom: "Downtown Harbor",
     tourDurationHours: 3,
     tourDurationMinutes: 30,
     adultPrice: 15500,
@@ -65,7 +62,6 @@ const initialRows: TourRow[] = [
     id: 3,
     tourName: "Fishing day",
     station: "Partner Sales",
-    departureFrom: "Marina Gate B",
     tourDurationHours: 4,
     tourDurationMinutes: 45,
     adultPrice: 11000,
@@ -78,7 +74,6 @@ const initialRows: TourRow[] = [
 const emptyEditForm: EditAdminTourFormState = {
   station: "",
   tourName: "",
-  departureFrom: "",
   tourDurationHours: "",
   tourDurationMinutes: "15",
   adultPrice: "",
@@ -125,7 +120,6 @@ export default function AdminToursPage() {
     setEditForm({
       station: target.station,
       tourName: target.tourName,
-      departureFrom: target.departureFrom,
       tourDurationHours: String(target.tourDurationHours),
       tourDurationMinutes: String(target.tourDurationMinutes),
       adultPrice: String(target.adultPrice),
@@ -153,7 +147,6 @@ export default function AdminToursPage() {
         id: nextId,
         tourName: tour.tourName,
         station: tour.station,
-        departureFrom: tour.departureFrom,
         tourDurationHours: tour.tourDurationHours,
         tourDurationMinutes: tour.tourDurationMinutes,
         adultPrice: tour.adultPrice,
@@ -178,9 +171,7 @@ export default function AdminToursPage() {
     const transportChild = Number(editForm.transportChild);
 
     const hasMissingRequiredValue =
-      !editForm.station ||
-      !editForm.tourName.trim() ||
-      !editForm.departureFrom.trim();
+      !editForm.station || !editForm.tourName.trim();
     const hasInvalidMinutes = ![15, 30, 45].includes(tourDurationMinutes);
 
     if (
@@ -204,7 +195,6 @@ export default function AdminToursPage() {
               ...row,
               station,
               tourName: editForm.tourName.trim(),
-              departureFrom: editForm.departureFrom.trim(),
               tourDurationHours,
               tourDurationMinutes: tourDurationMinutes as 15 | 30 | 45,
               adultPrice,
@@ -279,12 +269,6 @@ export default function AdminToursPage() {
                   rowSpan={2}
                   className="border border-gray-400 px-3 py-2 text-left text-2xs sm:text-sm font-semibold text-gray-900"
                 >
-                  Departure from
-                </th>
-                <th
-                  rowSpan={2}
-                  className="border border-gray-400 px-3 py-2 text-left text-2xs sm:text-sm font-semibold text-gray-900"
-                >
                   Tour duration
                 </th>
                 <th
@@ -332,9 +316,6 @@ export default function AdminToursPage() {
                     {row.station}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
-                    {row.departureFrom}
-                  </td>
-                  <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
                     {`${row.tourDurationHours}h ${row.tourDurationMinutes}m`}
                   </td>
                   <td className="border border-gray-300 px-3 py-2 text-xs sm:text-sm text-gray-800">
@@ -373,7 +354,7 @@ export default function AdminToursPage() {
               {filteredRows.length === 0 && (
                 <tr>
                   <td
-                    colSpan={9}
+                    colSpan={8}
                     className="border border-gray-300 px-3 py-5 text-center text-sm text-gray-500"
                   >
                     No tours found for this filter.

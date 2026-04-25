@@ -22,7 +22,6 @@ import { Station } from "./AdminTourSetupModal";
 export type EditAdminTourFormState = {
   station: Station | "";
   tourName: string;
-  departureFrom: string;
   tourDurationHours: string;
   tourDurationMinutes: string;
   adultPrice: string;
@@ -90,18 +89,6 @@ export default function EditAdminTourModal({
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="edit-departure-from">Departure from</Label>
-              <Input
-                id="edit-departure-from"
-                value={form.departureFrom}
-                onChange={(event) =>
-                  onFieldChange("departureFrom", event.target.value)
-                }
-                placeholder="Enter departure location"
-              />
-            </div>
-
             <div className="space-y-2">
               <Label>Tour duration</Label>
               <div className="grid grid-cols-2 gap-2">
