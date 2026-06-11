@@ -22,28 +22,6 @@ interface NavLink {
 }
 
 export const roleBaseNavLinks: Record<TUserRole, NavLink[]> = {
-  "chief-admin": [
-    {
-      href: "/chief-admin",
-      label: "Analytics",
-      icon: <ChartLine className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/chief-admin/users",
-      label: "Users",
-      icon: <Users className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/chief-admin/transactions",
-      label: "Transac.",
-      icon: <Landmark className="w-6 h-6 mb-1" />,
-    },
-    {
-      href: "/chief-admin/setting",
-      label: "Settings",
-      icon: <Settings className="w-6 h-6 mb-1" />,
-    },
-  ],
   admin: [
     {
       href: "/admin",

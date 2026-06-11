@@ -6,7 +6,6 @@ export const tourStatus = {
 };
 
 export const userRoles = {
-  CHIEF_ADMIN: "chief-admin",
   ADMIN: "admin",
   DIRECT_SALES: "direct-sales",
   CRUISE_SALES: "cruise-sales",

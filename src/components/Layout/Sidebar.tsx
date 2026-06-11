@@ -21,7 +21,6 @@ function Sidebar() {
 
   // Determine role based on the current path if role is not set
   const getRoleFromPath = () => {
-    if (pathname.startsWith("/chief-admin")) return "chief-admin";
     if (pathname.startsWith("/admin")) return "admin";
     if (pathname.startsWith("/direct-sales")) return "direct-sales";
     if (pathname.startsWith("/cruise-sales")) return "cruise-sales";

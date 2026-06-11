@@ -45,9 +45,6 @@ function LoginPage() {
 
     // Redirect based on role - Operations Board for sales roles, default pages for admin roles
     switch (data.role) {
-      case "chief-admin":
-        router.push("/chief-admin");
-        break;
       case "admin":
         router.push("/admin");
         break;
@@ -168,9 +165,7 @@ function LoginPage() {
                       />
                     </SelectTrigger>
                     <SelectContent className="mt-12">
-                      {/* <SelectItem value="chief-admin">Chief Admin</SelectItem> */}
                       <SelectItem value="admin">Admin</SelectItem>
-                      <SelectItem value="chief-admin">Chief Admin</SelectItem>
                       <SelectItem value="direct-sales">Direct Sales</SelectItem>
                       <SelectItem value="cruise-sales">Cruise Sales</SelectItem>
                       <SelectItem value="partner-sales">

@@ -1,5 +1,4 @@
 export type TUserRole =
-  | "chief-admin"
   | "admin"
   | "direct-sales"
   | "cruise-sales"

@@ -5,7 +5,6 @@ import type { NextRequest } from "next/server";
 // Constants
 const ROUTES = {
   LOGIN: "/login",
-  CHIEF_ADMIN: "/chief-admin",
   ADMIN: "/admin",
   CRUISE_SALES: "/cruise-sales",
   DIRECT_SALES: "/direct-sales",
@@ -15,7 +14,6 @@ const ROUTES = {
 
 // Route permissions mapping
 const ROUTE_PERMISSIONS: Record<string, TUserRole[]> = {
-  [ROUTES.CHIEF_ADMIN]: ["chief-admin"],
   [ROUTES.ADMIN]: ["admin"],
   [ROUTES.CRUISE_SALES]: ["cruise-sales"],
   [ROUTES.DIRECT_SALES]: ["direct-sales"],
@@ -24,7 +22,6 @@ const ROUTE_PERMISSIONS: Record<string, TUserRole[]> = {
 
 // Role to dashboard mapping
 const ROLE_DASHBOARD_MAP: Record<TUserRole, string> = {
-  "chief-admin": ROUTES.CHIEF_ADMIN,
   "admin": ROUTES.ADMIN,
   "cruise-sales": ROUTES.CRUISE_SALES,
   "direct-sales": ROUTES.DIRECT_SALES,
@@ -120,7 +117,6 @@ export const config = {
   matcher: [
     "/",
     "/login",
-    "/chief-admin/:path*",
     "/admin/:path*",
     "/cruise-sales/:path*",
     "/direct-sales/:path*",
